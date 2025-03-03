@@ -125,15 +125,6 @@
             border-radius: 8px;
             cursor: pointer;
         }
-        .deporte-selector select {
-            width: auto;
-            padding: 10px;
-            border: 2px solid #BB86FC; /* Primary */
-            border-radius: 8px;
-            cursor: pointer;
-            background-color: #121212; /* Surface */
-            color: #FFFFFF; /* On Surface */
-        }
         .idioma-selector select {
             width: auto;
             padding: 10px;
@@ -244,20 +235,20 @@
         <div class="filtros">
             <select id="filtroDeporte" onchange="filtrarEnlaces()">
                 <option value="">Todos los deportes</option>
-                <option value="f1">Fórmula 1 🏎️</option>
+                <option value="f1">Fórmula 1🏎️</option>
                 <option value="futbol">Fútbol ⚽</option>
-                <option value="nba">NBA 🏀</option>
-                <option value="tenis">Tenis 🎾</option>
+                <option value="nba">NBA🏀</option>
+                <option value="tenis">Tenis<🎾/option>
                 <option value="nascar">NASCAR 🚗</option>
                 <option value="indy">Indy 🚙</option>
                 <option value="motogp">Moto GP 🏍️</option>
                 <option value="wec">WEC 🏁</option>
                 <option value="rugby">Rugby 🏉</option>
-                <option value="ciclismo">Ciclismo 🚴</option>
+                <option value="ciclismo">Ciclismo 🚴
                 <option value="boxeo">Boxeo 🥊</option>
                 <option value="mma">MMA 🥋</option>
                 <option value="esports">eSports 🎮</option>
-                <option value="otros">Otros 🏅</option>
+                <option value="otros">Otros🏅</option>
             </select>
             <select id="filtroIdioma" onchange="filtrarEnlaces()">
                 <option value="">Todos los idiomas</option>
@@ -301,35 +292,27 @@
         <div class="form-container" id="formContainer">
             <input type="text" id="link" placeholder="Pega tu enlace aquí">
             <input type="text" id="title" placeholder="Añade un título">
+            <select id="deporte">
+                <option value="f1">Fórmula 1🏎️</option>
+                <option value="futbol">Fútbol ⚽</option>
+                <option value="nba">NBA🏀</option>
+                <option value="tenis">Tenis<🎾/option>
+                <option value="nascar">NASCAR 🚗</option>
+                <option value="indy">Indy 🚙</option>
+                <option value="motogp">Moto GP 🏍️</option>
+                <option value="wec">WEC 🏁</option>
+                <option value="rugby">Rugby 🏉</option>
+                <option value="ciclismo">Ciclismo 🚴
+                <option value="boxeo">Boxeo 🥊</option>
+                <option value="mma">MMA 🥋</option>
+                <option value="esports">eSports 🎮</option>
+                <option value="otros">Otros🏅</option>
+            </select>
             <div class="selectores">
-                <!-- Selector de color (ahora en la posición del selector de deporte) -->
                 <div class="color-picker">
                     <label for="color">🎨</label>
                     <input type="color" id="color" value="#28a745">
                 </div>
-
-                <!-- Selector de deporte (ahora en la posición del selector de color) -->
-                <div class="deporte-selector">
-                    <label for="deporte">🏅</label>
-                    <select id="deporte">
-                        <option value="f1">Fórmula 1 🏎️</option>
-                        <option value="futbol">Fútbol ⚽</option>
-                        <option value="nba">NBA 🏀</option>
-                        <option value="tenis">Tenis 🎾</option>
-                        <option value="nascar">NASCAR 🚗</option>
-                        <option value="indy">Indy 🚙</option>
-                        <option value="motogp">Moto GP 🏍️</option>
-                        <option value="wec">WEC 🏁</option>
-                        <option value="rugby">Rugby 🏉</option>
-                        <option value="ciclismo">Ciclismo 🚴</option>
-                        <option value="boxeo">Boxeo 🥊</option>
-                        <option value="mma">MMA 🥋</option>
-                        <option value="esports">eSports 🎮</option>
-                        <option value="otros">Otros 🏅</option>
-                    </select>
-                </div>
-
-                <!-- Selector de idioma (sin cambios) -->
                 <div class="idioma-selector">
                     <label for="idioma">🔊</label>
                     <select id="idioma">
@@ -340,8 +323,6 @@
                         <option value="OT">🏳️‍⚧️ OT</option>
                     </select>
                 </div>
-
-                <!-- Toggle de icono y multi (sin cambios) -->
                 <div class="toggle-icono">
                     <label for="mostrarIcono">🅰️</label>
                     <input type="checkbox" id="mostrarIcono">
