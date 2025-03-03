@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧔 Chefo TV 📺</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #121212; /* Background */
+            color: #FFFFFF; /* On Background */
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #121212; /* Surface */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #FFFFFF; /* On Background */
+            margin-bottom: 20px;
+        }
+        .categoria {
+            margin-bottom: 20px;
+        }
+        .categoria h2 {
+            font-size: 18px;
+            color: #BB86FC; /* Primary */
+            margin-bottom: 10px;
+        }
+        .link-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .link-item {
+            flex: 1 1 calc(33.33% - 10px);
+            height: 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #FFFFFF; /* Cambiado a blanco */
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            padding: 10px;
+            font-size: 14px;
+            position: relative;
+            box-sizing: border-box;
+            background-color: #BB86FC; /* Primary */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7); /* Mejora la legibilidad */
+        }
+        .link-item:hover {
+            opacity: 0.9;
+        }
+        .menu-contextual {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            border-radius: 8px;
+            padding: 5px;
+            font-size: 12px;
+            z-index: 10;
+        }
+        .link-item.mostrar-menu .menu-contextual {
+            display: block;
+        }
+        .boton-agregar {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #370083; /* Primary Variant */
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 24px;
+            margin: 0 auto;
+        }
+        .boton-agregar:hover {
+            background-color: #200; /* Secondary */
+        }
+        .form-container {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #370083; /* Primary Variant */
+            display: none;
+        }
+        .form-container.mostrar {
+            display: block;
+        }
+        input[type="text"], select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #BB86FC; /* Primary */
+            border-radius: 4px;
+            background-color: #121212; /* Surface */
+            color: #FFFFFF; /* On Surface */
+        }
+        .selectores {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+        }
+        .color-picker input[type="color"] {
+            width: 50px;
+            height: 50px;
+            padding: 5px;
+            border: 2px solid #BB86FC; /* Primary */
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        .idioma-selector select {
+            width: auto;
+            padding: 10px;
+            border: 2px solid #BB86FC; /* Primary */
+            border-radius: 8px;
+            cursor: pointer;
+            background-color: #121212; /* Surface */
+            color: #FFFFFF; /* On Surface */
+        }
+        .toggle-icono {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .toggle-icono label {
+            font-size: 20px;
+            color: #FFFFFF; /* On Surface */
+        }
+        .toggle-icono input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #370083; /* Primary Variant */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #200; /* Secondary */
+        }
+        .boton-exportar {
+            background-color: #BB86FC; /* Primary */
+            margin-top: 10px;
+        }
+        .boton-exportar:hover {
+            background-color: #370083; /* Primary Variant */
+        }
+        .boton-importar {
+            background-color: #CF6679; /* Error */
+            margin-top: 10px;
+        }
+        .boton-importar:hover {
+            background-color: #9e4a5a; /* Error Variant */
+        }
+        .separador {
+            margin: 20px 0;
+            border: 1px solid #370083; /* Primary Variant */
+        }
+        .notificacion {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #370083; /* Primary Variant */
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: none;
+            z-index: 1000;
+        }
+        .notificacion.mostrar {
+            display: block;
+            animation: fadeInOut 3s ease-in-out;
+        }
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0; }
+            10%, 90% { opacity: 1; }
+        }
+        .barra-busqueda {
+            margin-bottom: 20px;
+        }
+        .barra-busqueda input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #BB86FC; /* Primary */
+            border-radius: 4px;
+            background-color: #121212; /* Surface */
+            color: #FFFFFF; /* On Surface */
+        }
+        .filtros {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .filtros select {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #BB86FC; /* Primary */
+            border-radius: 4px;
+            background-color: #121212; /* Surface */
+            color: #FFFFFF; /* On Surface */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧔 Chefo TV 📺</h1>
+
+        <!-- Barra de búsqueda y filtros -->
+        <div class="barra-busqueda">
+            <input type="text" id="busqueda" placeholder="Buscar enlaces..." oninput="filtrarEnlaces()">
+        </div>
+        <div class="filtros">
+            <select id="filtroDeporte" onchange="filtrarEnlaces()">
+                <option value="">Todos los deportes</option>
+                <option value="f1">Fórmula 1🏎️</option>
+                <option value="futbol">Fútbol ⚽</option>
+                <option value="nba">NBA🏀</option>
+                <option value="tenis">Tenis<🎾/option>
+                <option value="nascar">NASCAR 🚗</option>
+                <option value="indy">Indy 🚙</option>
+                <option value="motogp">Moto GP 🏍️</option>
+                <option value="wec">WEC 🏁</option>
+                <option value="rugby">Rugby 🏉</option>
+                <option value="ciclismo">Ciclismo 🚴
+                <option value="boxeo">Boxeo 🥊</option>
+                <option value="mma">MMA 🥋</option>
+                <option value="esports">eSports 🎮</option>
+                <option value="otros">Otros🏅</option>
+            </select>
+            <select id="filtroIdioma" onchange="filtrarEnlaces()">
+                <option value="">Todos los idiomas</option>
+                <option value="ES">🇪🇦 ES</option>
+                <option value="EN">🇬🇧 EN</option>
+                <option value="FR">🇫🇷 FR</option>
+                <option value="DE">🇩🇪 DE</option>
+                <option value="OT">🏳️‍⚧️ OT</option>
+            </select>
+        </div>
+
+        <!-- Botones guardados arriba -->
+        <div class="categoria">
+            <h2>Vía WEB</h2>
+            <div class="link-list" id="linkList"></div>
+        </div>
+
+        <!-- Separación visual -->
+        <hr class="separador">
+
+        <div class="categoria">
+            <h2>Vía Acestream</h2>
+            <div class="link-list" id="acestreamList"></div>
+        </div>
+
+        <!-- Separación visual -->
+        <hr class="separador">
+
+        <!-- Nueva categoría Multi -->
+        <div class="categoria">
+            <h2>FUENTES</h2>
+            <div class="link-list" id="multiList"></div>
+        </div>
+
+        <!-- Botón para mostrar el formulario de añadir -->
+        <div class="link-list">
+            <div class="boton-agregar" id="botonAgregar" onclick="mostrarFormulario()">+</div>
+        </div>
+
+        <!-- Cuadros de diálogo abajo (ocultos por defecto) -->
+        <div class="form-container" id="formContainer">
+            <input type="text" id="link" placeholder="Pega tu enlace aquí">
+            <input type="text" id="title" placeholder="Añade un título">
+            <select id="deporte">
+                <option value="f1">Fórmula 1🏎️</option>
+                <option value="futbol">Fútbol ⚽</option>
+                <option value="nba">NBA🏀</option>
+                <option value="tenis">Tenis<🎾/option>
+                <option value="nascar">NASCAR 🚗</option>
+                <option value="indy">Indy 🚙</option>
+                <option value="motogp">Moto GP 🏍️</option>
+                <option value="wec">WEC 🏁</option>
+                <option value="rugby">Rugby 🏉</option>
+                <option value="ciclismo">Ciclismo 🚴
+                <option value="boxeo">Boxeo 🥊</option>
+                <option value="mma">MMA 🥋</option>
+                <option value="esports">eSports 🎮</option>
+                <option value="otros">Otros🏅</option>
+            </select>
+            <div class="selectores">
+                <div class="color-picker">
+                    <label for="color">🎨</label>
+                    <input type="color" id="color" value="#28a745">
+                </div>
+                <div class="idioma-selector">
+                    <label for="idioma">🔊</label>
+                    <select id="idioma">
+                        <option value="ES">🇪🇦 ES</option>
+                        <option value="EN">🇬🇧 EN</option>
+                        <option value="FR">🇫🇷 FR</option>
+                        <option value="DE">🇩🇪 DE</option>
+                        <option value="OT">🏳️‍⚧️ OT</option>
+                    </select>
+                </div>
+                <div class="toggle-icono">
+                    <label for="mostrarIcono">🅰️</label>
+                    <input type="checkbox" id="mostrarIcono">
+                </div>
+                <div class="toggle-icono">
+                    <label for="mostrarMulti">🌐</label>
+                    <input type="checkbox" id="mostrarMulti">
+                </div>
+            </div>
+            <button onclick="guardarEnlace()">Guardar Enlace</button>
+            <button class="boton-exportar" onclick="exportarEnlaces()">Exportar Enlaces</button>
+            <button class="boton-importar" onclick="document.getElementById('fileInput').click()">Importar Enlaces</button>
+            <input type="file" id="fileInput" accept=".json" style="display: none;" onchange="importarEnlaces(event)">
+        </div>
+    </div>
+
+    <!-- Notificación -->
+    <div class="notificacion" id="notificacion"></div>
+
+    <script>
+        let enlacesGuardados = JSON.parse(localStorage.getItem('enlaces')) || [];
+        let indiceEdicion = null;
+
+        document.addEventListener('DOMContentLoaded', mostrarEnlaces);
+
+        function mostrarFormulario() {
+            const formContainer = document.getElementById('formContainer');
+            const botonAgregar = document.getElementById('botonAgregar');
+            formContainer.classList.toggle('mostrar');
+            botonAgregar.textContent = formContainer.classList.contains('mostrar') ? '×' : '+';
+        }
+
+        function mostrarNotificacion(mensaje) {
+            const notificacion = document.getElementById('notificacion');
+            notificacion.textContent = mensaje;
+            notificacion.classList.add('mostrar');
+            setTimeout(() => notificacion.classList.remove('mostrar'), 3000);
+        }
+
+        function guardarEnlace() {
+            const link = document.getElementById('link').value;
+            const title = document.getElementById('title').value;
+            const deporte = document.getElementById('deporte').value;
+            const color = document.getElementById('color').value;
+            const idioma = document.getElementById('idioma').value;
+            const mostrarIcono = document.getElementById('mostrarIcono').checked;
+            const mostrarMulti = document.getElementById('mostrarMulti').checked;
+
+            if (link && title) {
+                if (indiceEdicion !== null) {
+                    enlacesGuardados[indiceEdicion] = { link, title, deporte, color, idioma, mostrarIcono, mostrarMulti };
+                    indiceEdicion = null;
+                    mostrarNotificacion('Enlace actualizado correctamente.');
+                } else {
+                    const enlaceExistente = enlacesGuardados.some((enlace) => enlace.link === link);
+                    if (enlaceExistente) {
+                        mostrarNotificacion('Este enlace ya existe. No se puede duplicar.');
+                        return;
+                    }
+
+                    enlacesGuardados.push({ link, title, deporte, color, idioma, mostrarIcono, mostrarMulti });
+                    mostrarNotificacion('Enlace guardado correctamente.');
+                }
+
+                document.getElementById('link').value = '';
+                document.getElementById('title').value = '';
+                mostrarFormulario();
+                localStorage.setItem('enlaces', JSON.stringify(enlacesGuardados));
+                mostrarEnlaces();
+            } else {
+                mostrarNotificacion('Por favor, ingresa un enlace y un título.');
+            }
+        }
+
+        function editarEnlace(index) {
+            const enlace = enlacesGuardados[index];
+            indiceEdicion = index;
+
+            document.getElementById('link').value = enlace.link;
+            document.getElementById('title').value = enlace.title;
+            document.getElementById('deporte').value = enlace.deporte;
+            document.getElementById('color').value = enlace.color;
+            document.getElementById('idioma').value = enlace.idioma;
+            document.getElementById('mostrarIcono').checked = enlace.mostrarIcono;
+            document.getElementById('mostrarMulti').checked = enlace.mostrarMulti;
+
+            mostrarFormulario();
+        }
+
+        function mostrarEnlaces() {
+            const linkList = document.getElementById('linkList');
+            const acestreamList = document.getElementById('acestreamList');
+            const multiList = document.getElementById('multiList');
+            linkList.innerHTML = '';
+            acestreamList.innerHTML = '';
+            multiList.innerHTML = '';
+
+            enlacesGuardados.forEach((item, index) => {
+                const linkItem = document.createElement('div');
+                linkItem.className = 'link-item';
+                linkItem.style.backgroundColor = item.color;
+                linkItem.onclick = () => window.open(item.link, '_blank');
+
+                const icono = {
+                    f1: '🏎️',
+                    futbol: '⚽',
+                    nba: '🏀',
+                    tenis: '🎾',
+                    nascar: '🚗',
+                    indy: '🚙',
+                    motogp: '🏍️',
+                    wec: '🏁',
+                    rugby: '🏉',
+                    ciclismo: '🚴',
+                    boxeo: '🥊',
+                    mma: '🥋',
+                    esports: '🎮',
+                    otros: '🏅'
+                }[item.deporte];
+
+                const bandera = { ES: '🇪🇦', EN: '🇬🇧', FR: '🇫🇷', DE: '🇩🇪', OT: '🏳️‍⚧️' }[item.idioma];
+
+                linkItem.innerHTML = `
+                    <div style="font-size: 24px;">${icono}</div>
+                    <div>${item.title}</div>
+                    <div>${bandera}</div>
+                    <div class="menu-contextual">
+                        <button onclick="event.stopPropagation(); editarEnlace(${index})">✏️ Editar</button>
+                        <button onclick="event.stopPropagation(); borrarEnlace(${index})">🗑️ Borrar</button>
+                    </div>
+                `;
+
+                if (item.mostrarIcono) {
+                    acestreamList.appendChild(linkItem);
+                } else if (item.mostrarMulti) {
+                    multiList.appendChild(linkItem);
+                } else {
+                    linkList.appendChild(linkItem);
+                }
+
+                linkItem.addEventListener('contextmenu', (e) => {
+                    e.preventDefault();
+                    linkItem.classList.add('mostrar-menu');
+                });
+
+                document.addEventListener('click', (e) => {
+                    if (!linkItem.contains(e.target)) {
+                        linkItem.classList.remove('mostrar-menu');
+                    }
+                });
+            });
+        }
+
+        function borrarEnlace(index) {
+            if (confirm('¿Estás seguro de que quieres eliminar este enlace?')) {
+                enlacesGuardados.splice(index, 1);
+                localStorage.setItem('enlaces', JSON.stringify(enlacesGuardados));
+                mostrarEnlaces();
+                mostrarNotificacion('Enlace eliminado correctamente.');
+            }
+        }
+
+        function exportarEnlaces() {
+            const contenido = JSON.stringify(enlacesGuardados, null, 2);
+            const blob = new Blob([contenido], { type: 'application/json' });
+            const enlaceDescarga = document.createElement('a');
+            enlaceDescarga.href = URL.createObjectURL(blob);
+            enlaceDescarga.download = 'enlaces_chefo_tv.json';
+            enlaceDescarga.click();
+            mostrarNotificacion('Enlaces exportados correctamente.');
+        }
+
+        function importarEnlaces(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const nuevosEnlaces = JSON.parse(e.target.result);
+                    if (!Array.isArray(nuevosEnlaces)) throw new Error('Formato inválido');
+                    enlacesGuardados = nuevosEnlaces;
+                    localStorage.setItem('enlaces', JSON.stringify(enlacesGuardados));
+                    mostrarEnlaces();
+                    mostrarNotificacion('Enlaces importados correctamente.');
+                } catch (error) {
+                    mostrarNotificacion('El archivo no es válido.');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function filtrarEnlaces() {
+            const busqueda = document.getElementById('busqueda').value.toLowerCase();
+            const filtroDeporte = document.getElementById('filtroDeporte').value;
+            const filtroIdioma = document.getElementById('filtroIdioma').value;
+            const enlaces = document.querySelectorAll('.link-item');
+
+            enlaces.forEach((enlace) => {
+                const titulo = enlace.querySelector('div:nth-child(2)').textContent.toLowerCase();
+                const deporte = enlace.querySelector('div:nth-child(1)').textContent;
+                const idioma = enlace.querySelector('div:nth-child(3)').textContent;
+
+                const coincideBusqueda = titulo.includes(busqueda);
+                const coincideDeporte = !filtroDeporte || deporte.includes({
+                    f1: '🏎️',
+                    futbol: '⚽',
+                    nba: '🏀',
+                    tenis: '🎾',
+                    nascar: '🚗',
+                    indy: '🚙',
+                    motogp: '🏍️',
+                    wec: '🏁',
+                    rugby: '🏉',
+                    ciclismo: '🚴',
+                    boxeo: '🥊',
+                    mma: '🥋',
+                    esports: '🎮',
+                    otros: '🏅'
+                }[filtroDeporte]);
+                const coincideIdioma = !filtroIdioma || idioma.includes({ ES: '🇪🇦', EN: '🇬🇧', FR: '🇫🇷', DE: '🇩🇪', OT: '🏳️‍⚧️' }[filtroIdioma]);
+
+                enlace.style.display = coincideBusqueda && coincideDeporte && coincideIdioma ? 'flex' : 'none';
+            });
+        }
+    </script>
+</body>
+</html>
