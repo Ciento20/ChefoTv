@@ -74,6 +74,22 @@
             font-size: 12px;
             z-index: 10;
         }
+        .menu-contextual button {
+            margin: 5px; /* Separación entre botones */
+            padding: 5px 10px; /* Espaciado interno */
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .menu-contextual button:nth-child(1) {
+            background-color: #CF6679; /* Color del botón Editar (igual que Importar) */
+            color: white;
+        }
+        .menu-contextual button:nth-child(2) {
+            background-color: #370083; /* Color del botón Eliminar (igual que antes) */
+            color: white;
+        }
         .link-item.mostrar-menu .menu-contextual {
             display: block;
         }
@@ -306,34 +322,34 @@
             <div class="selectores">
                 <!-- Selector de color (ahora en la posición del selector de deporte) -->
                 <div class="color-picker">
-                    <label for="color">🎨</label>
+                    <label for="color">Color</label>
                     <input type="color" id="color" value="#28a745">
                 </div>
 
                 <!-- Selector de deporte (ahora en la posición del selector de color) -->
                 <div class="deporte-selector">
-                    <label for="deporte">🏅</label>
+                    <label for="deporte">Deporte</label>
                     <select id="deporte">
-                        <option value="f1"> 🏎️</option>
-                        <option value="futbol">⚽</option>
-                        <option value="nba">🏀</option>
-                        <option value="tenis">🎾</option>
-                        <option value="nascar">🚗</option>
-                        <option value="indy">🚙</option>
-                        <option value="motogp"> 🏍️</option>
-                        <option value="wec">🏁</option>
-                        <option value="rugby">🏉</option>
-                        <option value="ciclismo"> 🚴</option>
-                        <option value="boxeo">🥊</option>
-                        <option value="mma">🥋</option>
-                        <option value="esports">eSports 🎮</option>
-                        <option value="otros">Otros 🏅</option>
+                        <option value="f1"> 🏎️ </option>
+                        <option value="futbol"> ⚽ </option>
+                        <option value="nba"> 🏀 </option>
+                        <option value="tenis"> 🎾 </option>
+                        <option value="nascar"> 🚗 </option>
+                        <option value="indy"> 🚙 </option>
+                        <option value="motogp"> 🏍️ </option>
+                        <option value="wec"> 🏁 </option>
+                        <option value="rugby"> 🏉 </option>
+                        <option value="ciclismo"> 🚴 </option>
+                        <option value="boxeo"> 🥊 </option>
+                        <option value="mma"> 🥋 </option>
+                        <option value="esports">  🎮 </option>
+                        <option value="otros"> 🏅 </option>
                     </select>
                 </div>
 
                 <!-- Selector de idioma (sin cambios) -->
                 <div class="idioma-selector">
-                    <label for="idioma">🔊</label>
+                    <label for="idioma">Idioma</label>
                     <select id="idioma">
                         <option value="ES">🇪🇦 ES</option>
                         <option value="EN">🇬🇧 EN</option>
