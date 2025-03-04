@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🧔 Chefo TV 📺</title>
     <style>
+        /* Estilos anteriores (sin cambios) */
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
@@ -325,8 +326,8 @@
                         <option value="ciclismo"> 🚴</option>
                         <option value="boxeo">🥊</option>
                         <option value="mma">🥋</option>
-                        <option value="esports">eSports 🎮</option>
-                        <option value="otros">Otros 🏅</option>
+                        <option value="esports"> 🎮</option>
+                        <option value="otros">🏅</option>
                     </select>
                 </div>
 
@@ -524,10 +525,20 @@
                 try {
                     const nuevosEnlaces = JSON.parse(e.target.result);
                     if (!Array.isArray(nuevosEnlaces)) throw new Error('Formato inválido');
-                    enlacesGuardados = nuevosEnlaces;
+
+                    // Combinar enlaces existentes con los nuevos, descartando duplicados
+                    nuevosEnlaces.forEach((nuevoEnlace) => {
+                        const existe = enlacesGuardados.some(
+                            (enlace) => enlace.link === nuevoEnlace.link
+                        );
+                        if (!existe) {
+                            enlacesGuardados.push(nuevoEnlace);
+                        }
+                    });
+
                     localStorage.setItem('enlaces', JSON.stringify(enlacesGuardados));
                     mostrarEnlaces();
-                    mostrarNotificacion('Enlaces importados correctamente.');
+                    mostrarNotificacion('Enlaces importados correctamente. Se han descartado duplicados.');
                 } catch (error) {
                     mostrarNotificacion('El archivo no es válido.');
                 }
@@ -570,4 +581,5 @@
         }
     </script>
 </body>
+</html>body>
 </html>
