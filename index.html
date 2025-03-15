@@ -183,17 +183,27 @@
         }
         .toggle-icono {
             display: flex;
+            gap: 20px; /* Espaciado entre los checkboxes */
             align-items: center;
-            gap: 8px; /* Reducido */
+        }
+        .checkbox-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px; /* Espaciado entre el icono y el checkbox */
+        }
+        .icono {
+            font-size: 24px; /* Tamaño del emoticono */
+            text-align: center;
         }
         .toggle-icono label {
-            font-size: 16px; /* Reducido */
-            color: #FFFFFF; /* On Surface */
+            font-size: 14px; /* Tamaño del texto */
+            color: #FFFFFF; /* Color del texto */
             cursor: pointer;
         }
         .toggle-icono input[type="checkbox"] {
-            width: 16px; /* Reducido */
-            height: 16px; /* Reducido */
+            width: 16px;
+            height: 16px;
             cursor: pointer;
             accent-color: #BB86FC; /* Color del checkbox */
         }
@@ -302,11 +312,11 @@
             </select>
             <select id="filtroIdioma" onchange="filtrarEnlaces()">
                 <option value="">Todos los idiomas</option>
-                <option value="ES">🇪🇦 ES</option>
-                <option value="EN">🇬🇧 EN</option>
-                <option value="FR">🇫🇷 FR</option>
-                <option value="DE">🇩🇪 DE</option>
-                <option value="OT">🏳️‍⚧️ OT</option>
+                <option value="ES">🇪🇦 ESPAÑOL</option>
+                <option value="EN">🇬🇧 ENGLISH</option>
+                <option value="FR">🇫🇷 FRENCH</option>
+                <option value="DE">🇩🇪 DUTCH</option>
+                <option value="OT">🏳️‍⚧️ OTROS</option>
             </select>
         </div>
 
@@ -380,12 +390,18 @@
                     </select>
                 </div>
 
-                <!-- Checkboxes en la misma fila -->
+                <!-- Checkboxes uno al lado del otro -->
                 <div class="toggle-icono">
-                    <label for="mostrarIcono">🅰️</label>
-                    <input type="checkbox" id="mostrarIcono">
-                    <label for="mostrarMulti">🌐</label>
-                    <input type="checkbox" id="mostrarMulti">
+                    <div class="checkbox-container">
+                        <div class="icono">🅰️</div>
+                        <label for="mostrarIcono"></label>
+                        <input type="checkbox" id="mostrarIcono">
+                    </div>
+                    <div class="checkbox-container">
+                        <div class="icono">🌐</div>
+                        <label for="mostrarMulti"></label>
+                        <input type="checkbox" id="mostrarMulti">
+                    </div>
                 </div>
             </div>
 
@@ -645,5 +661,7 @@
             });
         }
     </script>
+</body>
+</html> </script>
 </body>
 </html>
