@@ -90,6 +90,10 @@
             background-color: #370083; /* Color del botón Eliminar (igual que antes) */
             color: white;
         }
+        .menu-contextual button:nth-child(3) {
+            background-color: #28a745; /* Color del botón Cambiar */
+            color: white;
+        }
         .link-item.mostrar-menu .menu-contextual {
             display: block;
         }
@@ -121,82 +125,101 @@
         }
         input[type="text"], select {
             width: 100%;
-            padding: 10px;
-            margin: 10px 0;
+            padding: 8px; /* Reducido */
+            margin: 8px 0; /* Reducido */
             border: 1px solid #BB86FC; /* Primary */
             border-radius: 4px;
             background-color: #121212; /* Surface */
             color: #FFFFFF; /* On Surface */
+            font-size: 14px; /* Reducido */
         }
         .selectores {
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin: 10px 0;
+            gap: 8px; /* Reducido */
+            margin: 8px 0; /* Reducido */
+        }
+        .color-picker {
+            display: flex;
+            align-items: center;
+            gap: 8px; /* Reducido */
         }
         .color-picker input[type="color"] {
-            width: 50px;
-            height: 50px;
-            padding: 5px;
+            width: 30px; /* Reducido */
+            height: 30px; /* Reducido */
+            padding: 3px; /* Reducido */
             border: 2px solid #BB86FC; /* Primary */
-            border-radius: 8px;
+            border-radius: 6px; /* Reducido */
             cursor: pointer;
+        }
+        .color-picker input[type="text"] {
+            width: 70px; /* Reducido */
+            padding: 6px; /* Reducido */
+            border: 1px solid #BB86FC; /* Primary */
+            border-radius: 4px;
+            background-color: #121212; /* Surface */
+            color: #FFFFFF; /* On Surface */
+            font-size: 12px; /* Reducido */
         }
         .deporte-selector select {
             width: auto;
-            padding: 10px;
+            padding: 8px; /* Reducido */
             border: 2px solid #BB86FC; /* Primary */
-            border-radius: 8px;
+            border-radius: 6px; /* Reducido */
             cursor: pointer;
             background-color: #121212; /* Surface */
             color: #FFFFFF; /* On Surface */
+            font-size: 14px; /* Reducido */
         }
         .idioma-selector select {
             width: auto;
-            padding: 10px;
+            padding: 8px; /* Reducido */
             border: 2px solid #BB86FC; /* Primary */
-            border-radius: 8px;
+            border-radius: 6px; /* Reducido */
             cursor: pointer;
             background-color: #121212; /* Surface */
             color: #FFFFFF; /* On Surface */
+            font-size: 14px; /* Reducido */
         }
         .toggle-icono {
             display: flex;
-            flex-direction: column; /* Cambiado a columna */
             align-items: center;
-            gap: 5px;
+            gap: 8px; /* Reducido */
         }
         .toggle-icono label {
-            font-size: 20px;
+            font-size: 16px; /* Reducido */
             color: #FFFFFF; /* On Surface */
+            cursor: pointer;
         }
         .toggle-icono input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
+            width: 16px; /* Reducido */
+            height: 16px; /* Reducido */
             cursor: pointer;
+            accent-color: #BB86FC; /* Color del checkbox */
         }
         button {
             width: 100%;
-            padding: 10px;
+            padding: 8px; /* Reducido */
             background-color: #370083; /* Primary Variant */
             color: white;
             border: none;
             border-radius: 4px;
             cursor: pointer;
+            font-size: 14px; /* Reducido */
         }
         button:hover {
             background-color: #200; /* Secondary */
         }
         .boton-exportar {
             background-color: #BB86FC; /* Primary */
-            margin-top: 10px;
+            margin-top: 8px; /* Reducido */
         }
         .boton-exportar:hover {
             background-color: #370083; /* Primary Variant */
         }
         .boton-importar {
             background-color: #CF6679; /* Error */
-            margin-top: 10px;
+            margin-top: 8px; /* Reducido */
         }
         .boton-importar:hover {
             background-color: #9e4a5a; /* Error Variant */
@@ -320,15 +343,14 @@
             <input type="text" id="link" placeholder="Pega tu enlace aquí">
             <input type="text" id="title" placeholder="Añade un título">
             <div class="selectores">
-                <!-- Selector de color (ahora en la posición del selector de deporte) -->
+                <!-- Selector de color con cuadro de texto -->
                 <div class="color-picker">
-                    <label for="color">Color</label>
-                    <input type="color" id="color" value="#28a745">
+                    <input type="color" id="color" value="#28a745" oninput="actualizarCodigoColor()">
+                    <input type="text" id="codigoColor" value="#28a745">
                 </div>
 
-                <!-- Selector de deporte (ahora en la posición del selector de color) -->
+                <!-- Selector de deporte -->
                 <div class="deporte-selector">
-                    <label for="deporte">Deporte</label>
                     <select id="deporte">
                         <option value="f1"> 🏎️ </option>
                         <option value="futbol"> ⚽ </option>
@@ -347,28 +369,26 @@
                     </select>
                 </div>
 
-                <!-- Selector de idioma (sin cambios) -->
+                <!-- Selector de idioma -->
                 <div class="idioma-selector">
-                    <label for="idioma">Idioma</label>
                     <select id="idioma">
-                        <option value="ES">🇪🇦 ES</option>
-                        <option value="EN">🇬🇧 EN</option>
-                        <option value="FR">🇫🇷 FR</option>
-                        <option value="DE">🇩🇪 DE</option>
-                        <option value="OT">🏳️‍⚧️ OT</option>
+                        <option value="ES">🇪🇦 </option>
+                        <option value="EN">🇬🇧 </option>
+                        <option value="FR">🇫🇷 </option>
+                        <option value="DE">🇩🇪 </option>
+                        <option value="OT">🏳️‍⚧️ </option>
                     </select>
                 </div>
 
-                <!-- Toggle de icono y multi (ajustados uno encima del otro) -->
+                <!-- Checkboxes en la misma fila -->
                 <div class="toggle-icono">
                     <label for="mostrarIcono">🅰️</label>
                     <input type="checkbox" id="mostrarIcono">
-                </div>
-                <div class="toggle-icono">
                     <label for="mostrarMulti">🌐</label>
                     <input type="checkbox" id="mostrarMulti">
                 </div>
             </div>
+
             <button onclick="guardarEnlace()">Guardar Enlace</button>
             <button class="boton-exportar" onclick="exportarEnlaces()">Exportar Enlaces</button>
             <button class="boton-importar" onclick="document.getElementById('fileInput').click()">Importar Enlaces</button>
@@ -382,6 +402,7 @@
     <script>
         let enlacesGuardados = JSON.parse(localStorage.getItem('enlaces')) || [];
         let indiceEdicion = null;
+        let indiceCambiar = null; // Variable para almacenar el índice del enlace a cambiar
 
         document.addEventListener('DOMContentLoaded', mostrarEnlaces);
 
@@ -399,11 +420,17 @@
             setTimeout(() => notificacion.classList.remove('mostrar'), 3000);
         }
 
+        function actualizarCodigoColor() {
+            const colorPicker = document.getElementById('color');
+            const codigoColor = document.getElementById('codigoColor');
+            codigoColor.value = colorPicker.value;
+        }
+
         function guardarEnlace() {
             const link = document.getElementById('link').value;
             const title = document.getElementById('title').value;
             const deporte = document.getElementById('deporte').value;
-            const color = document.getElementById('color').value;
+            const color = document.getElementById('codigoColor').value; // Usar el valor del campo de texto
             const idioma = document.getElementById('idioma').value;
             const mostrarIcono = document.getElementById('mostrarIcono').checked;
             const mostrarMulti = document.getElementById('mostrarMulti').checked;
@@ -442,11 +469,26 @@
             document.getElementById('title').value = enlace.title;
             document.getElementById('deporte').value = enlace.deporte;
             document.getElementById('color').value = enlace.color;
+            document.getElementById('codigoColor').value = enlace.color;
             document.getElementById('idioma').value = enlace.idioma;
             document.getElementById('mostrarIcono').checked = enlace.mostrarIcono;
             document.getElementById('mostrarMulti').checked = enlace.mostrarMulti;
 
             mostrarFormulario();
+        }
+
+        function cambiarPosicion(index) {
+            if (indiceCambiar === null) {
+                indiceCambiar = index;
+                mostrarNotificacion('Selecciona otro enlace para intercambiar posiciones.');
+            } else {
+                // Intercambiar posiciones
+                [enlacesGuardados[indiceCambiar], enlacesGuardados[index]] = [enlacesGuardados[index], enlacesGuardados[indiceCambiar]];
+                localStorage.setItem('enlaces', JSON.stringify(enlacesGuardados));
+                mostrarEnlaces();
+                mostrarNotificacion('Posiciones intercambiadas correctamente.');
+                indiceCambiar = null;
+            }
         }
 
         function mostrarEnlaces() {
@@ -461,7 +503,13 @@
                 const linkItem = document.createElement('div');
                 linkItem.className = 'link-item';
                 linkItem.style.backgroundColor = item.color;
-                linkItem.onclick = () => window.open(item.link, '_blank');
+                linkItem.onclick = () => {
+                    if (indiceCambiar !== null) {
+                        cambiarPosicion(index);
+                    } else {
+                        window.open(item.link, '_blank');
+                    }
+                };
 
                 const icono = {
                     f1: '🏎️',
@@ -489,6 +537,7 @@
                     <div class="menu-contextual">
                         <button onclick="event.stopPropagation(); editarEnlace(${index})">✏️ Editar</button>
                         <button onclick="event.stopPropagation(); borrarEnlace(${index})">🗑️ Borrar</button>
+                        <button onclick="event.stopPropagation(); cambiarPosicion(${index})">🔄 Cambiar</button>
                     </div>
                 `;
 
