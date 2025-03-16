@@ -41,7 +41,7 @@
         }
         .link-item {
             flex: 1 1 calc(33.33% - 10px);
-            height: 100px;
+            height: 150px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -293,6 +293,26 @@
             background-color: #121212;
             color: #FFFFFF;
         }
+        .puntuacion {
+            display: flex;
+            gap: 5px;
+            margin-top: 10px;
+            justify-content: center;
+        }
+        .puntuacion button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            color: #BB86FC;
+            padding: 0;
+        }
+        .puntuacion button:hover {
+            color: #370083;
+        }
+        .puntuacion button.seleccionado {
+            color: #FFD700;
+        }
     </style>
 </head>
 <body>
@@ -356,6 +376,13 @@
         <div class="form-container" id="formContainer">
             <input type="text" id="link" placeholder="Pega tu enlace aquí">
             <input type="text" id="title" placeholder="Añade un título">
+            <div class="puntuacion" id="puntuacion">
+                <button onclick="seleccionarPuntuacion(1)">★</button>
+                <button onclick="seleccionarPuntuacion(2)">★</button>
+                <button onclick="seleccionarPuntuacion(3)">★</button>
+                <button onclick="seleccionarPuntuacion(4)">★</button>
+                <button onclick="seleccionarPuntuacion(5)">★</button>
+            </div>
             <div class="selectores">
                 <div class="color-picker">
                     <input type="color" id="color" value="#28a745" oninput="actualizarCodigoColor()">
@@ -419,6 +446,7 @@
         let enlacesGuardados = JSON.parse(localStorage.getItem('enlaces')) || [];
         let indiceEdicion = null;
         let indiceCambiar = null;
+        let puntuacionSeleccionada = 0;
 
         document.addEventListener('DOMContentLoaded', mostrarEnlaces);
 
@@ -442,6 +470,18 @@
             codigoColor.value = colorPicker.value;
         }
 
+        function seleccionarPuntuacion(puntos) {
+            puntuacionSeleccionada = puntos;
+            const botones = document.querySelectorAll('#puntuacion button');
+            botones.forEach((boton, index) => {
+                if (index < puntos) {
+                    boton.classList.add('seleccionado');
+                } else {
+                    boton.classList.remove('seleccionado');
+                }
+            });
+        }
+
         function guardarEnlace() {
             const link = document.getElementById('link').value;
             const title = document.getElementById('title').value;
@@ -450,10 +490,11 @@
             const idioma = document.getElementById('idioma').value;
             const mostrarIcono = document.getElementById('mostrarIcono').checked;
             const mostrarMulti = document.getElementById('mostrarMulti').checked;
+            const puntuacion = puntuacionSeleccionada;
 
             if (link && title) {
                 if (indiceEdicion !== null) {
-                    enlacesGuardados[indiceEdicion] = { link, title, deporte, color, idioma, mostrarIcono, mostrarMulti };
+                    enlacesGuardados[indiceEdicion] = { link, title, deporte, color, idioma, mostrarIcono, mostrarMulti, puntuacion };
                     indiceEdicion = null;
                     mostrarNotificacion('Enlace actualizado correctamente.');
                 } else {
@@ -463,12 +504,13 @@
                         return;
                     }
 
-                    enlacesGuardados.push({ link, title, deporte, color, idioma, mostrarIcono, mostrarMulti });
+                    enlacesGuardados.push({ link, title, deporte, color, idioma, mostrarIcono, mostrarMulti, puntuacion });
                     mostrarNotificacion('Enlace guardado correctamente.');
                 }
 
                 document.getElementById('link').value = '';
                 document.getElementById('title').value = '';
+                seleccionarPuntuacion(0);
                 mostrarFormulario();
                 localStorage.setItem('enlaces', JSON.stringify(enlacesGuardados));
                 mostrarEnlaces();
@@ -489,6 +531,7 @@
             document.getElementById('idioma').value = enlace.idioma;
             document.getElementById('mostrarIcono').checked = enlace.mostrarIcono;
             document.getElementById('mostrarMulti').checked = enlace.mostrarMulti;
+            seleccionarPuntuacion(enlace.puntuacion);
 
             mostrarFormulario();
         }
@@ -545,10 +588,13 @@
 
                 const bandera = { ES: '🇪🇦', EN: '🇬🇧', FR: '🇫🇷', DE: '🇩🇪', OT: '🏳️‍⚧️' }[item.idioma];
 
+                const puntuacion = '★'.repeat(item.puntuacion) + '☆'.repeat(5 - item.puntuacion);
+
                 linkItem.innerHTML = `
                     <div style="font-size: 24px;">${icono}</div>
                     <div>${item.title}</div>
                     <div>${bandera}</div>
+                    <div>${puntuacion}</div>
                     <div class="menu-contextual">
                         <button onclick="event.stopPropagation(); editarEnlace(${index})">✏️ Editar</button>
                         <button onclick="event.stopPropagation(); borrarEnlace(${index})">🗑️ Borrar</button>
