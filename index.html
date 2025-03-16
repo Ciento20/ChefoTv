@@ -5,25 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🧔 Chefo TV 📺</title>
     <style>
-        /* Estilos anteriores (sin cambios) */
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
             padding: 0;
-            background-color: #121212; /* Background */
-            color: #FFFFFF; /* On Background */
+            background-color: #121212;
+            color: #FFFFFF;
         }
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            background: #121212; /* Surface */
+            background: #121212;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         h1 {
             text-align: center;
-            color: #FFFFFF; /* On Background */
+            color: #FFFFFF;
             margin-bottom: 20px;
         }
         .categoria {
@@ -31,7 +30,7 @@
         }
         .categoria h2 {
             font-size: 18px;
-            color: #BB86FC; /* Primary */
+            color: #BB86FC;
             margin-bottom: 10px;
         }
         .link-list {
@@ -47,7 +46,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            color: #FFFFFF; /* Cambiado a blanco */
+            color: #FFFFFF;
             border: none;
             border-radius: 8px;
             cursor: pointer;
@@ -56,8 +55,8 @@
             font-size: 14px;
             position: relative;
             box-sizing: border-box;
-            background-color: #BB86FC; /* Primary */
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7); /* Mejora la legibilidad */
+            background-color: #BB86FC;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
         }
         .link-item:hover {
             opacity: 0.9;
@@ -75,23 +74,23 @@
             z-index: 10;
         }
         .menu-contextual button {
-            margin: 5px; /* Separación entre botones */
-            padding: 5px 10px; /* Espaciado interno */
+            margin: 5px;
+            padding: 5px 10px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
             font-size: 12px;
         }
         .menu-contextual button:nth-child(1) {
-            background-color: #CF6679; /* Color del botón Editar (igual que Importar) */
+            background-color: #CF6679;
             color: white;
         }
         .menu-contextual button:nth-child(2) {
-            background-color: #370083; /* Color del botón Eliminar (igual que antes) */
+            background-color: #370083;
             color: white;
         }
         .menu-contextual button:nth-child(3) {
-            background-color: #28a745; /* Color del botón Cambiar */
+            background-color: #28a745;
             color: white;
         }
         .link-item.mostrar-menu .menu-contextual {
@@ -103,7 +102,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: #370083; /* Primary Variant */
+            background-color: #370083;
             color: white;
             border: none;
             border-radius: 50%;
@@ -112,12 +111,12 @@
             margin: 0 auto;
         }
         .boton-agregar:hover {
-            background-color: #200; /* Secondary */
+            background-color: #200;
         }
         .form-container {
             margin-top: 20px;
             padding-top: 20px;
-            border-top: 2px solid #370083; /* Primary Variant */
+            border-top: 2px solid #370083;
             display: none;
         }
         .form-container.mostrar {
@@ -125,132 +124,132 @@
         }
         input[type="text"], select {
             width: 100%;
-            padding: 8px; /* Reducido */
-            margin: 8px 0; /* Reducido */
-            border: 1px solid #BB86FC; /* Primary */
+            padding: 8px;
+            margin: 8px 0;
+            border: 1px solid #BB86FC;
             border-radius: 4px;
-            background-color: #121212; /* Surface */
-            color: #FFFFFF; /* On Surface */
-            font-size: 14px; /* Reducido */
+            background-color: #121212;
+            color: #FFFFFF;
+            font-size: 14px;
         }
         .selectores {
             display: flex;
             align-items: center;
-            gap: 8px; /* Reducido */
-            margin: 8px 0; /* Reducido */
+            gap: 8px;
+            margin: 8px 0;
         }
         .color-picker {
             display: flex;
             align-items: center;
-            gap: 8px; /* Reducido */
+            gap: 8px;
         }
         .color-picker input[type="color"] {
-            width: 30px; /* Reducido */
-            height: 30px; /* Reducido */
-            padding: 3px; /* Reducido */
-            border: 2px solid #BB86FC; /* Primary */
-            border-radius: 6px; /* Reducido */
+            width: 30px;
+            height: 30px;
+            padding: 3px;
+            border: 2px solid #BB86FC;
+            border-radius: 6px;
             cursor: pointer;
         }
         .color-picker input[type="text"] {
-            width: 70px; /* Reducido */
-            padding: 6px; /* Reducido */
-            border: 1px solid #BB86FC; /* Primary */
+            width: 70px;
+            padding: 6px;
+            border: 1px solid #BB86FC;
             border-radius: 4px;
-            background-color: #121212; /* Surface */
-            color: #FFFFFF; /* On Surface */
-            font-size: 12px; /* Reducido */
+            background-color: #121212;
+            color: #FFFFFF;
+            font-size: 12px;
         }
         .deporte-selector select {
             width: auto;
-            padding: 8px; /* Reducido */
-            border: 2px solid #BB86FC; /* Primary */
-            border-radius: 6px; /* Reducido */
+            padding: 8px;
+            border: 2px solid #BB86FC;
+            border-radius: 6px;
             cursor: pointer;
-            background-color: #121212; /* Surface */
-            color: #FFFFFF; /* On Surface */
-            font-size: 14px; /* Reducido */
+            background-color: #121212;
+            color: #FFFFFF;
+            font-size: 14px;
         }
         .idioma-selector select {
             width: auto;
-            padding: 8px; /* Reducido */
-            border: 2px solid #BB86FC; /* Primary */
-            border-radius: 6px; /* Reducido */
+            padding: 8px;
+            border: 2px solid #BB86FC;
+            border-radius: 6px;
             cursor: pointer;
-            background-color: #121212; /* Surface */
-            color: #FFFFFF; /* On Surface */
-            font-size: 14px; /* Reducido */
+            background-color: #121212;
+            color: #FFFFFF;
+            font-size: 14px;
         }
         .toggle-icono {
             display: flex;
-            gap: 20px; /* Espaciado entre los checkboxes */
+            gap: 20px;
             align-items: center;
         }
         .checkbox-container {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 5px; /* Espaciado entre el icono y el checkbox */
+            gap: 5px;
         }
         .icono {
-            font-size: 24px; /* Tamaño del emoticono */
+            font-size: 24px;
             text-align: center;
         }
         .toggle-icono label {
-            font-size: 14px; /* Tamaño del texto */
-            color: #FFFFFF; /* Color del texto */
+            font-size: 14px;
+            color: #FFFFFF;
             cursor: pointer;
         }
         .toggle-icono input[type="checkbox"] {
             width: 16px;
             height: 16px;
             cursor: pointer;
-            accent-color: #BB86FC; /* Color del checkbox */
+            accent-color: #BB86FC;
         }
         button {
             width: 100%;
-            padding: 8px; /* Reducido */
-            background-color: #370083; /* Primary Variant */
+            padding: 8px;
+            background-color: #370083;
             color: white;
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 14px; /* Reducido */
+            font-size: 14px;
         }
         button:hover {
-            background-color: #200; /* Secondary */
+            background-color: #200;
         }
         .boton-exportar {
-            background-color: #BB86FC; /* Primary */
-            margin-top: 8px; /* Reducido */
+            background-color: #BB86FC;
+            margin-top: 8px;
         }
         .boton-exportar:hover {
-            background-color: #370083; /* Primary Variant */
+            background-color: #370083;
         }
         .boton-importar {
-            background-color: #CF6679; /* Error */
-            margin-top: 8px; /* Reducido */
+            background-color: #CF6679;
+            margin-top: 8px;
         }
         .boton-importar:hover {
-            background-color: #9e4a5a; /* Error Variant */
+            background-color: #9e4a5a;
         }
         .boton-borrar-todo {
-            background-color: #ff4444; /* Rojo */
-            margin-top: 8px; /* Reducido */
+            background-color: #ff4444;
+            margin-top: 8px;
         }
         .boton-borrar-todo:hover {
-            background-color: #cc0000; /* Rojo más oscuro */
+            background-color: #cc0000;
         }
         .separador {
             margin: 20px 0;
-            border: 1px solid #370083; /* Primary Variant */
+            border: 1px solid #370083;
         }
         .notificacion {
             position: fixed;
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background-color: #370083; /* Primary Variant */
+            background-color: #370083;
             color: white;
             padding: 10px 20px;
             border-radius: 5px;
@@ -271,15 +270,15 @@
         .barra-busqueda input {
             width: 100%;
             padding: 10px;
-            border: 1px solid #BB86FC; /* Primary */
+            border: 1px solid #BB86FC;
             border-radius: 4px;
-            background-color: #121212; /* Surface */
-            color: #FFFFFF; /* On Surface */
-            margin-left: 0; /* Ajuste para alinear con los botones */
+            background-color: #121212;
+            color: #FFFFFF;
+            margin-left: 0;
         }
         .form-container input[type="text"] {
-            width: calc(100% - 16px); /* Ajuste para alinear con los botones */
-            margin-left: 0; /* Ajuste para alinear con los botones */
+            width: calc(100% - 16px);
+            margin-left: 0;
         }
         .filtros {
             display: flex;
@@ -289,10 +288,10 @@
         .filtros select {
             flex: 1;
             padding: 10px;
-            border: 1px solid #BB86FC; /* Primary */
+            border: 1px solid #BB86FC;
             border-radius: 4px;
-            background-color: #121212; /* Surface */
-            color: #FFFFFF; /* On Surface */
+            background-color: #121212;
+            color: #FFFFFF;
         }
     </style>
 </head>
@@ -300,7 +299,6 @@
     <div class="container">
         <h1>🧔 Chefo TV 📺</h1>
 
-        <!-- Barra de búsqueda y filtros -->
         <div class="barra-busqueda">
             <input type="text" id="busqueda" placeholder="Buscar enlaces..." oninput="filtrarEnlaces()">
         </div>
@@ -332,13 +330,11 @@
             </select>
         </div>
 
-        <!-- Botones guardados arriba -->
         <div class="categoria">
             <h2>Vía WEB</h2>
             <div class="link-list" id="linkList"></div>
         </div>
 
-        <!-- Separación visual -->
         <hr class="separador">
 
         <div class="categoria">
@@ -346,32 +342,26 @@
             <div class="link-list" id="acestreamList"></div>
         </div>
 
-        <!-- Separación visual -->
         <hr class="separador">
 
-        <!-- Nueva categoría Multi -->
         <div class="categoria">
             <h2>FUENTES</h2>
             <div class="link-list" id="multiList"></div>
         </div>
 
-        <!-- Botón para mostrar el formulario de añadir -->
         <div class="link-list">
             <div class="boton-agregar" id="botonAgregar" onclick="mostrarFormulario()">+</div>
         </div>
 
-        <!-- Cuadros de diálogo abajo (ocultos por defecto) -->
         <div class="form-container" id="formContainer">
             <input type="text" id="link" placeholder="Pega tu enlace aquí">
             <input type="text" id="title" placeholder="Añade un título">
             <div class="selectores">
-                <!-- Selector de color con cuadro de texto -->
                 <div class="color-picker">
                     <input type="color" id="color" value="#28a745" oninput="actualizarCodigoColor()">
                     <input type="text" id="codigoColor" value="#28a745">
                 </div>
 
-                <!-- Selector de deporte -->
                 <div class="deporte-selector">
                     <select id="deporte">
                         <option value="f1"> 🏎️ </option>
@@ -391,7 +381,6 @@
                     </select>
                 </div>
 
-                <!-- Selector de idioma -->
                 <div class="idioma-selector">
                     <select id="idioma">
                         <option value="ES">🇪🇦 </option>
@@ -402,7 +391,6 @@
                     </select>
                 </div>
 
-                <!-- Checkboxes uno al lado del otro -->
                 <div class="toggle-icono">
                     <div class="checkbox-container">
                         <div class="icono">🅰️</div>
@@ -420,19 +408,17 @@
             <button onclick="guardarEnlace()">Guardar Enlace</button>
             <button class="boton-exportar" onclick="exportarEnlaces()">Exportar Enlaces</button>
             <button class="boton-importar" onclick="document.getElementById('fileInput').click()">Importar Enlaces</button>
-            <!-- Nuevo botón para borrar todos los enlaces -->
             <button class="boton-borrar-todo" onclick="borrarTodosLosEnlaces()">Borrar Todos los Enlaces</button>
             <input type="file" id="fileInput" accept=".json" style="display: none;" onchange="importarEnlaces(event)">
         </div>
     </div>
 
-    <!-- Notificación -->
     <div class="notificacion" id="notificacion"></div>
 
     <script>
         let enlacesGuardados = JSON.parse(localStorage.getItem('enlaces')) || [];
         let indiceEdicion = null;
-        let indiceCambiar = null; // Variable para almacenar el índice del enlace a cambiar
+        let indiceCambiar = null;
 
         document.addEventListener('DOMContentLoaded', mostrarEnlaces);
 
@@ -460,7 +446,7 @@
             const link = document.getElementById('link').value;
             const title = document.getElementById('title').value;
             const deporte = document.getElementById('deporte').value;
-            const color = document.getElementById('codigoColor').value; // Usar el valor del campo de texto
+            const color = document.getElementById('codigoColor').value;
             const idioma = document.getElementById('idioma').value;
             const mostrarIcono = document.getElementById('mostrarIcono').checked;
             const mostrarMulti = document.getElementById('mostrarMulti').checked;
@@ -512,7 +498,6 @@
                 indiceCambiar = index;
                 mostrarNotificacion('Selecciona otro enlace para intercambiar posiciones.');
             } else {
-                // Intercambiar posiciones
                 [enlacesGuardados[indiceCambiar], enlacesGuardados[index]] = [enlacesGuardados[index], enlacesGuardados[indiceCambiar]];
                 localStorage.setItem('enlaces', JSON.stringify(enlacesGuardados));
                 mostrarEnlaces();
@@ -630,7 +615,6 @@
                     const nuevosEnlaces = JSON.parse(e.target.result);
                     if (!Array.isArray(nuevosEnlaces)) throw new Error('Formato inválido');
 
-                    // Combinar enlaces existentes con los nuevos, descartando duplicados
                     nuevosEnlaces.forEach((nuevoEnlace) => {
                         const existe = enlacesGuardados.some(
                             (enlace) => enlace.link === nuevoEnlace.link
