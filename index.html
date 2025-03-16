@@ -234,6 +234,13 @@
         .boton-importar:hover {
             background-color: #9e4a5a; /* Error Variant */
         }
+        .boton-borrar-todo {
+            background-color: #ff4444; /* Rojo */
+            margin-top: 8px; /* Reducido */
+        }
+        .boton-borrar-todo:hover {
+            background-color: #cc0000; /* Rojo más oscuro */
+        }
         .separador {
             margin: 20px 0;
             border: 1px solid #370083; /* Primary Variant */
@@ -408,6 +415,8 @@
             <button onclick="guardarEnlace()">Guardar Enlace</button>
             <button class="boton-exportar" onclick="exportarEnlaces()">Exportar Enlaces</button>
             <button class="boton-importar" onclick="document.getElementById('fileInput').click()">Importar Enlaces</button>
+            <!-- Nuevo botón para borrar todos los enlaces -->
+            <button class="boton-borrar-todo" onclick="borrarTodosLosEnlaces()">Borrar Todos los Enlaces</button>
             <input type="file" id="fileInput" accept=".json" style="display: none;" onchange="importarEnlaces(event)">
         </div>
     </div>
@@ -587,6 +596,15 @@
             }
         }
 
+        function borrarTodosLosEnlaces() {
+            if (confirm('¿Estás seguro de que quieres borrar todos los enlaces? Esta acción no se puede deshacer.')) {
+                enlacesGuardados = [];
+                localStorage.setItem('enlaces', JSON.stringify(enlacesGuardados));
+                mostrarEnlaces();
+                mostrarNotificacion('Todos los enlaces han sido borrados.');
+            }
+        }
+
         function exportarEnlaces() {
             const contenido = JSON.stringify(enlacesGuardados, null, 2);
             const blob = new Blob([contenido], { type: 'application/json' });
@@ -661,7 +679,5 @@
             });
         }
     </script>
-</body>
-</html> </script>
 </body>
 </html>
