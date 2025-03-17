@@ -34,12 +34,39 @@
             font-size: 18px;
             color: #BB86FC;
             margin-bottom: 10px;
+            display: flex;
+            align-items: center;
         }
         .link-list {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
             margin-bottom: 20px;
+            transition: opacity 0.3s ease, max-height 0.3s ease;
+            overflow: hidden;
+        }
+        .categoria.oculta .link-list {
+            opacity: 0;
+            max-height: 0;
+        }
+        .toggle-categoria {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            color: var(--color-primario); /* Usar el color primario del tema */
+            margin-left: 10px;
+            padding: 0;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            transition: background-color 0.3s ease, color 0.3s ease; /* Transición suave */
+        }
+        .toggle-categoria:hover {
+            background-color: rgba(187, 134, 252, 0.1);
         }
         .link-item {
             flex: 1 1 calc(33.33% - 10px);
@@ -640,21 +667,30 @@
         </div>
 
         <div class="categoria">
-            <h2>Vía WEB</h2>
+            <h2>
+                Vía WEB
+                <button class="toggle-categoria" onclick="toggleCategoria(this)">▼</button>
+            </h2>
             <div class="link-list" id="linkList"></div>
         </div>
 
         <hr class="separador">
 
         <div class="categoria">
-            <h2>Vía Acestream</h2>
+            <h2>
+                Vía Acestream
+                <button class="toggle-categoria" onclick="toggleCategoria(this)">▼</button>
+            </h2>
             <div class="link-list" id="acestreamList"></div>
         </div>
 
         <hr class="separador">
 
         <div class="categoria">
-            <h2>FUENTES</h2>
+            <h2>
+                FUENTES
+                <button class="toggle-categoria" onclick="toggleCategoria(this)">▼</button>
+            </h2>
             <div class="link-list" id="multiList"></div>
         </div>
 
@@ -734,6 +770,70 @@
         let indiceCambiar = null;
         let puntuacionSeleccionada = 0;
 
+        // Función para guardar el estado de las categorías
+        function guardarEstadoCategorias() {
+            const categorias = document.querySelectorAll('.categoria');
+            const estadoCategorias = {};
+
+            categorias.forEach((categoria, index) => {
+                estadoCategorias[`categoria-${index}`] = categoria.classList.contains('oculta');
+            });
+
+            localStorage.setItem('estadoCategorias', JSON.stringify(estadoCategorias));
+        }
+
+        // Función para cargar el estado de las categorías
+        function cargarEstadoCategorias() {
+            const estadoCategorias = JSON.parse(localStorage.getItem('estadoCategorias')) || {};
+            const categorias = document.querySelectorAll('.categoria');
+
+            categorias.forEach((categoria, index) => {
+                const estado = estadoCategorias[`categoria-${index}`];
+                if (estado !== undefined) {
+                    if (estado) {
+                        categoria.classList.add('oculta');
+                        categoria.querySelector('.toggle-categoria').textContent = '▲'; // Ícono para mostrar
+                    } else {
+                        categoria.classList.remove('oculta');
+                        categoria.querySelector('.toggle-categoria').textContent = '▼'; // Ícono para ocultar
+                    }
+                }
+            });
+        }
+
+        // Función para alternar la visibilidad de una categoría
+        function toggleCategoria(boton) {
+            const categoria = boton.closest('.categoria');
+            categoria.classList.toggle('oculta');
+
+            // Cambiar el ícono del botón
+            if (categoria.classList.contains('oculta')) {
+                boton.textContent = '▲'; // Ícono para mostrar
+            } else {
+                boton.textContent = '▼'; // Ícono para ocultar
+            }
+
+            // Guardar el estado de las categorías
+            guardarEstadoCategorias();
+        }
+
+        // Función para cambiar el tema
+        function cambiarTema() {
+            const selector = document.getElementById('selectorTema');
+            const temaSeleccionado = selector.value;
+            document.body.className = `tema-${temaSeleccionado}`;
+
+            // Guardar el tema en localStorage
+            localStorage.setItem('tema', temaSeleccionado);
+
+            // Actualizar el color de los botones de toggle
+            const botonesToggle = document.querySelectorAll('.toggle-categoria');
+            botonesToggle.forEach((boton) => {
+                boton.style.color = `var(--color-primario)`;
+            });
+        }
+
+        // Cargar el estado de las categorías al iniciar la página
         document.addEventListener('DOMContentLoaded', () => {
             // Cargar el tema guardado
             const temaGuardado = localStorage.getItem('tema');
@@ -748,6 +848,9 @@
                 const selector = document.getElementById('selectorTema');
                 selector.value = 'morado';
             }
+
+            // Cargar el estado de las categorías
+            cargarEstadoCategorias();
 
             // Mostrar los enlaces guardados
             mostrarEnlaces();
@@ -1064,15 +1167,6 @@
         function mostrarMenuAjustes() {
             const menuAjustes = document.getElementById('menuAjustes');
             menuAjustes.classList.toggle('mostrar');
-        }
-
-        // Función para cambiar el tema
-        function cambiarTema() {
-            const selector = document.getElementById('selectorTema');
-            const temaSeleccionado = selector.value;
-            document.body.className = `tema-${temaSeleccionado}`;
-            // Guardar el tema en localStorage
-            localStorage.setItem('tema', temaSeleccionado);
         }
     </script>
 </body>
