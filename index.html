@@ -19,6 +19,7 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
         }
         h1 {
             text-align: center;
@@ -313,10 +314,57 @@
         .puntuacion button.seleccionado {
             color: #FFD700;
         }
+        /* Nuevos estilos para el botón de ajustes */
+        .boton-ajustes {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #BB86FC;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .boton-ajustes:hover {
+            opacity: 0.8;
+        }
+        .menu-ajustes {
+            display: none;
+            position: absolute;
+            top: 60px; /* Ajustado para que no se solape con el botón */
+            right: 20px;
+            background-color: #370083;
+            border-radius: 8px;
+            padding: 10px;
+            z-index: 1000;
+            width: 200px; /* Ancho fijo para el menú */
+        }
+        .menu-ajustes.mostrar {
+            display: block;
+        }
+        .menu-ajustes button {
+            display: block;
+            width: 100%;
+            margin: 5px 0;
+        }
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- Botón de ajustes -->
+        <button class="boton-ajustes" onclick="mostrarMenuAjustes()">⚙️</button>
+        <!-- Menú de ajustes -->
+        <div class="menu-ajustes" id="menuAjustes">
+            <button class="boton-exportar" onclick="exportarEnlaces()">Exportar Enlaces</button>
+            <button class="boton-importar" onclick="document.getElementById('fileInput').click()">Importar Enlaces</button>
+            <button class="boton-borrar-todo" onclick="borrarTodosLosEnlaces()">Borrar Todos los Enlaces</button>
+        </div>
+
         <h1>🧔 Chefo TV 📺</h1>
 
         <div class="barra-busqueda">
@@ -325,7 +373,7 @@
         <div class="filtros">
             <select id="filtroDeporte" onchange="filtrarEnlaces()">
                 <option value="">Todos los deportes</option>
-                <option value="f1">Fórmula 1 🏎️</option>
+                <option value="f1">Fórmula 1 ��️</option>
                 <option value="futbol">Fútbol ⚽</option>
                 <option value="nba">NBA 🏀</option>
                 <option value="tenis">Tenis 🎾</option>
@@ -433,9 +481,6 @@
             </div>
 
             <button onclick="guardarEnlace()">Guardar Enlace</button>
-            <button class="boton-exportar" onclick="exportarEnlaces()">Exportar Enlaces</button>
-            <button class="boton-importar" onclick="document.getElementById('fileInput').click()">Importar Enlaces</button>
-            <button class="boton-borrar-todo" onclick="borrarTodosLosEnlaces()">Borrar Todos los Enlaces</button>
             <input type="file" id="fileInput" accept=".json" style="display: none;" onchange="importarEnlaces(event)">
         </div>
     </div>
@@ -712,6 +757,12 @@
 
                 enlace.style.display = coincideBusqueda && coincideDeporte && coincideIdioma ? 'flex' : 'none';
             });
+        }
+
+        // Función para mostrar/ocultar el menú de ajustes
+        function mostrarMenuAjustes() {
+            const menuAjustes = document.getElementById('menuAjustes');
+            menuAjustes.classList.toggle('mostrar');
         }
     </script>
 </body>
