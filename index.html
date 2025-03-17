@@ -336,13 +336,13 @@
         .menu-ajustes {
             display: none;
             position: absolute;
-            top: 60px; /* Ajustado para que no se solape con el botón */
+            top: 60px;
             right: 20px;
             background-color: #370083;
             border-radius: 8px;
             padding: 10px;
             z-index: 1000;
-            width: 200px; /* Ancho fijo para el menú */
+            width: 200px;
         }
         .menu-ajustes.mostrar {
             display: block;
@@ -352,14 +352,223 @@
             width: 100%;
             margin: 5px 0;
         }
+        /* Estilos para el selector de temas */
+        .selector-tema {
+            margin-bottom: 10px;
+        }
+        .selector-tema select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #BB86FC;
+            border-radius: 4px;
+            background-color: #121212;
+            color: #FFFFFF;
+            font-size: 14px;
+        }
+        /* Temas */
+        .tema-azul {
+            --color-primario: #2196F3;
+        }
+        .tema-rojo {
+            --color-primario: #F44336;
+        }
+        .tema-verde {
+            --color-primario: #4CAF50;
+        }
+        .tema-morado {
+            --color-primario: #6A1B9A; /* Morado más intenso */
+        }
+        .tema-azul-claro {
+            --color-primario: #2196F3;
+            background-color: #FFFFFF;
+            color: #000000;
+        }
+        .tema-rojo-claro {
+            --color-primario: #F44336;
+            background-color: #FFFFFF;
+            color: #000000;
+        }
+        .tema-verde-claro {
+            --color-primario: #4CAF50;
+            background-color: #FFFFFF;
+            color: #000000;
+        }
+        .tema-morado-claro {
+            --color-primario: #6A1B9A; /* Morado más intenso */
+            background-color: #FFFFFF;
+            color: #000000;
+        }
+        /* Aplicar colores del tema */
+        .tema-azul .barra-busqueda input,
+        .tema-azul .form-container input[type="text"],
+        .tema-azul .filtros select,
+        .tema-azul .categoria h2,
+        .tema-azul .separador,
+        .tema-azul .boton-agregar,
+        .tema-azul .puntuacion button,
+        .tema-azul .deporte-selector select,
+        .tema-azul .idioma-selector select,
+        .tema-azul .color-picker input[type="color"],
+        .tema-azul .color-picker input[type="text"] {
+            border-color: var(--color-primario);
+            color: var(--color-primario);
+        }
+        .tema-azul .link-item {
+            background-color: var(--color-primario);
+        }
+        .tema-rojo .barra-busqueda input,
+        .tema-rojo .form-container input[type="text"],
+        .tema-rojo .filtros select,
+        .tema-rojo .categoria h2,
+        .tema-rojo .separador,
+        .tema-rojo .boton-agregar,
+        .tema-rojo .puntuacion button,
+        .tema-rojo .deporte-selector select,
+        .tema-rojo .idioma-selector select,
+        .tema-rojo .color-picker input[type="color"],
+        .tema-rojo .color-picker input[type="text"] {
+            border-color: var(--color-primario);
+            color: var(--color-primario);
+        }
+        .tema-rojo .link-item {
+            background-color: var(--color-primario);
+        }
+        .tema-verde .barra-busqueda input,
+        .tema-verde .form-container input[type="text"],
+        .tema-verde .filtros select,
+        .tema-verde .categoria h2,
+        .tema-verde .separador,
+        .tema-verde .boton-agregar,
+        .tema-verde .puntuacion button,
+        .tema-verde .deporte-selector select,
+        .tema-verde .idioma-selector select,
+        .tema-verde .color-picker input[type="color"],
+        .tema-verde .color-picker input[type="text"] {
+            border-color: var(--color-primario);
+            color: var(--color-primario);
+        }
+        .tema-verde .link-item {
+            background-color: var(--color-primario);
+        }
+        .tema-morado .barra-busqueda input,
+        .tema-morado .form-container input[type="text"],
+        .tema-morado .filtros select,
+        .tema-morado .categoria h2,
+        .tema-morado .separador,
+        .tema-morado .boton-agregar,
+        .tema-morado .puntuacion button,
+        .tema-morado .deporte-selector select,
+        .tema-morado .idioma-selector select,
+        .tema-morado .color-picker input[type="color"],
+        .tema-morado .color-picker input[type="text"] {
+            border-color: var(--color-primario);
+            color: var(--color-primario);
+        }
+        .tema-morado .link-item {
+            background-color: var(--color-primario);
+        }
+        /* Temas con fondo blanco */
+        .tema-azul-claro .barra-busqueda input,
+        .tema-azul-claro .form-container input[type="text"],
+        .tema-azul-claro .filtros select,
+        .tema-azul-claro .categoria h2,
+        .tema-azul-claro .separador,
+        .tema-azul-claro .boton-agregar,
+        .tema-azul-claro .puntuacion button,
+        .tema-azul-claro .deporte-selector select,
+        .tema-azul-claro .idioma-selector select,
+        .tema-azul-claro .color-picker input[type="color"],
+        .tema-azul-claro .color-picker input[type="text"] {
+            border-color: var(--color-primario);
+            color: var(--color-primario);
+        }
+        .tema-azul-claro .link-item {
+            background-color: var(--color-primario);
+        }
+        .tema-rojo-claro .barra-busqueda input,
+        .tema-rojo-claro .form-container input[type="text"],
+        .tema-rojo-claro .filtros select,
+        .tema-rojo-claro .categoria h2,
+        .tema-rojo-claro .separador,
+        .tema-rojo-claro .boton-agregar,
+        .tema-rojo-claro .puntuacion button,
+        .tema-rojo-claro .deporte-selector select,
+        .tema-rojo-claro .idioma-selector select,
+        .tema-rojo-claro .color-picker input[type="color"],
+        .tema-rojo-claro .color-picker input[type="text"] {
+            border-color: var(--color-primario);
+            color: var(--color-primario);
+        }
+        .tema-rojo-claro .link-item {
+            background-color: var(--color-primario);
+        }
+        .tema-verde-claro .barra-busqueda input,
+        .tema-verde-claro .form-container input[type="text"],
+        .tema-verde-claro .filtros select,
+        .tema-verde-claro .categoria h2,
+        .tema-verde-claro .separador,
+        .tema-verde-claro .boton-agregar,
+        .tema-verde-claro .puntuacion button,
+        .tema-verde-claro .deporte-selector select,
+        .tema-verde-claro .idioma-selector select,
+        .tema-verde-claro .color-picker input[type="color"],
+        .tema-verde-claro .color-picker input[type="text"] {
+            border-color: var(--color-primario);
+            color: var(--color-primario);
+        }
+        .tema-verde-claro .link-item {
+            background-color: var(--color-primario);
+        }
+        .tema-morado-claro .barra-busqueda input,
+        .tema-morado-claro .form-container input[type="text"],
+        .tema-morado-claro .filtros select,
+        .tema-morado-claro .categoria h2,
+        .tema-morado-claro .separador,
+        .tema-morado-claro .boton-agregar,
+        .tema-morado-claro .puntuacion button,
+        .tema-morado-claro .deporte-selector select,
+        .tema-morado-claro .idioma-selector select,
+        .tema-morado-claro .color-picker input[type="color"],
+        .tema-morado-claro .color-picker input[type="text"] {
+            border-color: var(--color-primario);
+            color: var(--color-primario);
+        }
+        .tema-morado-claro .link-item {
+            background-color: var(--color-primario);
+        }
+        /* Estilos específicos para el botón de añadir */
+        .boton-agregar {
+            background-color: var(--color-primario);
+            color: white;
+        }
+        /* Estilos para el símbolo + y × */
+        .boton-agregar {
+            color: white !important;
+        }
+        /* Estilos para los filtros de deporte e idioma */
+        .filtros select {
+            color: white !important;
+        }
     </style>
 </head>
-<body>
+<body class="tema-azul">
     <div class="container">
         <!-- Botón de ajustes -->
         <button class="boton-ajustes" onclick="mostrarMenuAjustes()">⚙️</button>
         <!-- Menú de ajustes -->
         <div class="menu-ajustes" id="menuAjustes">
+            <div class="selector-tema">
+                <select id="selectorTema" onchange="cambiarTema()">
+                    <option value="azul">Azul</option>
+                    <option value="rojo">Rojo</option>
+                    <option value="verde">Verde</option>
+                    <option value="morado">Morado</option>
+                    <option value="azul-claro">Azul (Fondo blanco)</option>
+                    <option value="rojo-claro">Rojo (Fondo blanco)</option>
+                    <option value="verde-claro">Verde (Fondo blanco)</option>
+                    <option value="morado-claro">Morado (Fondo blanco)</option>
+                </select>
+            </div>
             <button class="boton-exportar" onclick="exportarEnlaces()">Exportar Enlaces</button>
             <button class="boton-importar" onclick="document.getElementById('fileInput').click()">Importar Enlaces</button>
             <button class="boton-borrar-todo" onclick="borrarTodosLosEnlaces()">Borrar Todos los Enlaces</button>
@@ -373,7 +582,7 @@
         <div class="filtros">
             <select id="filtroDeporte" onchange="filtrarEnlaces()">
                 <option value="">Todos los deportes</option>
-                <option value="f1">Fórmula 1 ��️</option>
+                <option value="f1">Fórmula 1 🏎️</option>
                 <option value="futbol">Fútbol ⚽</option>
                 <option value="nba">NBA 🏀</option>
                 <option value="tenis">Tenis 🎾</option>
@@ -763,6 +972,13 @@
         function mostrarMenuAjustes() {
             const menuAjustes = document.getElementById('menuAjustes');
             menuAjustes.classList.toggle('mostrar');
+        }
+
+        // Función para cambiar el tema
+        function cambiarTema() {
+            const selector = document.getElementById('selectorTema');
+            const temaSeleccionado = selector.value;
+            document.body.className = `tema-${temaSeleccionado}`;
         }
     </script>
 </body>
