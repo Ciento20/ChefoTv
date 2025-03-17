@@ -574,7 +574,7 @@
         }
     </style>
 </head>
-<body class="tema-azul">
+<body class="tema-morado">
     <div class="container">
         <!-- Botón de ajustes -->
         <button class="boton-ajustes" onclick="mostrarMenuAjustes()">⚙️</button>
@@ -582,14 +582,14 @@
         <div class="menu-ajustes" id="menuAjustes">
             <div class="selector-tema">
                 <select id="selectorTema" onchange="cambiarTema()">
+                    <option value="morado">Morado</option>
                     <option value="azul">Azul</option>
                     <option value="rojo">Rojo</option>
                     <option value="verde">Verde</option>
-                    <option value="morado">Morado</option>
+                    <option value="morado-claro">Morado (Fondo blanco)</option>
                     <option value="azul-claro">Azul (Fondo blanco)</option>
                     <option value="rojo-claro">Rojo (Fondo blanco)</option>
                     <option value="verde-claro">Verde (Fondo blanco)</option>
-                    <option value="morado-claro">Morado (Fondo blanco)</option>
                 </select>
             </div>
             <button class="boton-exportar" onclick="exportarEnlaces()">Exportar Enlaces</button>
@@ -742,6 +742,11 @@
                 // Seleccionar la opción correcta en el dropdown
                 const selector = document.getElementById('selectorTema');
                 selector.value = temaGuardado;
+            } else {
+                // Establecer el tema morado como predeterminado
+                document.body.className = 'tema-morado';
+                const selector = document.getElementById('selectorTema');
+                selector.value = 'morado';
             }
 
             // Mostrar los enlaces guardados
