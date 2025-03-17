@@ -305,12 +305,12 @@
             border: none;
             cursor: pointer;
             font-size: 18px;
-            color: #BB86FC; /* Color de las estrellas no seleccionadas */
+            color: #CCCCCC; /* Color de las estrellas no seleccionadas (gris claro) */
             padding: 0;
             transition: color 0.3s ease;
         }
         .puntuacion button.seleccionado {
-            color: #FFD700; /* Color de las estrellas seleccionadas (dorado) */
+            color: var(--color-primario); /* Color de las estrellas seleccionadas (color del tema) */
         }
         /* Nuevos estilos para el botón de ajustes */
         .boton-ajustes {
@@ -632,11 +632,11 @@
             <input type="text" id="link" placeholder="Pega tu enlace aquí">
             <input type="text" id="title" placeholder="Añade un título">
             <div class="puntuacion" id="puntuacion">
-                <button onclick="seleccionarPuntuacion(1)">★</button>
-                <button onclick="seleccionarPuntuacion(2)">★</button>
-                <button onclick="seleccionarPuntuacion(3)">★</button>
-                <button onclick="seleccionarPuntuacion(4)">★</button>
-                <button onclick="seleccionarPuntuacion(5)">★</button>
+                <button onclick="seleccionarPuntuacion(1)">☆</button>
+                <button onclick="seleccionarPuntuacion(2)">☆</button>
+                <button onclick="seleccionarPuntuacion(3)">☆</button>
+                <button onclick="seleccionarPuntuacion(4)">☆</button>
+                <button onclick="seleccionarPuntuacion(5)">☆</button>
             </div>
             <div class="selectores">
                 <div class="color-picker">
@@ -727,9 +727,11 @@
             const botones = document.querySelectorAll('#puntuacion button');
             botones.forEach((boton, index) => {
                 if (index < puntos) {
-                    boton.classList.add('seleccionado'); // Agrega la clase para estrellas seleccionadas
+                    boton.textContent = '⭐'; // Estrella llena
+                    boton.classList.add('seleccionado'); // Aplica el color del tema
                 } else {
-                    boton.classList.remove('seleccionado'); // Quita la clase para estrellas no seleccionadas
+                    boton.textContent = '☆'; // Estrella vacía
+                    boton.classList.remove('seleccionado'); // Vuelve al color claro
                 }
             });
         }
@@ -840,7 +842,7 @@
 
                 const bandera = { ES: '🇪🇦', EN: '🇬🇧', FR: '🇫🇷', DE: '🇩🇪', OT: '🏳️‍⚧️' }[item.idioma];
 
-                const puntuacion = '★'.repeat(item.puntuacion) + '☆'.repeat(5 - item.puntuacion);
+                const puntuacion = '⭐'.repeat(item.puntuacion) + '☆'.repeat(5 - item.puntuacion);
 
                 linkItem.innerHTML = `
                     <div style="font-size: 24px;">${icono}</div>
