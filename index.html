@@ -305,14 +305,12 @@
             border: none;
             cursor: pointer;
             font-size: 18px;
-            color: #BB86FC;
+            color: #BB86FC; /* Color de las estrellas no seleccionadas */
             padding: 0;
-        }
-        .puntuacion button:hover {
-            color: #370083;
+            transition: color 0.3s ease;
         }
         .puntuacion button.seleccionado {
-            color: #FFD700;
+            color: #FFD700; /* Color de las estrellas seleccionadas (dorado) */
         }
         /* Nuevos estilos para el botón de ajustes */
         .boton-ajustes {
@@ -729,9 +727,9 @@
             const botones = document.querySelectorAll('#puntuacion button');
             botones.forEach((boton, index) => {
                 if (index < puntos) {
-                    boton.classList.add('seleccionado');
+                    boton.classList.add('seleccionado'); // Agrega la clase para estrellas seleccionadas
                 } else {
-                    boton.classList.remove('seleccionado');
+                    boton.classList.remove('seleccionado'); // Quita la clase para estrellas no seleccionadas
                 }
             });
         }
