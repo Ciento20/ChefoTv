@@ -734,7 +734,19 @@
         let indiceCambiar = null;
         let puntuacionSeleccionada = 0;
 
-        document.addEventListener('DOMContentLoaded', mostrarEnlaces);
+        document.addEventListener('DOMContentLoaded', () => {
+            // Cargar el tema guardado
+            const temaGuardado = localStorage.getItem('tema');
+            if (temaGuardado) {
+                document.body.className = `tema-${temaGuardado}`;
+                // Seleccionar la opción correcta en el dropdown
+                const selector = document.getElementById('selectorTema');
+                selector.value = temaGuardado;
+            }
+
+            // Mostrar los enlaces guardados
+            mostrarEnlaces();
+        });
 
         function mostrarFormulario() {
             const formContainer = document.getElementById('formContainer');
@@ -1054,6 +1066,8 @@
             const selector = document.getElementById('selectorTema');
             const temaSeleccionado = selector.value;
             document.body.className = `tema-${temaSeleccionado}`;
+            // Guardar el tema en localStorage
+            localStorage.setItem('tema', temaSeleccionado);
         }
     </script>
 </body>
