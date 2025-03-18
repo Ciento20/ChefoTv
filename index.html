@@ -881,7 +881,7 @@
             const botones = document.querySelectorAll('#puntuacion button');
             botones.forEach((boton, index) => {
                 if (index < puntos) {
-                    boton.textContent = '⭐';
+                    boton.textContent = '✭';
                     boton.classList.add('seleccionado');
                 } else {
                     boton.textContent = '☆';
@@ -996,7 +996,7 @@
 
                 const bandera = { ES: '🇪🇦', EN: '🇬🇧', FR: '🇫🇷', DE: '🇩🇪', OT: '🏳️‍⚧️' }[item.idioma];
 
-                const puntuacion = '⭐'.repeat(item.puntuacion) + '☆'.repeat(5 - item.puntuacion);
+                const puntuacion = '✭'.repeat(item.puntuacion) + '☆'.repeat(5 - item.puntuacion);
 
                 linkItem.innerHTML = `
                     <div style="font-size: 24px;">${icono}</div>
