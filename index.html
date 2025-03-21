@@ -1183,7 +1183,7 @@
             if (contadorClicks === 1) {
                 temporizador = setTimeout(() => {
                     contadorClicks = 0; // Reiniciar el contador si no se completan los 3 clics en menos de un segundo
-                }, 1000); // 1 segundo para completar los 3 clics
+                }, 1000); // 2 segundo para completar los 3 clics
             } else if (contadorClicks === 3) {
                 clearTimeout(temporizador); // Detener el temporizador
                 mostrarElementosOcultos(); // Mostrar el título y el botón de añadir
