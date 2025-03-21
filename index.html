@@ -26,6 +26,8 @@
             text-align: center;
             color: #FFFFFF;
             margin-bottom: 20px;
+            opacity: 0; /* Inicialmente invisible */
+            transition: opacity 0.3s ease;
         }
         .categoria {
             margin-bottom: 20px;
@@ -138,6 +140,8 @@
             cursor: pointer;
             font-size: 24px;
             margin: 0 auto;
+            opacity: 0; /* Inicialmente invisible */
+            transition: opacity 0.3s ease;
         }
         .boton-agregar:hover {
             background-color: #200;
@@ -1168,6 +1172,34 @@
             const menuAjustes = document.getElementById('menuAjustes');
             menuAjustes.classList.toggle('mostrar');
         }
+
+        // Lógica para mostrar el título y el botón de añadir después de 3 clics rápidos
+        let contadorClicks = 0;
+        let temporizador = null;
+
+        function manejarClicksAjustes() {
+            contadorClicks++;
+
+            if (contadorClicks === 1) {
+                temporizador = setTimeout(() => {
+                    contadorClicks = 0; // Reiniciar el contador si no se completan los 3 clics en menos de un segundo
+                }, 1000); // 1 segundo para completar los 3 clics
+            } else if (contadorClicks === 3) {
+                clearTimeout(temporizador); // Detener el temporizador
+                mostrarElementosOcultos(); // Mostrar el título y el botón de añadir
+                contadorClicks = 0; // Reiniciar el contador
+            }
+        }
+
+        function mostrarElementosOcultos() {
+            const titulo = document.querySelector('h1');
+            const botonAgregar = document.getElementById('botonAgregar');
+            titulo.style.opacity = 1; // Hacer visible el título
+            botonAgregar.style.opacity = 1; // Hacer visible el botón de añadir
+        }
+
+        // Asignar la función al botón de ajustes
+        document.querySelector('.boton-ajustes').addEventListener('click', manejarClicksAjustes);
     </script>
 </body>
 </html>
