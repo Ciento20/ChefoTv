@@ -393,6 +393,18 @@
             color: #FFFFFF;
             font-size: 14px;
         }
+        .selector-apertura-enlaces {
+            margin-bottom: 10px;
+        }
+        .selector-apertura-enlaces select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #BB86FC;
+            border-radius: 4px;
+            background-color: #121212;
+            color: #FFFFFF;
+            font-size: 14px;
+        }
         .tema-azul {
             --color-primario: #2196F3;
         }
@@ -604,23 +616,46 @@
             opacity: 0.8;
         }
         /* Estilos para el reproductor */
-        #reproductor {
-            margin: 20px 0;
-            display: none;
-        }
-        #iframeReproductor, #videoReproductor {
+        .reproductor {
             width: 100%;
             height: 400px;
-            border: none;
+            margin-bottom: 20px;
+            background-color: #000;
             border-radius: 8px;
+            overflow: hidden;
+            display: none; /* Oculto inicialmente */
         }
-        #videoReproductor {
-            display: none;
+        .reproductor iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .boton-cerrar-reproductor {
+            width: 100%;
+            padding: 8px;
+            background-color: #CF6679;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-bottom: 20px;
+            display: none; /* Oculto inicialmente */
+        }
+        .boton-cerrar-reproductor:hover {
+            background-color: #9e4a5a;
         }
     </style>
 </head>
 <body class="tema-morado">
     <div class="container">
+        <!-- Reproductor de video -->
+        <div class="reproductor" id="reproductor">
+            <iframe id="videoFrame" src="" allowfullscreen></iframe>
+        </div>
+        <!-- Botón para cerrar el reproductor -->
+        <button class="boton-cerrar-reproductor" id="botonCerrarReproductor" onclick="cerrarReproductor()">Cerrar Reproductor</button>
+
         <!-- Botón de ajustes -->
         <button class="boton-ajustes" onclick="mostrarMenuAjustes()">⚙️</button>
         <!-- Menú de ajustes -->
@@ -637,10 +672,11 @@
                     <option value="verde-claro">Verde (Fondo blanco)</option>
                 </select>
             </div>
-            <div class="selector-reproductor">
-                <select id="selectorReproductor" onchange="cambiarModoReproductor()">
-                    <option value="redirigir">Redirigir a otra página</option>
-                    <option value="web">Reproducir en la web</option>
+            <div class="selector-apertura-enlaces">
+                <select id="selectorApertura" onchange="cambiarAperturaEnlaces()">
+                    <option value="nueva-pestaña">Abrir en otra pestaña</option>
+                    <option value="solo-web-reproductor">Abrir solo "Vía WEB" en reproductor</option>
+                    <option value="todo-reproductor">Abrir todo en reproductor</option>
                 </select>
             </div>
             <button class="boton-exportar" onclick="exportarEnlaces()">Exportar Enlaces</button>
@@ -658,16 +694,6 @@
         </div>
 
         <h1>🧔 Chefo TV 📺</h1>
-
-        <!-- Reproductor de video -->
-        <div id="reproductor">
-            <iframe id="iframeReproductor" width="640" height="360" frameborder="0" allowfullscreen></iframe>
-            <video id="videoReproductor" width="640" height="360" controls>
-                <source src="" type="video/mp4">
-                Tu navegador no soporta la reproducción de video.
-            </video>
-            <button onclick="document.getElementById('reproductor').style.display = 'none';">Cerrar</button>
-        </div>
 
         <div class="barra-busqueda">
             <input type="text" id="busqueda" placeholder="Buscar enlaces..." oninput="filtrarEnlaces()">
@@ -803,7 +829,49 @@
         let indiceEdicion = null;
         let indiceCambiar = null;
         let puntuacionSeleccionada = 0;
-        let modoReproductor = localStorage.getItem('modoReproductor') || 'redirigir';
+        let modoApertura = localStorage.getItem('modoApertura') || 'nueva-pestaña'; // Modo de apertura predeterminado
+
+        // Función para reproducir un enlace en el reproductor
+        function reproducirEnlace(url) {
+            const videoFrame = document.getElementById('videoFrame');
+            const reproductor = document.getElementById('reproductor');
+            const botonCerrar = document.getElementById('botonCerrarReproductor');
+
+            videoFrame.src = url;
+            reproductor.style.display = 'block'; // Mostrar el reproductor
+            botonCerrar.style.display = 'block'; // Mostrar el botón de cerrar
+        }
+
+        // Función para cerrar el reproductor
+        function cerrarReproductor() {
+            const videoFrame = document.getElementById('videoFrame');
+            const reproductor = document.getElementById('reproductor');
+            const botonCerrar = document.getElementById('botonCerrarReproductor');
+
+            videoFrame.src = ''; // Detener el video
+            reproductor.style.display = 'none'; // Ocultar el reproductor
+            botonCerrar.style.display = 'none'; // Ocultar el botón de cerrar
+        }
+
+        // Función para cambiar el modo de apertura de enlaces
+        function cambiarAperturaEnlaces() {
+            const selector = document.getElementById('selectorApertura');
+            modoApertura = selector.value;
+            localStorage.setItem('modoApertura', modoApertura); // Guardar la selección en localStorage
+        }
+
+        // Función para manejar el clic en un enlace
+        function manejarClicEnlace(url, categoria) {
+            if (modoApertura === 'nueva-pestaña') {
+                window.open(url, '_blank'); // Abrir en nueva pestaña
+            } else if (modoApertura === 'solo-web-reproductor' && categoria === 'web') {
+                reproducirEnlace(url); // Abrir en reproductor solo si es "Vía WEB"
+            } else if (modoApertura === 'todo-reproductor') {
+                reproducirEnlace(url); // Abrir todo en el reproductor
+            } else {
+                window.open(url, '_blank'); // Por defecto, abrir en nueva pestaña
+            }
+        }
 
         // Función para guardar el estado de las categorías
         function guardarEstadoCategorias() {
@@ -868,13 +936,6 @@
             });
         }
 
-        // Función para cambiar el modo del reproductor
-        function cambiarModoReproductor() {
-            const selector = document.getElementById('selectorReproductor');
-            modoReproductor = selector.value;
-            localStorage.setItem('modoReproductor', modoReproductor);
-        }
-
         // Cargar el estado de las categorías al iniciar la página
         document.addEventListener('DOMContentLoaded', () => {
             // Cargar el tema guardado
@@ -891,9 +952,13 @@
                 selector.value = 'morado';
             }
 
-            // Cargar el modo del reproductor
-            const selectorReproductor = document.getElementById('selectorReproductor');
-            selectorReproductor.value = modoReproductor;
+            // Cargar el modo de apertura guardado
+            const modoAperturaGuardado = localStorage.getItem('modoApertura');
+            if (modoAperturaGuardado) {
+                modoApertura = modoAperturaGuardado;
+                const selectorApertura = document.getElementById('selectorApertura');
+                selectorApertura.value = modoApertura;
+            }
 
             // Cargar el estado de las categorías
             cargarEstadoCategorias();
@@ -1003,37 +1068,6 @@
             }
         }
 
-        function mostrarReproductor(url, tipo) {
-            if (modoReproductor === 'redirigir') {
-                window.open(url, '_blank');
-            } else {
-                const reproductor = document.getElementById('reproductor');
-                const iframeReproductor = document.getElementById('iframeReproductor');
-                const videoReproductor = document.getElementById('videoReproductor');
-
-                if (tipo === 'youtube' || tipo === 'vimeo') {
-                    iframeReproductor.src = url;
-                    iframeReproductor.style.display = 'block';
-                    videoReproductor.style.display = 'none';
-                } else if (tipo === 'video') {
-                    videoReproductor.querySelector('source').src = url;
-                    videoReproductor.load();
-                    iframeReproductor.style.display = 'none';
-                    videoReproductor.style.display = 'block';
-                }
-
-                reproductor.style.display = 'block';
-            }
-        }
-
-        function manejarClicEnlace(url, tipo) {
-            if (tipo === 'acestream') {
-                window.open(url, '_blank'); // Abrir en nueva pestaña para Acestream
-            } else {
-                mostrarReproductor(url, tipo);
-            }
-        }
-
         function mostrarEnlaces() {
             const linkList = document.getElementById('linkList');
             const acestreamList = document.getElementById('acestreamList');
@@ -1050,8 +1084,8 @@
                     if (indiceCambiar !== null) {
                         cambiarPosicion(index);
                     } else {
-                        const tipo = item.mostrarMulti ? 'video' : (item.mostrarIcono ? 'acestream' : 'youtube');
-                        manejarClicEnlace(item.link, tipo);
+                        const categoria = item.mostrarIcono ? 'acestream' : item.mostrarMulti ? 'fuentes' : 'web';
+                        manejarClicEnlace(item.link, categoria);
                     }
                 };
 
