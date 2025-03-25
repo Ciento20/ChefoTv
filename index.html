@@ -616,14 +616,32 @@
             opacity: 0.8;
         }
         /* Estilos para el reproductor */
-        .reproductor {
+       .reproductor {
             width: 100%;
             height: 400px;
-            margin-bottom: 20px;
+            margin-bottom: 40px;
             background-color: #000;
             border-radius: 8px;
             overflow: hidden;
-            display: none; /* Oculto inicialmente */
+            display: none;
+            resize: vertical;
+            min-height: 250px;
+            max-height: 80vh;
+            position: relative;
+        }
+        .reproductor::before {
+            content: "◿";
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 20px;
+            height: 20px;
+            background-color: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: ns-resize;
+            z-index: 10;
         }
         .reproductor iframe {
             width: 100%;
@@ -640,7 +658,7 @@
             cursor: pointer;
             font-size: 14px;
             margin-bottom: 20px;
-            display: none; /* Oculto inicialmente */
+            display: none;
         }
         .boton-cerrar-reproductor:hover {
             background-color: #9e4a5a;
@@ -829,7 +847,7 @@
         let indiceEdicion = null;
         let indiceCambiar = null;
         let puntuacionSeleccionada = 0;
-        let modoApertura = localStorage.getItem('modoApertura') || 'nueva-pestaña'; // Modo de apertura predeterminado
+        let modoApertura = localStorage.getItem('modoApertura') || 'nueva-pestaña';
 
         // Función para reproducir un enlace en el reproductor
         function reproducirEnlace(url) {
@@ -838,8 +856,8 @@
             const botonCerrar = document.getElementById('botonCerrarReproductor');
 
             videoFrame.src = url;
-            reproductor.style.display = 'block'; // Mostrar el reproductor
-            botonCerrar.style.display = 'block'; // Mostrar el botón de cerrar
+            reproductor.style.display = 'block';
+            botonCerrar.style.display = 'block';
         }
 
         // Función para cerrar el reproductor
@@ -848,30 +866,33 @@
             const reproductor = document.getElementById('reproductor');
             const botonCerrar = document.getElementById('botonCerrarReproductor');
 
-            videoFrame.src = ''; // Detener el video
-            reproductor.style.display = 'none'; // Ocultar el reproductor
-            botonCerrar.style.display = 'none'; // Ocultar el botón de cerrar
+            videoFrame.src = '';
+            reproductor.style.display = 'none';
+            botonCerrar.style.display = 'none';
         }
 
         // Función para cambiar el modo de apertura de enlaces
         function cambiarAperturaEnlaces() {
             const selector = document.getElementById('selectorApertura');
             modoApertura = selector.value;
-            localStorage.setItem('modoApertura', modoApertura); // Guardar la selección en localStorage
+            localStorage.setItem('modoApertura', modoApertura);
         }
 
         // Función para manejar el clic en un enlace
         function manejarClicEnlace(url, categoria) {
             if (modoApertura === 'nueva-pestaña') {
-                window.open(url, '_blank'); // Abrir en nueva pestaña
+                window.open(url, '_blank');
             } else if (modoApertura === 'solo-web-reproductor' && categoria === 'web') {
-                reproducirEnlace(url); // Abrir en reproductor solo si es "Vía WEB"
+                reproducirEnlace(url);
             } else if (modoApertura === 'todo-reproductor') {
-                reproducirEnlace(url); // Abrir todo en el reproductor
+                reproducirEnlace(url);
             } else {
-                window.open(url, '_blank'); // Por defecto, abrir en nueva pestaña
+                window.open(url, '_blank');
             }
         }
+
+        // Resto del código JavaScript permanece igual...
+        // [El resto del código JavaScript se mantiene exactamente igual que en el original]
 
         // Función para guardar el estado de las categorías
         function guardarEstadoCategorias() {
@@ -895,10 +916,10 @@
                 if (estado !== undefined) {
                     if (estado) {
                         categoria.classList.add('oculta');
-                        categoria.querySelector('.toggle-categoria').textContent = '▲'; // Ícono para mostrar
+                        categoria.querySelector('.toggle-categoria').textContent = '▲';
                     } else {
                         categoria.classList.remove('oculta');
-                        categoria.querySelector('.toggle-categoria').textContent = '▼'; // Ícono para ocultar
+                        categoria.querySelector('.toggle-categoria').textContent = '▼';
                     }
                 }
             });
@@ -909,14 +930,12 @@
             const categoria = boton.closest('.categoria');
             categoria.classList.toggle('oculta');
 
-            // Cambiar el ícono del botón
             if (categoria.classList.contains('oculta')) {
-                boton.textContent = '▲'; // Ícono para mostrar
+                boton.textContent = '▲';
             } else {
-                boton.textContent = '▼'; // Ícono para ocultar
+                boton.textContent = '▼';
             }
 
-            // Guardar el estado de las categorías
             guardarEstadoCategorias();
         }
 
@@ -925,11 +944,8 @@
             const selector = document.getElementById('selectorTema');
             const temaSeleccionado = selector.value;
             document.body.className = `tema-${temaSeleccionado}`;
-
-            // Guardar el tema en localStorage
             localStorage.setItem('tema', temaSeleccionado);
 
-            // Actualizar el color de los botones de toggle
             const botonesToggle = document.querySelectorAll('.toggle-categoria');
             botonesToggle.forEach((boton) => {
                 boton.style.color = `var(--color-primario)`;
@@ -938,21 +954,17 @@
 
         // Cargar el estado de las categorías al iniciar la página
         document.addEventListener('DOMContentLoaded', () => {
-            // Cargar el tema guardado
             const temaGuardado = localStorage.getItem('tema');
             if (temaGuardado) {
                 document.body.className = `tema-${temaGuardado}`;
-                // Seleccionar la opción correcta en el dropdown
                 const selector = document.getElementById('selectorTema');
                 selector.value = temaGuardado;
             } else {
-                // Establecer el tema morado como predeterminado
                 document.body.className = 'tema-morado';
                 const selector = document.getElementById('selectorTema');
                 selector.value = 'morado';
             }
 
-            // Cargar el modo de apertura guardado
             const modoAperturaGuardado = localStorage.getItem('modoApertura');
             if (modoAperturaGuardado) {
                 modoApertura = modoAperturaGuardado;
@@ -960,10 +972,7 @@
                 selectorApertura.value = modoApertura;
             }
 
-            // Cargar el estado de las categorías
             cargarEstadoCategorias();
-
-            // Mostrar los enlaces guardados
             mostrarEnlaces();
         });
 
@@ -1210,19 +1219,16 @@
             reader.readAsText(file);
         }
 
-        // Función para abrir el modal de importación
         function importarDesdeTexto() {
             const modal = document.getElementById('modalImportar');
             modal.style.display = 'block';
         }
 
-        // Función para cerrar el modal de importación
         function cerrarModalImportar() {
             const modal = document.getElementById('modalImportar');
             modal.style.display = 'none';
         }
 
-        // Función para procesar el texto pegado
         function procesarTextoImportado() {
             const texto = document.getElementById('textoImportar').value;
             if (texto) {
@@ -1285,13 +1291,11 @@
             });
         }
 
-        // Función para mostrar/ocultar el menú de ajustes
         function mostrarMenuAjustes() {
             const menuAjustes = document.getElementById('menuAjustes');
             menuAjustes.classList.toggle('mostrar');
         }
 
-        // Lógica para mostrar el título y el botón de añadir después de 3 clics rápidos
         let contadorClicks = 0;
         let temporizador = null;
 
@@ -1300,24 +1304,23 @@
 
             if (contadorClicks === 1) {
                 temporizador = setTimeout(() => {
-                    contadorClicks = 0; // Reiniciar el contador si no se completan los 3 clics en menos de un segundo
-                }, 1000); // 2 segundo para completar los 3 clics
+                    contadorClicks = 0;
+                }, 1000);
             } else if (contadorClicks === 3) {
-                clearTimeout(temporizador); // Detener el temporizador
-                mostrarElementosOcultos(); // Mostrar el título y el botón de añadir
-                contadorClicks = 0; // Reiniciar el contador
+                clearTimeout(temporizador);
+                mostrarElementosOcultos();
+                contadorClicks = 0;
             }
         }
 
         function mostrarElementosOcultos() {
             const titulo = document.querySelector('h1');
             const botonAgregar = document.getElementById('botonAgregar');
-            titulo.style.opacity = 1; // Hacer visible el título
-            botonAgregar.style.opacity = 1; // Hacer visible el botón de añadir
+            titulo.style.opacity = 1;
+            botonAgregar.style.opacity = 1;
         }
 
-        // Asignar la función al botón de ajustes
         document.querySelector('.boton-ajustes').addEventListener('click', manejarClicksAjustes);
     </script>
 </body>
-</html>
+</html>l>>>
