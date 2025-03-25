@@ -1058,12 +1058,22 @@
         function cambiarPosicion(index) {
             if (indiceCambiar === null) {
                 indiceCambiar = index;
-                mostrarNotificacion('Selecciona otro enlace para intercambiar posiciones.');
+                mostrarNotificacion('Selecciona otro enlace para mover el primero detrás del segundo.');
             } else {
-                [enlacesGuardados[indiceCambiar], enlacesGuardados[index]] = [enlacesGuardados[index], enlacesGuardados[indiceCambiar]];
+                if (indiceCambiar === index) {
+                    mostrarNotificacion('No puedes mover un enlace detrás de sí mismo.');
+                    indiceCambiar = null;
+                    return;
+                }
+
+                const enlaceMovido = enlacesGuardados[indiceCambiar];
+                enlacesGuardados.splice(indiceCambiar, 1);
+                const nuevaPosicion = index > indiceCambiar ? index : index + 1;
+                enlacesGuardados.splice(nuevaPosicion, 0, enlaceMovido);
+
                 localStorage.setItem('enlaces', JSON.stringify(enlacesGuardados));
                 mostrarEnlaces();
-                mostrarNotificacion('Posiciones intercambiadas correctamente.');
+                mostrarNotificacion('Enlace movido correctamente.');
                 indiceCambiar = null;
             }
         }
