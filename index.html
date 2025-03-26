@@ -15,7 +15,7 @@
         }
         .container {
             max-width: 1200px;
-            margin: 0 auto;
+            margin: 0 20px 0 auto;
             background: #121212;
             padding: 20px;
             border-radius: 8px;
@@ -26,7 +26,7 @@
             text-align: center;
             color: #FFFFFF;
             margin-bottom: 20px;
-            opacity: 0; /* Inicialmente invisible */
+            opacity: 0;
             transition: opacity 0.3s ease;
         }
         .categoria {
@@ -56,7 +56,7 @@
             border: none;
             cursor: pointer;
             font-size: 14px;
-            color: var(--color-primario); /* Usar el color primario del tema */
+            color: var(--color-primario);
             margin-left: 10px;
             padding: 0;
             width: 24px;
@@ -65,7 +65,7 @@
             align-items: center;
             justify-content: center;
             border-radius: 4px;
-            transition: background-color 0.3s ease, color 0.3s ease; /* Transición suave */
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
         .toggle-categoria:hover {
             background-color: rgba(187, 134, 252, 0.1);
@@ -140,7 +140,7 @@
             cursor: pointer;
             font-size: 24px;
             margin: 0 auto;
-            opacity: 0; /* Inicialmente invisible */
+            opacity: 0;
             transition: opacity 0.3s ease;
         }
         .boton-agregar:hover {
@@ -347,7 +347,7 @@
         .boton-ajustes {
             position: absolute;
             top: 20px;
-            right: 20px;
+            left: 20px;
             background: none;
             border: none;
             font-size: 24px;
@@ -366,7 +366,7 @@
             display: none;
             position: absolute;
             top: 60px;
-            right: 20px;
+            left: 20px;
             background-color: #370083;
             border-radius: 8px;
             padding: 10px;
@@ -583,7 +583,6 @@
         .filtros select {
             color: white !important;
         }
-        /* Estilos para el modal de importación */
         .modal-importar {
             position: fixed;
             top: 50%;
@@ -615,7 +614,6 @@
         .modal-importar button:hover {
             opacity: 0.8;
         }
-        /* Estilos para el reproductor */
         .reproductor {
             width: 100%;
             height: 400px;
@@ -629,6 +627,7 @@
             max-height: 80vh;
             position: relative;
             border: 15px solid rgba(30, 30, 30, 0.2);
+            margin-left: 0;
         }
         .reproductor::after {
             content: "◿";
@@ -668,16 +667,12 @@
 </head>
 <body class="tema-morado">
     <div class="container">
-        <!-- Reproductor de video -->
         <div class="reproductor" id="reproductor">
             <iframe id="videoFrame" src="" allowfullscreen></iframe>
         </div>
-        <!-- Botón para cerrar el reproductor -->
         <button class="boton-cerrar-reproductor" id="botonCerrarReproductor" onclick="cerrarReproductor()">Cerrar Reproductor</button>
 
-        <!-- Botón de ajustes -->
         <button class="boton-ajustes" onclick="mostrarMenuAjustes()">⚙️</button>
-        <!-- Menú de ajustes -->
         <div class="menu-ajustes" id="menuAjustes">
             <div class="selector-tema">
                 <select id="selectorTema" onchange="cambiarTema()">
@@ -704,7 +699,6 @@
             <button class="boton-borrar-todo" onclick="borrarTodosLosEnlaces()">Borrar Todos los Enlaces</button>
         </div>
 
-        <!-- Modal para pegar texto JSON -->
         <div class="modal-importar" id="modalImportar">
             <h3>Pega tu copia de seguridad JSON</h3>
             <textarea id="textoImportar" rows="10" cols="50" placeholder="Pega aquí el contenido JSON..."></textarea>
@@ -850,7 +844,6 @@
         let puntuacionSeleccionada = 0;
         let modoApertura = localStorage.getItem('modoApertura') || 'nueva-pestaña';
 
-        // Función para reproducir un enlace en el reproductor
         function reproducirEnlace(url) {
             const videoFrame = document.getElementById('videoFrame');
             const reproductor = document.getElementById('reproductor');
@@ -861,7 +854,6 @@
             botonCerrar.style.display = 'block';
         }
 
-        // Función para cerrar el reproductor
         function cerrarReproductor() {
             const videoFrame = document.getElementById('videoFrame');
             const reproductor = document.getElementById('reproductor');
@@ -872,14 +864,12 @@
             botonCerrar.style.display = 'none';
         }
 
-        // Función para cambiar el modo de apertura de enlaces
         function cambiarAperturaEnlaces() {
             const selector = document.getElementById('selectorApertura');
             modoApertura = selector.value;
             localStorage.setItem('modoApertura', modoApertura);
         }
 
-        // Función para manejar el clic en un enlace
         function manejarClicEnlace(url, categoria) {
             if (modoApertura === 'nueva-pestaña') {
                 window.open(url, '_blank');
@@ -892,10 +882,6 @@
             }
         }
 
-        // Resto del código JavaScript permanece igual...
-        // [El resto del código JavaScript se mantiene exactamente igual que en el original]
-
-        // Función para guardar el estado de las categorías
         function guardarEstadoCategorias() {
             const categorias = document.querySelectorAll('.categoria');
             const estadoCategorias = {};
@@ -907,7 +893,6 @@
             localStorage.setItem('estadoCategorias', JSON.stringify(estadoCategorias));
         }
 
-        // Función para cargar el estado de las categorías
         function cargarEstadoCategorias() {
             const estadoCategorias = JSON.parse(localStorage.getItem('estadoCategorias')) || {};
             const categorias = document.querySelectorAll('.categoria');
@@ -926,7 +911,6 @@
             });
         }
 
-        // Función para alternar la visibilidad de una categoría
         function toggleCategoria(boton) {
             const categoria = boton.closest('.categoria');
             categoria.classList.toggle('oculta');
@@ -940,7 +924,6 @@
             guardarEstadoCategorias();
         }
 
-        // Función para cambiar el tema
         function cambiarTema() {
             const selector = document.getElementById('selectorTema');
             const temaSeleccionado = selector.value;
@@ -953,7 +936,6 @@
             });
         }
 
-        // Cargar el estado de las categorías al iniciar la página
         document.addEventListener('DOMContentLoaded', () => {
             const temaGuardado = localStorage.getItem('tema');
             if (temaGuardado) {
