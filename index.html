@@ -616,7 +616,7 @@
         }
         .reproductor {
             width: 92%;
-            height: 400px;
+            height: 250px;
             margin-bottom: 40px;
             background-color: #000;
             border-radius: 8px;
@@ -843,6 +843,7 @@
         let indiceCambiar = null;
         let puntuacionSeleccionada = 0;
         let modoApertura = localStorage.getItem('modoApertura') || 'nueva-pestaña';
+        let alturaReproductor = localStorage.getItem('alturaReproductor') || '250px';
 
         function reproducirEnlace(url) {
             const videoFrame = document.getElementById('videoFrame');
@@ -851,7 +852,14 @@
 
             videoFrame.src = url;
             reproductor.style.display = 'block';
+            reproductor.style.height = alturaReproductor;
             botonCerrar.style.display = 'block';
+            
+            // Guardar la altura cuando el usuario la cambie
+            reproductor.addEventListener('mouseup', function() {
+                alturaReproductor = reproductor.style.height;
+                localStorage.setItem('alturaReproductor', alturaReproductor);
+            });
         }
 
         function cerrarReproductor() {
@@ -1306,5 +1314,4 @@
         document.querySelector('.boton-ajustes').addEventListener('click', manejarClicksAjustes);
     </script>
 </body>
-</html>
 </html>
