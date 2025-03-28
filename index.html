@@ -828,16 +828,11 @@
                 </div>
 
                 <div class="toggle-icono">
-                    <div class="checkbox-container">
-                        <div class="icono">🅰️</div>
-                        <label for="mostrarIcono"></label>
-                        <input type="checkbox" id="mostrarIcono">
-                    </div>
-                    <div class="checkbox-container">
-                        <div class="icono">🌐</div>
-                        <label for="mostrarMulti"></label>
-                        <input type="checkbox" id="mostrarMulti">
-                    </div>
+                    <select id="tipoEnlace">
+                        <option value="web">Vía WEB</option>
+                        <option value="acestream">Vía Acestream</option>
+                        <option value="fuentes">FUENTES</option>
+                    </select>
                 </div>
             </div>
 
@@ -866,7 +861,6 @@
             reproductor.style.height = alturaReproductor;
             botonCerrar.style.display = 'block';
             
-            // Guardar la altura cuando el usuario la cambie
             reproductor.addEventListener('mouseup', function() {
                 alturaReproductor = reproductor.style.height;
                 localStorage.setItem('alturaReproductor', alturaReproductor);
@@ -1018,9 +1012,11 @@
             const deporte = document.getElementById('deporte').value;
             const color = document.getElementById('codigoColor').value;
             const idioma = document.getElementById('idioma').value;
-            const mostrarIcono = document.getElementById('mostrarIcono').checked;
-            const mostrarMulti = document.getElementById('mostrarMulti').checked;
+            const tipoEnlace = document.getElementById('tipoEnlace').value;
             const puntuacion = puntuacionSeleccionada;
+
+            const mostrarIcono = tipoEnlace === 'acestream';
+            const mostrarMulti = tipoEnlace === 'fuentes';
 
             if (link && title) {
                 if (indiceEdicion !== null) {
@@ -1059,8 +1055,10 @@
             document.getElementById('color').value = enlace.color;
             document.getElementById('codigoColor').value = enlace.color;
             document.getElementById('idioma').value = enlace.idioma;
-            document.getElementById('mostrarIcono').checked = enlace.mostrarIcono;
-            document.getElementById('mostrarMulti').checked = enlace.mostrarMulti;
+            
+            const tipoEnlace = enlace.mostrarMulti ? 'fuentes' : enlace.mostrarIcono ? 'acestream' : 'web';
+            document.getElementById('tipoEnlace').value = tipoEnlace;
+            
             seleccionarPuntuacion(enlace.puntuacion);
 
             mostrarFormulario();
