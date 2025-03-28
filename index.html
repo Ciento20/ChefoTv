@@ -625,7 +625,9 @@
             resize: vertical;
             min-height: 250px;
             max-height: 80vh;
-            position: relative;
+            position: sticky;
+            top: 60px;
+            z-index: 100;
             border: 15px solid rgba(30, 30, 30, 0.2);
             margin-left: 0;
         }
@@ -649,16 +651,25 @@
             border: none;
         }
         .boton-cerrar-reproductor {
-            width: 100%;
-            padding: 8px;
+            width: 40px;
+            height: 40px;
+            padding: 0;
             background-color: #CF6679;
             color: white;
             border: none;
-            border-radius: 4px;
+            border-radius: 50%;
             cursor: pointer;
-            font-size: 14px;
-            margin-bottom: 20px;
+            font-size: 20px;
             display: none;
+            position: sticky;
+            top: 20px;
+            z-index: 101;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: auto;
+            margin-right: 0;
         }
         .boton-cerrar-reproductor:hover {
             background-color: #9e4a5a;
@@ -667,10 +678,10 @@
 </head>
 <body class="tema-morado">
     <div class="container">
+        <button class="boton-cerrar-reproductor" id="botonCerrarReproductor" onclick="cerrarReproductor()">×</button>
         <div class="reproductor" id="reproductor">
             <iframe id="videoFrame" src="" allowfullscreen></iframe>
         </div>
-        <button class="boton-cerrar-reproductor" id="botonCerrarReproductor" onclick="cerrarReproductor()">Cerrar Reproductor</button>
 
         <button class="boton-ajustes" onclick="mostrarMenuAjustes()">⚙️</button>
         <div class="menu-ajustes" id="menuAjustes">
@@ -1202,7 +1213,7 @@
 
                     localStorage.setItem('enlaces', JSON.stringify(enlacesGuardados));
                     mostrarEnlaces();
-                    mostrarNotificacion('Enlaces importados correctamente. Se han descartado duplicados.');
+                    mostrarNotificacion('Enlaces importados correctamente. Se han descartados duplicados.');
                 } catch (error) {
                     mostrarNotificacion('El archivo no es válido.');
                 }
@@ -1238,7 +1249,7 @@
 
                     localStorage.setItem('enlaces', JSON.stringify(enlacesGuardados));
                     mostrarEnlaces();
-                    mostrarNotificacion('Enlaces importados correctamente. Se han descartado duplicados.');
+                    mostrarNotificacion('Enlaces importados correctamente. Se han descartados duplicados.');
                     cerrarModalImportar();
                 } catch (error) {
                     mostrarNotificacion('El texto no es válido. Asegúrate de pegar un JSON correcto.');
