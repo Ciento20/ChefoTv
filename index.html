@@ -785,6 +785,7 @@
         <div class="form-container" id="formContainer">
             <input type="text" id="link" placeholder="Pega tu enlace aquí">
             <input type="text" id="title" placeholder="Añade un título">
+            <input type="text" id="webName" placeholder="Nombre de la web (opcional)">
             <div class="puntuacion" id="puntuacion">
                 <button onclick="seleccionarPuntuacion(1)">☆</button>
                 <button onclick="seleccionarPuntuacion(2)">☆</button>
@@ -1009,6 +1010,7 @@
         function guardarEnlace() {
             const link = document.getElementById('link').value;
             const title = document.getElementById('title').value;
+            const webName = document.getElementById('webName').value;
             const deporte = document.getElementById('deporte').value;
             const color = document.getElementById('codigoColor').value;
             const idioma = document.getElementById('idioma').value;
@@ -1020,7 +1022,7 @@
 
             if (link && title) {
                 if (indiceEdicion !== null) {
-                    enlacesGuardados[indiceEdicion] = { link, title, deporte, color, idioma, mostrarIcono, mostrarMulti, puntuacion };
+                    enlacesGuardados[indiceEdicion] = { link, title, webName, deporte, color, idioma, mostrarIcono, mostrarMulti, puntuacion };
                     indiceEdicion = null;
                     mostrarNotificacion('Enlace actualizado correctamente.');
                 } else {
@@ -1030,12 +1032,13 @@
                         return;
                     }
 
-                    enlacesGuardados.push({ link, title, deporte, color, idioma, mostrarIcono, mostrarMulti, puntuacion });
+                    enlacesGuardados.push({ link, title, webName, deporte, color, idioma, mostrarIcono, mostrarMulti, puntuacion });
                     mostrarNotificacion('Enlace guardado correctamente.');
                 }
 
                 document.getElementById('link').value = '';
                 document.getElementById('title').value = '';
+                document.getElementById('webName').value = '';
                 seleccionarPuntuacion(0);
                 mostrarFormulario();
                 localStorage.setItem('enlaces', JSON.stringify(enlacesGuardados));
@@ -1051,6 +1054,7 @@
 
             document.getElementById('link').value = enlace.link;
             document.getElementById('title').value = enlace.title;
+            document.getElementById('webName').value = enlace.webName || '';
             document.getElementById('deporte').value = enlace.deporte;
             document.getElementById('color').value = enlace.color;
             document.getElementById('codigoColor').value = enlace.color;
@@ -1132,6 +1136,7 @@
                 linkItem.innerHTML = `
                     <div style="font-size: 24px;">${icono}</div>
                     <div>${item.title}</div>
+                    ${item.webName ? `<div>${item.webName}</div>` : ''}
                     <div>${bandera}</div>
                     <div>${puntuacion}</div>
                     <div class="menu-contextual">
@@ -1265,10 +1270,11 @@
 
             enlaces.forEach((enlace) => {
                 const titulo = enlace.querySelector('div:nth-child(2)').textContent.toLowerCase();
+                const webName = enlace.querySelector('div:nth-child(3)') ? enlace.querySelector('div:nth-child(3)').textContent.toLowerCase() : '';
                 const deporte = enlace.querySelector('div:nth-child(1)').textContent;
-                const idioma = enlace.querySelector('div:nth-child(3)').textContent;
+                const idioma = enlace.querySelector('div:nth-child(3)') ? enlace.querySelector('div:nth-child(4)').textContent : enlace.querySelector('div:nth-child(3)').textContent;
 
-                const coincideBusqueda = titulo.includes(busqueda);
+                const coincideBusqueda = titulo.includes(busqueda) || webName.includes(busqueda);
                 const coincideDeporte = !filtroDeporte || deporte.includes({
                     f1: '🏎️',
                     futbol: '⚽',
@@ -1295,7 +1301,6 @@
             const menuAjustes = document.getElementById('menuAjustes');
             menuAjustes.classList.toggle('mostrar');
             
-            // Cerrar menú al hacer clic fuera
             if (menuAjustes.classList.contains('mostrar')) {
                 setTimeout(() => {
                     document.addEventListener('click', cerrarMenuSiClickFuera);
