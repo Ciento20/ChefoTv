@@ -1294,6 +1294,25 @@
         function mostrarMenuAjustes() {
             const menuAjustes = document.getElementById('menuAjustes');
             menuAjustes.classList.toggle('mostrar');
+            
+            // Cerrar menú al hacer clic fuera
+            if (menuAjustes.classList.contains('mostrar')) {
+                setTimeout(() => {
+                    document.addEventListener('click', cerrarMenuSiClickFuera);
+                }, 0);
+            } else {
+                document.removeEventListener('click', cerrarMenuSiClickFuera);
+            }
+        }
+
+        function cerrarMenuSiClickFuera(event) {
+            const menuAjustes = document.getElementById('menuAjustes');
+            const botonAjustes = document.querySelector('.boton-ajustes');
+            
+            if (!menuAjustes.contains(event.target) && !botonAjustes.contains(event.target)) {
+                menuAjustes.classList.remove('mostrar');
+                document.removeEventListener('click', cerrarMenuSiClickFuera);
+            }
         }
 
         let contadorClicks = 0;
