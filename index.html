@@ -797,7 +797,7 @@
 
         <div class="categoria">
             <h2>
-                Vía WEB
+                #Acestream
                 <button class="toggle-categoria" onclick="toggleCategoria(this)">▼</button>
             </h2>
             <div class="link-list" id="linkList"></div>
@@ -807,7 +807,7 @@
 
         <div class="categoria">
             <h2>
-                Vía Acestream
+                #Vpn
                 <button class="toggle-categoria" onclick="toggleCategoria(this)">▼</button>
             </h2>
             <div class="link-list" id="acestreamList"></div>
@@ -817,10 +817,30 @@
 
         <div class="categoria">
             <h2>
-                FUENTES
+                #Recopilador
                 <button class="toggle-categoria" onclick="toggleCategoria(this)">▼</button>
             </h2>
             <div class="link-list" id="multiList"></div>
+        </div>
+
+        <hr class="separador">
+
+        <div class="categoria">
+            <h2>
+                #Multideporte
+                <button class="toggle-categoria" onclick="toggleCategoria(this)">▼</button>
+            </h2>
+            <div class="link-list"></div>
+        </div>
+
+        <hr class="separador">
+
+        <div class="categoria">
+            <h2>
+                #Eventos
+                <button class="toggle-categoria" onclick="toggleCategoria(this)">▼</button>
+            </h2>
+            <div class="link-list"></div>
         </div>
 
         <div class="link-list">
@@ -1406,6 +1426,45 @@
                 document.removeEventListener('click', cerrarMenuSiClickFuera);
             }
         }
+
+        function cerrarMenuSiClickFuera(event) {
+            const menuAjustes = document.getElementById('menuAjustes');
+            const botonAjustes = document.querySelector('.boton-ajustes');
+            
+            if (!menuAjustes.contains(event.target) && !botonAjustes.contains(event.target)) {
+                menuAjustes.classList.remove('mostrar');
+                document.removeEventListener('click', cerrarMenuSiClickFuera);
+            }
+        }
+
+        let contadorClicks = 0;
+        let temporizador = null;
+
+        function manejarClicksAjustes() {
+            contadorClicks++;
+
+            if (contadorClicks === 1) {
+                temporizador = setTimeout(() => {
+                    contadorClicks = 0;
+                }, 1000);
+            } else if (contadorClicks === 3) {
+                clearTimeout(temporizador);
+                mostrarElementosOcultos();
+                contadorClicks = 0;
+            }
+        }
+
+        function mostrarElementosOcultos() {
+            const titulo = document.querySelector('h1');
+            const botonAgregar = document.getElementById('botonAgregar');
+            titulo.style.opacity = 1;
+            botonAgregar.style.opacity = 1;
+        }
+
+        document.querySelector('.boton-ajustes').addEventListener('click', manejarClicksAjustes);
+    </script>
+</body>
+</html>     }
 
         function cerrarMenuSiClickFuera(event) {
             const menuAjustes = document.getElementById('menuAjustes');
