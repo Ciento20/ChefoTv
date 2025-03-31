@@ -317,6 +317,7 @@
             display: flex;
             gap: 10px;
             margin-bottom: 20px;
+            align-items: center;
         }
         .filtros select {
             flex: 1;
@@ -325,6 +326,7 @@
             border-radius: 4px;
             background-color: #121212;
             color: #FFFFFF;
+            height: 40px;
         }
         .puntuacion {
             display: flex;
@@ -699,6 +701,22 @@
         .boton-favoritos:hover {
             background-color: #FFC000;
         }
+        .boton-limpiar-filtros {
+            background-color: #BB86FC;
+            padding: 0;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+        }
+        .boton-limpiar-filtros:hover {
+            background-color: #370083;
+        }
     </style>
 </head>
 <body class="tema-morado">
@@ -774,6 +792,7 @@
                 <option value="DE">🇩🇪 DUTCH</option>
                 <option value="OT">🏳️‍⚧️ OTROS</option>
             </select>
+            <button class="boton-limpiar-filtros" onclick="limpiarFiltros()" title="Limpiar filtros">⥀</button>
         </div>
 
         <div class="categoria">
@@ -878,6 +897,11 @@
         let modoApertura = localStorage.getItem('modoApertura') || 'nueva-pestaña';
         let alturaReproductor = localStorage.getItem('alturaReproductor') || '250px';
         let mostrarSoloFavoritos = false;
+        let filtrosEstado = JSON.parse(localStorage.getItem('filtrosEstado')) || {
+            busqueda: '',
+            deporte: '',
+            idioma: ''
+        };
 
         function reproducirEnlace(url) {
             const videoFrame = document.getElementById('videoFrame');
@@ -977,6 +1001,23 @@
             });
         }
 
+        function guardarEstadoFiltros() {
+            filtrosEstado = {
+                busqueda: document.getElementById('busqueda').value,
+                deporte: document.getElementById('filtroDeporte').value,
+                idioma: document.getElementById('filtroIdioma').value
+            };
+            localStorage.setItem('filtrosEstado', JSON.stringify(filtrosEstado));
+        }
+
+        function cargarEstadoFiltros() {
+            if (filtrosEstado) {
+                document.getElementById('busqueda').value = filtrosEstado.busqueda || '';
+                document.getElementById('filtroDeporte').value = filtrosEstado.deporte || '';
+                document.getElementById('filtroIdioma').value = filtrosEstado.idioma || '';
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             const temaGuardado = localStorage.getItem('tema');
             if (temaGuardado) {
@@ -997,7 +1038,9 @@
             }
 
             cargarEstadoCategorias();
+            cargarEstadoFiltros();
             mostrarEnlaces();
+            filtrarEnlaces();
         });
 
         function mostrarFormulario() {
@@ -1305,11 +1348,22 @@
             }
         }
 
+        function limpiarFiltros() {
+            document.getElementById('busqueda').value = '';
+            document.getElementById('filtroDeporte').value = '';
+            document.getElementById('filtroIdioma').value = '';
+            guardarEstadoFiltros();
+            filtrarEnlaces();
+            mostrarNotificacion('Filtros limpiados correctamente.');
+        }
+
         function filtrarEnlaces() {
             const busqueda = document.getElementById('busqueda').value.toLowerCase();
             const filtroDeporte = document.getElementById('filtroDeporte').value;
             const filtroIdioma = document.getElementById('filtroIdioma').value;
             const enlaces = document.querySelectorAll('.link-item');
+
+            guardarEstadoFiltros();
 
             enlaces.forEach((enlace) => {
                 const titulo = enlace.querySelector('div:nth-child(3)').textContent.toLowerCase();
