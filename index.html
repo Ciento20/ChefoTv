@@ -16,7 +16,7 @@
         .container {
             max-width: 1200px;
             margin:0 auto;
-            background: #121212;
+            
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -367,7 +367,7 @@
             position: absolute;
             top: 60px;
             left: 20px;
-            background-color: #370083;
+            background-color: #151515;
             border-radius: 8px;
             padding: 10px;
             z-index: 1000;
@@ -405,184 +405,50 @@
             color: #FFFFFF;
             font-size: 14px;
         }
-        .tema-azul {
-            --color-primario: #2196F3;
-        }
-        .tema-rojo {
-            --color-primario: #F44336;
-        }
-        .tema-verde {
-            --color-primario: #4CAF50;
-        }
-        .tema-morado {
-            --color-primario: #6A1B9A;
-        }
-        .tema-azul-claro {
-            --color-primario: #2196F3;
-            background-color: #FFFFFF;
-            color: #000000;
-        }
-        .tema-rojo-claro {
-            --color-primario: #F44336;
-            background-color: #FFFFFF;
-            color: #000000;
-        }
-        .tema-verde-claro {
-            --color-primario: #4CAF50;
-            background-color: #FFFFFF;
-            color: #000000;
-        }
-        .tema-morado-claro {
-            --color-primario: #6A1B9A;
-            background-color: #FFFFFF;
-            color: #000000;
-        }
-        .tema-azul .barra-busqueda input,
-        .tema-azul .form-container input[type="text"],
-        .tema-azul .filtros select,
-        .tema-azul .categoria h2,
-        .tema-azul .separador,
-        .tema-azul .boton-agregar,
-        .tema-azul .puntuacion button,
-        .tema-azul .deporte-selector select,
-        .tema-azul .idioma-selector select,
-        .tema-azul .color-picker input[type="color"],
-        .tema-azul .color-picker input[type="text"] {
+        
+        /* Temas simplificados */
+        .tema-morado { --color-primario: #BB86FC; }
+        .tema-azul { --color-primario: #2196F3; }
+        .tema-rojo { --color-primario: #F44336; }
+        .tema-verde { --color-primario: #4CAF50; }
+        .tema-morado-claro { --color-primario: #6A1B9A; background-color: #FFFFFF; color: #000000; }
+        .tema-azul-claro { --color-primario: #2196F3; background-color: #FFFFFF; color: #000000; }
+        .tema-rojo-claro { --color-primario: #F44336; background-color: #FFFFFF; color: #000000; }
+        .tema-verde-claro { --color-primario: #4CAF50; background-color: #FFFFFF; color: #000000; }
+
+        /* Estilos comunes para todos los temas */
+        [class^="tema-"] .barra-busqueda input,
+        [class^="tema-"] .form-container input[type="text"],
+        [class^="tema-"] .filtros select,
+        [class^="tema-"] .categoria h2,
+        [class^="tema-"] .separador,
+        [class^="tema-"] .boton-agregar,
+        [class^="tema-"] .puntuacion button,
+        [class^="tema-"] .deporte-selector select,
+        [class^="tema-"] .idioma-selector select,
+        [class^="tema-"] .color-picker input[type="color"],
+        [class^="tema-"] .color-picker input[type="text"] {
             border-color: var(--color-primario);
             color: var(--color-primario);
         }
-        .tema-azul .link-item {
+
+        [class^="tema-"] .link-item {
             background-color: var(--color-primario);
         }
-        .tema-rojo .barra-busqueda input,
-        .tema-rojo .form-container input[type="text"],
-        .tema-rojo .filtros select,
-        .tema-rojo .categoria h2,
-        .tema-rojo .separador,
-        .tema-rojo .boton-agregar,
-        .tema-rojo .puntuacion button,
-        .tema-rojo .deporte-selector select,
-        .tema-rojo .idioma-selector select,
-        .tema-rojo .color-picker input[type="color"],
-        .tema-rojo .color-picker input[type="text"] {
-            border-color: var(--color-primario);
-            color: var(--color-primario);
-        }
-        .tema-rojo .link-item {
-            background-color: var(--color-primario);
-        }
-        .tema-verde .barra-busqueda input,
-        .tema-verde .form-container input[type="text"],
-        .tema-verde .filtros select,
-        .tema-verde .categoria h2,
-        .tema-verde .separador,
-        .tema-verde .boton-agregar,
-        .tema-verde .puntuacion button,
-        .tema-verde .deporte-selector select,
-        .tema-verde .idioma-selector select,
-        .tema-verde .color-picker input[type="color"],
-        .tema-verde .color-picker input[type="text"] {
-            border-color: var(--color-primario);
-            color: var(--color-primario);
-        }
-        .tema-verde .link-item {
-            background-color: var(--color-primario);
-        }
-        .tema-morado .barra-busqueda input,
-        .tema-morado .form-container input[type="text"],
-        .tema-morado .filtros select,
-        .tema-morado .categoria h2,
-        .tema-morado .separador,
-        .tema-morado .boton-agregar,
-        .tema-morado .puntuacion button,
-        .tema-morado .deporte-selector select,
-        .tema-morado .idioma-selector select,
-        .tema-morado .color-picker input[type="color"],
-        .tema-morado .color-picker input[type="text"] {
-            border-color: var(--color-primario);
-            color: var(--color-primario);
-        }
-        .tema-morado .link-item {
-            background-color: var(--color-primario);
-        }
-        .tema-azul-claro .barra-busqueda input,
-        .tema-azul-claro .form-container input[type="text"],
-        .tema-azul-claro .filtros select,
-        .tema-azul-claro .categoria h2,
-        .tema-azul-claro .separador,
-        .tema-azul-claro .boton-agregar,
-        .tema-azul-claro .puntuacion button,
-        .tema-azul-claro .deporte-selector select,
-        .tema-azul-claro .idioma-selector select,
-        .tema-azul-claro .color-picker input[type="color"],
-        .tema-azul-claro .color-picker input[type="text"] {
-            border-color: var(--color-primario);
-            color: var(--color-primario);
-        }
-        .tema-azul-claro .link-item {
-            background-color: var(--color-primario);
-        }
-        .tema-rojo-claro .barra-busqueda input,
-        .tema-rojo-claro .form-container input[type="text"],
-        .tema-rojo-claro .filtros select,
-        .tema-rojo-claro .categoria h2,
-        .tema-rojo-claro .separador,
-        .tema-rojo-claro .boton-agregar,
-        .tema-rojo-claro .puntuacion button,
-        .tema-rojo-claro .deporte-selector select,
-        .tema-rojo-claro .idioma-selector select,
-        .tema-rojo-claro .color-picker input[type="color"],
-        .tema-rojo-claro .color-picker input[type="text"] {
-            border-color: var(--color-primario);
-            color: var(--color-primario);
-        }
-        .tema-rojo-claro .link-item {
-            background-color: var(--color-primario);
-        }
-        .tema-verde-claro .barra-busqueda input,
-        .tema-verde-claro .form-container input[type="text"],
-        .tema-verde-claro .filtros select,
-        .tema-verde-claro .categoria h2,
-        .tema-verde-claro .separador,
-        .tema-verde-claro .boton-agregar,
-        .tema-verde-claro .puntuacion button,
-        .tema-verde-claro .deporte-selector select,
-        .tema-verde-claro .idioma-selector select,
-        .tema-verde-claro .color-picker input[type="color"],
-        .tema-verde-claro .color-picker input[type="text"] {
-            border-color: var(--color-primario);
-            color: var(--color-primario);
-        }
-        .tema-verde-claro .link-item {
-            background-color: var(--color-primario);
-        }
-        .tema-morado-claro .barra-busqueda input,
-        .tema-morado-claro .form-container input[type="text"],
-        .tema-morado-claro .filtros select,
-        .tema-morado-claro .categoria h2,
-        .tema-morado-claro .separador,
-        .tema-morado-claro .boton-agregar,
-        .tema-morado-claro .puntuacion button,
-        .tema-morado-claro .deporte-selector select,
-        .tema-morado-claro .idioma-selector select,
-        .tema-morado-claro .color-picker input[type="color"],
-        .tema-morado-claro .color-picker input[type="text"] {
-            border-color: var(--color-primario);
-            color: var(--color-primario);
-        }
-        .tema-morado-claro .link-item {
-            background-color: var(--color-primario);
-        }
-        .boton-agregar {
+
+        [class^="tema-"] .boton-agregar {
             background-color: var(--color-primario);
             color: white;
         }
-        .boton-agregar {
+
+        [class^="tema-"] .boton-agregar {
             color: white !important;
         }
-        .filtros select {
+
+        [class^="tema-"] .filtros select {
             color: white !important;
         }
+
         .modal-importar {
             position: fixed;
             top: 50%;
@@ -625,9 +491,7 @@
             resize: vertical;
             min-height: 250px;
             max-height: 80vh;
-            position: sticky;
-            top: 60px;
-            z-index: 100;
+            position: relative;
             border: 15px solid rgba(30, 30, 30, 0.2);
             margin-left: 0;
         }
@@ -651,25 +515,16 @@
             border: none;
         }
         .boton-cerrar-reproductor {
-            width: 30px;
-            height: 30px;
-            padding: 0;
+            width: 100%;
+            padding: 8px;
             background-color: #CF6679;
             color: white;
             border: none;
-            border-radius: 50%;
+            border-radius: 4px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 14px;
+            margin-bottom: 20px;
             display: none;
-            position: sticky;
-            top: 20px;
-            z-index: 101;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-left: auto;
-            margin-right: 0;
         }
         .boton-cerrar-reproductor:hover {
             background-color: #9e4a5a;
@@ -678,10 +533,10 @@
 </head>
 <body class="tema-morado">
     <div class="container">
-        <button class="boton-cerrar-reproductor" id="botonCerrarReproductor" onclick="cerrarReproductor()" style="display: none;">×</button>
         <div class="reproductor" id="reproductor">
             <iframe id="videoFrame" src="" allowfullscreen></iframe>
         </div>
+        <button class="boton-cerrar-reproductor" id="botonCerrarReproductor" onclick="cerrarReproductor()">Cerrar Reproductor</button>
 
         <button class="boton-ajustes" onclick="mostrarMenuAjustes()">⚙️</button>
         <div class="menu-ajustes" id="menuAjustes">
@@ -828,11 +683,16 @@
                 </div>
 
                 <div class="toggle-icono">
-                    <select id="tipoEnlace">
-                        <option value="web">Vía WEB</option>
-                        <option value="acestream">Vía Acestream</option>
-                        <option value="fuentes">FUENTES</option>
-                    </select>
+                    <div class="checkbox-container">
+                        <div class="icono">🅰️</div>
+                        <label for="mostrarIcono"></label>
+                        <input type="checkbox" id="mostrarIcono">
+                    </div>
+                    <div class="checkbox-container">
+                        <div class="icono">🌐</div>
+                        <label for="mostrarMulti"></label>
+                        <input type="checkbox" id="mostrarMulti">
+                    </div>
                 </div>
             </div>
 
@@ -861,6 +721,7 @@
             reproductor.style.height = alturaReproductor;
             botonCerrar.style.display = 'block';
             
+            // Guardar la altura cuando el usuario la cambie
             reproductor.addEventListener('mouseup', function() {
                 alturaReproductor = reproductor.style.height;
                 localStorage.setItem('alturaReproductor', alturaReproductor);
@@ -1012,11 +873,9 @@
             const deporte = document.getElementById('deporte').value;
             const color = document.getElementById('codigoColor').value;
             const idioma = document.getElementById('idioma').value;
-            const tipoEnlace = document.getElementById('tipoEnlace').value;
+            const mostrarIcono = document.getElementById('mostrarIcono').checked;
+            const mostrarMulti = document.getElementById('mostrarMulti').checked;
             const puntuacion = puntuacionSeleccionada;
-
-            const mostrarIcono = tipoEnlace === 'acestream';
-            const mostrarMulti = tipoEnlace === 'fuentes';
 
             if (link && title) {
                 if (indiceEdicion !== null) {
@@ -1055,10 +914,8 @@
             document.getElementById('color').value = enlace.color;
             document.getElementById('codigoColor').value = enlace.color;
             document.getElementById('idioma').value = enlace.idioma;
-            
-            const tipoEnlace = enlace.mostrarMulti ? 'fuentes' : enlace.mostrarIcono ? 'acestream' : 'web';
-            document.getElementById('tipoEnlace').value = tipoEnlace;
-            
+            document.getElementById('mostrarIcono').checked = enlace.mostrarIcono;
+            document.getElementById('mostrarMulti').checked = enlace.mostrarMulti;
             seleccionarPuntuacion(enlace.puntuacion);
 
             mostrarFormulario();
@@ -1211,7 +1068,7 @@
 
                     localStorage.setItem('enlaces', JSON.stringify(enlacesGuardados));
                     mostrarEnlaces();
-                    mostrarNotificacion('Enlaces importados correctamente. Se han descartados duplicados.');
+                    mostrarNotificacion('Enlaces importados correctamente. Se han descartado duplicados.');
                 } catch (error) {
                     mostrarNotificacion('El archivo no es válido.');
                 }
@@ -1247,7 +1104,7 @@
 
                     localStorage.setItem('enlaces', JSON.stringify(enlacesGuardados));
                     mostrarEnlaces();
-                    mostrarNotificacion('Enlaces importados correctamente. Se han descartados duplicados.');
+                    mostrarNotificacion('Enlaces importados correctamente. Se han descartado duplicados.');
                     cerrarModalImportar();
                 } catch (error) {
                     mostrarNotificacion('El texto no es válido. Asegúrate de pegar un JSON correcto.');
@@ -1294,25 +1151,6 @@
         function mostrarMenuAjustes() {
             const menuAjustes = document.getElementById('menuAjustes');
             menuAjustes.classList.toggle('mostrar');
-            
-            // Cerrar menú al hacer clic fuera
-            if (menuAjustes.classList.contains('mostrar')) {
-                setTimeout(() => {
-                    document.addEventListener('click', cerrarMenuSiClickFuera);
-                }, 0);
-            } else {
-                document.removeEventListener('click', cerrarMenuSiClickFuera);
-            }
-        }
-
-        function cerrarMenuSiClickFuera(event) {
-            const menuAjustes = document.getElementById('menuAjustes');
-            const botonAjustes = document.querySelector('.boton-ajustes');
-            
-            if (!menuAjustes.contains(event.target) && !botonAjustes.contains(event.target)) {
-                menuAjustes.classList.remove('mostrar');
-                document.removeEventListener('click', cerrarMenuSiClickFuera);
-            }
         }
 
         let contadorClicks = 0;
@@ -1341,5 +1179,7 @@
 
         document.querySelector('.boton-ajustes').addEventListener('click', manejarClicksAjustes);
     </script>
+</body>
+</html>ipt>
 </body>
 </html>
