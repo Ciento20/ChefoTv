@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🧔 Chefo TV 📺</title>
     <style>
-        /* Estilos generales */
         body {
             font-family: Arial, sans-serif;
             margin: 10px;
             padding: 0;
             background-color: #121212;
             color: #FFFFFF;
+            --color-primario: #BB86FC;
         }
         .container {
             max-width: 1200px;
@@ -34,7 +34,7 @@
         }
         .categoria h2 {
             font-size: 18px;
-            color: #BB86FC;
+            color: var(--color-primario);
             margin-bottom: 10px;
             display: flex;
             align-items: center;
@@ -86,7 +86,7 @@
             font-size: 14px;
             position: relative;
             box-sizing: border-box;
-            background-color: #BB86FC;
+            background-color: var(--color-primario);
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
         }
         .link-item:hover {
@@ -133,7 +133,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: #370083;
+            background-color: var(--color-primario);
             color: white;
             border: none;
             border-radius: 50%;
@@ -149,7 +149,7 @@
         .form-container {
             margin-top: 20px;
             padding-top: 20px;
-            border-top: 2px solid #370083;
+            border-top: 2px solid var(--color-primario);
             display: none;
         }
         .form-container.mostrar {
@@ -159,7 +159,7 @@
             width: 100%;
             padding: 8px;
             margin: 8px 0;
-            border: 1px solid #BB86FC;
+            border: 1px solid var(--color-primario);
             border-radius: 4px;
             background-color: #121212;
             color: #FFFFFF;
@@ -180,14 +180,14 @@
             width: 30px;
             height: 30px;
             padding: 3px;
-            border: 2px solid #BB86FC;
+            border: 2px solid var(--color-primario);
             border-radius: 6px;
             cursor: pointer;
         }
         .color-picker input[type="text"] {
             width: 70px;
             padding: 6px;
-            border: 1px solid #BB86FC;
+            border: 1px solid var(--color-primario);
             border-radius: 4px;
             background-color: #121212;
             color: #FFFFFF;
@@ -196,7 +196,7 @@
         .deporte-selector select {
             width: auto;
             padding: 8px;
-            border: 2px solid #BB86FC;
+            border: 2px solid var(--color-primario);
             border-radius: 6px;
             cursor: pointer;
             background-color: #121212;
@@ -206,7 +206,7 @@
         .idioma-selector select {
             width: auto;
             padding: 8px;
-            border: 2px solid #BB86FC;
+            border: 2px solid var(--color-primario);
             border-radius: 6px;
             cursor: pointer;
             background-color: #121212;
@@ -237,12 +237,12 @@
             width: 16px;
             height: 16px;
             cursor: pointer;
-            accent-color: #BB86FC;
+            accent-color: var(--color-primario);
         }
         button {
             width: 100%;
             padding: 8px;
-            background-color: #370083;
+            background-color: var(--color-primario);
             color: white;
             border: none;
             border-radius: 4px;
@@ -253,7 +253,7 @@
             background-color: #200;
         }
         .boton-exportar {
-            background-color: #BB86FC;
+            background-color: var(--color-primario);
             margin-top: 8px;
         }
         .boton-exportar:hover {
@@ -275,23 +275,19 @@
         }
         .separador {
             margin: 20px 0;
-            border: 1px solid #370083;
+            border: 1px solid var(--color-primario);
         }
         .notificacion {
             position: fixed;
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background-color: #370083;
+            background-color: var(--color-primario);
             color: white;
             padding: 10px 20px;
             border-radius: 5px;
             display: none;
             z-index: 1000;
-        }
-        .notificacion.mostrar {
-            display: block;
-            animation: fadeInOut 3s ease-in-out;
         }
         @keyframes fadeInOut {
             0%, 100% { opacity: 0; }
@@ -303,7 +299,7 @@
         .barra-busqueda input {
             width: 100%;
             padding: 10px;
-            border: 1px solid #BB86FC;
+            border: 1px solid var(--color-primario);
             border-radius: 4px;
             background-color: #121212;
             color: #FFFFFF;
@@ -322,7 +318,7 @@
         .filtros select {
             flex: 1;
             padding: 10px;
-            border: 1px solid #BB86FC;
+            border: 1px solid var(--color-primario);
             border-radius: 4px;
             background-color: #121212;
             color: #FFFFFF;
@@ -354,7 +350,7 @@
             border: none;
             font-size: 24px;
             cursor: pointer;
-            color: #BB86FC;
+            color: var(--color-primario);
             width: 40px;
             height: 40px;
             display: flex;
@@ -369,7 +365,7 @@
             position: absolute;
             top: 60px;
             left: 20px;
-            background-color: #370083;
+            background-color: var(--color-primario);
             border-radius: 8px;
             padding: 10px;
             z-index: 1000;
@@ -383,207 +379,17 @@
             width: 100%;
             margin: 5px 0;
         }
-        .selector-tema {
-            margin-bottom: 10px;
-        }
-        .selector-tema select {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #BB86FC;
-            border-radius: 4px;
-            background-color: #121212;
-            color: #FFFFFF;
-            font-size: 14px;
-        }
         .selector-apertura-enlaces {
             margin-bottom: 10px;
         }
         .selector-apertura-enlaces select {
             width: 100%;
             padding: 8px;
-            border: 1px solid #BB86FC;
+            border: 1px solid var(--color-primario);
             border-radius: 4px;
             background-color: #121212;
             color: #FFFFFF;
             font-size: 14px;
-        }
-        .tema-azul {
-            --color-primario: #2196F3;
-        }
-        .tema-rojo {
-            --color-primario: #F44336;
-        }
-        .tema-verde {
-            --color-primario: #4CAF50;
-        }
-        .tema-morado {
-            --color-primario: #6A1B9A;
-        }
-        .tema-azul-claro {
-            --color-primario: #2196F3;
-            background-color: #FFFFFF;
-            color: #000000;
-        }
-        .tema-rojo-claro {
-            --color-primario: #F44336;
-            background-color: #FFFFFF;
-            color: #000000;
-        }
-        .tema-verde-claro {
-            --color-primario: #4CAF50;
-            background-color: #FFFFFF;
-            color: #000000;
-        }
-        .tema-morado-claro {
-            --color-primario: #6A1B9A;
-            background-color: #FFFFFF;
-            color: #000000;
-        }
-        .tema-azul .barra-busqueda input,
-        .tema-azul .form-container input[type="text"],
-        .tema-azul .filtros select,
-        .tema-azul .categoria h2,
-        .tema-azul .separador,
-        .tema-azul .boton-agregar,
-        .tema-azul .puntuacion button,
-        .tema-azul .deporte-selector select,
-        .tema-azul .idioma-selector select,
-        .tema-azul .color-picker input[type="color"],
-        .tema-azul .color-picker input[type="text"] {
-            border-color: var(--color-primario);
-            color: var(--color-primario);
-        }
-        .tema-azul .link-item {
-            background-color: var(--color-primario);
-        }
-        .tema-rojo .barra-busqueda input,
-        .tema-rojo .form-container input[type="text"],
-        .tema-rojo .filtros select,
-        .tema-rojo .categoria h2,
-        .tema-rojo .separador,
-        .tema-rojo .boton-agregar,
-        .tema-rojo .puntuacion button,
-        .tema-rojo .deporte-selector select,
-        .tema-rojo .idioma-selector select,
-        .tema-rojo .color-picker input[type="color"],
-        .tema-rojo .color-picker input[type="text"] {
-            border-color: var(--color-primario);
-            color: var(--color-primario);
-        }
-        .tema-rojo .link-item {
-            background-color: var(--color-primario);
-        }
-        .tema-verde .barra-busqueda input,
-        .tema-verde .form-container input[type="text"],
-        .tema-verde .filtros select,
-        .tema-verde .categoria h2,
-        .tema-verde .separador,
-        .tema-verde .boton-agregar,
-        .tema-verde .puntuacion button,
-        .tema-verde .deporte-selector select,
-        .tema-verde .idioma-selector select,
-        .tema-verde .color-picker input[type="color"],
-        .tema-verde .color-picker input[type="text"] {
-            border-color: var(--color-primario);
-            color: var(--color-primario);
-        }
-        .tema-verde .link-item {
-            background-color: var(--color-primario);
-        }
-        .tema-morado .barra-busqueda input,
-        .tema-morado .form-container input[type="text"],
-        .tema-morado .filtros select,
-        .tema-morado .categoria h2,
-        .tema-morado .separador,
-        .tema-morado .boton-agregar,
-        .tema-morado .puntuacion button,
-        .tema-morado .deporte-selector select,
-        .tema-morado .idioma-selector select,
-        .tema-morado .color-picker input[type="color"],
-        .tema-morado .color-picker input[type="text"] {
-            border-color: var(--color-primario);
-            color: var(--color-primario);
-        }
-        .tema-morado .link-item {
-            background-color: var(--color-primario);
-        }
-        .tema-azul-claro .barra-busqueda input,
-        .tema-azul-claro .form-container input[type="text"],
-        .tema-azul-claro .filtros select,
-        .tema-azul-claro .categoria h2,
-        .tema-azul-claro .separador,
-        .tema-azul-claro .boton-agregar,
-        .tema-azul-claro .puntuacion button,
-        .tema-azul-claro .deporte-selector select,
-        .tema-azul-claro .idioma-selector select,
-        .tema-azul-claro .color-picker input[type="color"],
-        .tema-azul-claro .color-picker input[type="text"] {
-            border-color: var(--color-primario);
-            color: var(--color-primario);
-        }
-        .tema-azul-claro .link-item {
-            background-color: var(--color-primario);
-        }
-        .tema-rojo-claro .barra-busqueda input,
-        .tema-rojo-claro .form-container input[type="text"],
-        .tema-rojo-claro .filtros select,
-        .tema-rojo-claro .categoria h2,
-        .tema-rojo-claro .separador,
-        .tema-rojo-claro .boton-agregar,
-        .tema-rojo-claro .puntuacion button,
-        .tema-rojo-claro .deporte-selector select,
-        .tema-rojo-claro .idioma-selector select,
-        .tema-rojo-claro .color-picker input[type="color"],
-        .tema-rojo-claro .color-picker input[type="text"] {
-            border-color: var(--color-primario);
-            color: var(--color-primario);
-        }
-        .tema-rojo-claro .link-item {
-            background-color: var(--color-primario);
-        }
-        .tema-verde-claro .barra-busqueda input,
-        .tema-verde-claro .form-container input[type="text"],
-        .tema-verde-claro .filtros select,
-        .tema-verde-claro .categoria h2,
-        .tema-verde-claro .separador,
-        .tema-verde-claro .boton-agregar,
-        .tema-verde-claro .puntuacion button,
-        .tema-verde-claro .deporte-selector select,
-        .tema-verde-claro .idioma-selector select,
-        .tema-verde-claro .color-picker input[type="color"],
-        .tema-verde-claro .color-picker input[type="text"] {
-            border-color: var(--color-primario);
-            color: var(--color-primario);
-        }
-        .tema-verde-claro .link-item {
-            background-color: var(--color-primario);
-        }
-        .tema-morado-claro .barra-busqueda input,
-        .tema-morado-claro .form-container input[type="text"],
-        .tema-morado-claro .filtros select,
-        .tema-morado-claro .categoria h2,
-        .tema-morado-claro .separador,
-        .tema-morado-claro .boton-agregar,
-        .tema-morado-claro .puntuacion button,
-        .tema-morado-claro .deporte-selector select,
-        .tema-morado-claro .idioma-selector select,
-        .tema-morado-claro .color-picker input[type="color"],
-        .tema-morado-claro .color-picker input[type="text"] {
-            border-color: var(--color-primario);
-            color: var(--color-primario);
-        }
-        .tema-morado-claro .link-item {
-            background-color: var(--color-primario);
-        }
-        .boton-agregar {
-            background-color: var(--color-primario);
-            color: white;
-        }
-        .boton-agregar {
-            color: white !important;
-        }
-        .filtros select {
-            color: white !important;
         }
         .modal-importar {
             position: fixed;
@@ -602,7 +408,7 @@
             margin-bottom: 10px;
             background-color: #121212;
             color: #FFFFFF;
-            border: 1px solid #BB86FC;
+            border: 1px solid var(--color-primario);
             border-radius: 4px;
             padding: 8px;
         }
@@ -702,7 +508,7 @@
             background-color: #FFC000;
         }
         .boton-limpiar-filtros {
-            background-color: #BB86FC;
+            background-color: var(--color-primario);
             padding: 0;
             width: 40px;
             height: 40px;
@@ -768,7 +574,7 @@
         }
     </style>
 </head>
-<body class="tema-morado">
+<body>
     <div class="container">
         <button class="boton-cerrar-reproductor" id="botonCerrarReproductor" onclick="cerrarReproductor()" style="display: none;">×</button>
         <div class="reproductor" id="reproductor">
@@ -777,18 +583,6 @@
 
         <button class="boton-ajustes" onclick="mostrarMenuAjustes()">⚙️</button>
         <div class="menu-ajustes" id="menuAjustes">
-            <div class="selector-tema">
-                <select id="selectorTema" onchange="cambiarTema()">
-                    <option value="morado">Morado</option>
-                    <option value="azul">Azul</option>
-                    <option value="rojo">Rojo</option>
-                    <option value="verde">Verde</option>
-                    <option value="morado-claro">Morado (Fondo blanco)</option>
-                    <option value="azul-claro">Azul (Fondo blanco)</option>
-                    <option value="rojo-claro">Rojo (Fondo blanco)</option>
-                    <option value="verde-claro">Verde (Fondo blanco)</option>
-                </select>
-            </div>
             <div class="selector-apertura-enlaces">
                 <select id="selectorApertura" onchange="cambiarAperturaEnlaces()">
                     <option value="nueva-pestaña">Abrir en otra pestaña</option>
@@ -968,11 +762,112 @@
         let modoApertura = localStorage.getItem('modoApertura') || 'nueva-pestaña';
         let alturaReproductor = localStorage.getItem('alturaReproductor') || '250px';
         let mostrarSoloFavoritos = localStorage.getItem('mostrarSoloFavoritos') === 'true';
-        let filtrosEstado = JSON.parse(localStorage.getItem('filtrosEstado')) || {
-            busqueda: '',
-            deporte: '',
-            idioma: ''
+        
+        const iconosDeporte = {
+            f1: '🏎️', futbol: '⚽', nba: '🏀', tenis: '🎾', nascar: '🚗',
+            indy: '🚙', motogp: '🏍️', wec: '🏁', rugby: '🏉', ciclismo: '🚴',
+            boxeo: '🥊', mma: '🥋', esports: '🎮', otros: '🏅'
         };
+        
+        const banderasIdioma = {
+            ES: '🇪🇦', EN: '🇬🇧', FR: '🇫🇷', DE: '🇩🇪', OT: '🏳️‍⚧️'
+        };
+
+        function filtrarEnlaces() {
+            const busqueda = document.getElementById('busqueda').value.toLowerCase();
+            const filtroDeporte = document.getElementById('filtroDeporte').value;
+            const filtroIdioma = document.getElementById('filtroIdioma').value;
+
+            const linkList = document.getElementById('linkList');
+            const acestreamList = document.getElementById('acestreamList');
+            const multiList = document.getElementById('multiList');
+            
+            linkList.innerHTML = '';
+            acestreamList.innerHTML = '';
+            multiList.innerHTML = '';
+
+            enlacesGuardados.forEach((item, index) => {
+                if (mostrarSoloFavoritos && !item.favorito) return;
+                
+                const titulo = item.title.toLowerCase();
+                const webName = item.webName ? item.webName.toLowerCase() : '';
+                const cumpleBusqueda = titulo.includes(busqueda) || webName.includes(busqueda);
+                const cumpleDeporte = !filtroDeporte || item.deporte === filtroDeporte;
+                const cumpleIdioma = !filtroIdioma || item.idioma === filtroIdioma;
+                
+                if (!cumpleBusqueda || !cumpleDeporte || !cumpleIdioma) return;
+
+                const linkItem = document.createElement('div');
+                linkItem.className = 'link-item';
+                linkItem.style.backgroundColor = item.color;
+                linkItem.onclick = () => {
+                    if (indiceCambiar !== null) {
+                        cambiarPosicion(index);
+                    } else {
+                        const categoria = item.mostrarIcono ? 'acestream' : item.mostrarMulti ? 'fuentes' : 'web';
+                        manejarClicEnlace(item.link, categoria);
+                    }
+                };
+
+                linkItem.innerHTML = `
+                    <button class="boton-favorito" onclick="toggleFavorito(${index}, event)">${item.favorito ? '★' : '☆'}</button>
+                    <div style="font-size:24px">${iconosDeporte[item.deporte]}</div>
+                    <div>${item.title}</div>
+                    ${item.webName ? `<div>${item.webName}</div>` : ''}
+                    <div>${banderasIdioma[item.idioma]}</div>
+                    <div>${'✭'.repeat(item.puntuacion) + '☆'.repeat(5 - item.puntuacion)}</div>
+                    ${(item.etiquetas || []).map(etiqueta => `<span class="etiqueta">${etiqueta}</span>`).join('')}
+                    <div class="menu-contextual">
+                        <button onclick="event.stopPropagation(); editarEnlace(${index})">✏️ Editar</button>
+                        <button onclick="event.stopPropagation(); borrarEnlace(${index})">🗑️ Borrar</button>
+                        <button onclick="event.stopPropagation(); cambiarPosicion(${index})">🔄 Cambiar</button>
+                    </div>
+                `;
+
+                if (item.mostrarIcono) {
+                    acestreamList.appendChild(linkItem);
+                } else if (item.mostrarMulti) {
+                    multiList.appendChild(linkItem);
+                } else {
+                    linkList.appendChild(linkItem);
+                }
+
+                linkItem.addEventListener('contextmenu', (e) => {
+                    e.preventDefault();
+                    linkItem.classList.add('mostrar-menu');
+                });
+
+                document.addEventListener('click', (e) => {
+                    if (!linkItem.contains(e.target)) {
+                        linkItem.classList.remove('mostrar-menu');
+                    }
+                });
+            });
+        }
+
+        function filtrarFavoritos() {
+            mostrarSoloFavoritos = !mostrarSoloFavoritos;
+            localStorage.setItem('mostrarSoloFavoritos', mostrarSoloFavoritos);
+            document.querySelector('.boton-favoritos').textContent = mostrarSoloFavoritos ? 'Mostrar todos' : 'Mostrar solo favoritos';
+            filtrarEnlaces();
+        }
+
+        function toggleFavorito(index, event) {
+            event.stopPropagation();
+            enlacesGuardados[index].favorito = !enlacesGuardados[index].favorito;
+            localStorage.setItem('enlaces', JSON.stringify(enlacesGuardados));
+            filtrarEnlaces();
+        }
+
+        function limpiarFiltros() {
+            document.getElementById('busqueda').value = '';
+            document.getElementById('filtroDeporte').value = '';
+            document.getElementById('filtroIdioma').value = '';
+            mostrarSoloFavoritos = false;
+            localStorage.setItem('mostrarSoloFavoritos', false);
+            document.querySelector('.boton-favoritos').textContent = 'Mostrar solo favoritos';
+            filtrarEnlaces();
+        }
 
         function togglePantallaCompleta() {
             if (!document.fullscreenElement) {
@@ -986,21 +881,6 @@
             }
         }
 
-        // Configurar eventos para las etiquetas
-        document.addEventListener('DOMContentLoaded', function() {
-            const etiquetasOpciones = document.querySelectorAll('.etiquetas-opciones input[type="checkbox"]');
-            etiquetasOpciones.forEach(checkbox => {
-                checkbox.addEventListener('change', function() {
-                    const label = this.parentElement;
-                    if (this.checked) {
-                        label.classList.add('seleccionada');
-                    } else {
-                        label.classList.remove('seleccionada');
-                    }
-                });
-            });
-        });
-
         function reproducirEnlace(url) {
             const videoFrame = document.getElementById('videoFrame');
             const reproductor = document.getElementById('reproductor');
@@ -1011,7 +891,7 @@
             reproductor.style.height = alturaReproductor;
             botonCerrar.style.display = 'block';
             
-            reproductor.addEventListener('mouseup', function() {
+            reproductor.addEventListener('pointerup', function() {
                 alturaReproductor = reproductor.style.height;
                 localStorage.setItem('alturaReproductor', alturaReproductor);
             });
@@ -1087,64 +967,6 @@
             guardarEstadoCategorias();
         }
 
-        function cambiarTema() {
-            const selector = document.getElementById('selectorTema');
-            const temaSeleccionado = selector.value;
-            document.body.className = `tema-${temaSeleccionado}`;
-            localStorage.setItem('tema', temaSeleccionado);
-
-            const botonesToggle = document.querySelectorAll('.toggle-categoria');
-            botonesToggle.forEach((boton) => {
-                boton.style.color = `var(--color-primario)`;
-            });
-        }
-
-        function guardarEstadoFiltros() {
-            filtrosEstado = {
-                busqueda: document.getElementById('busqueda').value,
-                deporte: document.getElementById('filtroDeporte').value,
-                idioma: document.getElementById('filtroIdioma').value
-            };
-            localStorage.setItem('filtrosEstado', JSON.stringify(filtrosEstado));
-        }
-
-        function cargarEstadoFiltros() {
-            if (filtrosEstado) {
-                document.getElementById('busqueda').value = filtrosEstado.busqueda || '';
-                document.getElementById('filtroDeporte').value = filtrosEstado.deporte || '';
-                document.getElementById('filtroIdioma').value = filtrosEstado.idioma || '';
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const temaGuardado = localStorage.getItem('tema');
-            if (temaGuardado) {
-                document.body.className = `tema-${temaGuardado}`;
-                const selector = document.getElementById('selectorTema');
-                selector.value = temaGuardado;
-            } else {
-                document.body.className = 'tema-morado';
-                const selector = document.getElementById('selectorTema');
-                selector.value = 'morado';
-            }
-
-            const modoAperturaGuardado = localStorage.getItem('modoApertura');
-            if (modoAperturaGuardado) {
-                modoApertura = modoAperturaGuardado;
-                const selectorApertura = document.getElementById('selectorApertura');
-                selectorApertura.value = modoApertura;
-            }
-
-            cargarEstadoCategorias();
-            cargarEstadoFiltros();
-            mostrarEnlaces();
-            filtrarEnlaces();
-
-            if (mostrarSoloFavoritos) {
-                document.querySelector('.boton-favoritos').textContent = 'Mostrar todos';
-            }
-        });
-
         function mostrarFormulario() {
             const formContainer = document.getElementById('formContainer');
             const botonAgregar = document.getElementById('botonAgregar');
@@ -1155,8 +977,8 @@
         function mostrarNotificacion(mensaje) {
             const notificacion = document.getElementById('notificacion');
             notificacion.textContent = mensaje;
-            notificacion.classList.add('mostrar');
-            setTimeout(() => notificacion.classList.remove('mostrar'), 3000);
+            notificacion.style.display = 'block';
+            setTimeout(() => notificacion.style.display = 'none', 3000);
         }
 
         function actualizarCodigoColor() {
@@ -1258,24 +1080,10 @@
                 establecerEtiquetasSeleccionadas([]);
                 mostrarFormulario();
                 localStorage.setItem('enlaces', JSON.stringify(enlacesGuardados));
-                mostrarEnlaces();
+                filtrarEnlaces();
             } else {
                 mostrarNotificacion('Por favor, ingresa un enlace y un título.');
             }
-        }
-
-        function toggleFavorito(index, event) {
-            event.stopPropagation();
-            enlacesGuardados[index].favorito = !enlacesGuardados[index].favorito;
-            localStorage.setItem('enlaces', JSON.stringify(enlacesGuardados));
-            mostrarEnlaces();
-        }
-
-        function filtrarFavoritos() {
-            mostrarSoloFavoritos = !mostrarSoloFavoritos;
-            localStorage.setItem('mostrarSoloFavoritos', mostrarSoloFavoritos);
-            document.querySelector('.boton-favoritos').textContent = mostrarSoloFavoritos ? 'Mostrar todos' : 'Mostrar solo favoritos';
-            mostrarEnlaces();
         }
 
         function editarEnlace(index) {
@@ -1316,99 +1124,17 @@
                 enlacesGuardados.splice(nuevaPosicion, 0, enlaceMovido);
 
                 localStorage.setItem('enlaces', JSON.stringify(enlacesGuardados));
-                mostrarEnlaces();
+                filtrarEnlaces();
                 mostrarNotificacion('Enlace movido correctamente.');
                 indiceCambiar = null;
             }
-        }
-
-        function mostrarEnlaces() {
-            const linkList = document.getElementById('linkList');
-            const acestreamList = document.getElementById('acestreamList');
-            const multiList = document.getElementById('multiList');
-            linkList.innerHTML = '';
-            acestreamList.innerHTML = '';
-            multiList.innerHTML = '';
-
-            enlacesGuardados.forEach((item, index) => {
-                if (mostrarSoloFavoritos && !item.favorito) return;
-
-                const linkItem = document.createElement('div');
-                linkItem.className = 'link-item';
-                linkItem.style.backgroundColor = item.color;
-                linkItem.onclick = () => {
-                    if (indiceCambiar !== null) {
-                        cambiarPosicion(index);
-                    } else {
-                        const categoria = item.mostrarIcono ? 'acestream' : item.mostrarMulti ? 'fuentes' : 'web';
-                        manejarClicEnlace(item.link, categoria);
-                    }
-                };
-
-                const icono = {
-                    f1: '🏎️',
-                    futbol: '⚽',
-                    nba: '🏀',
-                    tenis: '🎾',
-                    nascar: '🚗',
-                    indy: '🚙',
-                    motogp: '🏍️',
-                    wec: '🏁',
-                    rugby: '🏉',
-                    ciclismo: '🚴',
-                    boxeo: '🥊',
-                    mma: '🥋',
-                    esports: '🎮',
-                    otros: '🏅'
-                }[item.deporte];
-
-                const bandera = { ES: '🇪🇦', EN: '🇬🇧', FR: '🇫🇷', DE: '🇩🇪', OT: '🏳️‍⚧️' }[item.idioma];
-
-                const puntuacion = '✭'.repeat(item.puntuacion) + '☆'.repeat(5 - item.puntuacion);
-                
-                const etiquetasHTML = (item.etiquetas || []).map(etiqueta => `<span class="etiqueta">${etiqueta}</span>`).join('');
-
-                linkItem.innerHTML = `
-                    <button class="boton-favorito" onclick="toggleFavorito(${index}, event)">${item.favorito ? '★' : '☆'}</button>
-                    <div style="font-size: 24px;">${icono}</div>
-                    <div>${item.title}</div>
-                    ${item.webName ? `<div>${item.webName}</div>` : ''}
-                    <div>${bandera}</div>
-                    <div>${puntuacion}</div>
-                    ${etiquetasHTML ? `<div class="etiquetas">${etiquetasHTML}</div>` : ''}
-                    <div class="menu-contextual">
-                        <button onclick="event.stopPropagation(); editarEnlace(${index})">✏️ Editar</button>
-                        <button onclick="event.stopPropagation(); borrarEnlace(${index})">🗑️ Borrar</button>
-                        <button onclick="event.stopPropagation(); cambiarPosicion(${index})">🔄 Cambiar</button>
-                    </div>
-                `;
-
-                if (item.mostrarIcono) {
-                    acestreamList.appendChild(linkItem);
-                } else if (item.mostrarMulti) {
-                    multiList.appendChild(linkItem);
-                } else {
-                    linkList.appendChild(linkItem);
-                }
-
-                linkItem.addEventListener('contextmenu', (e) => {
-                    e.preventDefault();
-                    linkItem.classList.add('mostrar-menu');
-                });
-
-                document.addEventListener('click', (e) => {
-                    if (!linkItem.contains(e.target)) {
-                        linkItem.classList.remove('mostrar-menu');
-                    }
-                });
-            });
         }
 
         function borrarEnlace(index) {
             if (confirm('¿Estás seguro de que quieres eliminar este enlace?')) {
                 enlacesGuardados.splice(index, 1);
                 localStorage.setItem('enlaces', JSON.stringify(enlacesGuardados));
-                mostrarEnlaces();
+                filtrarEnlaces();
                 mostrarNotificacion('Enlace eliminado correctamente.');
             }
         }
@@ -1420,7 +1146,7 @@
                 localStorage.setItem('mostrarSoloFavoritos', false);
                 mostrarSoloFavoritos = false;
                 document.querySelector('.boton-favoritos').textContent = 'Mostrar solo favoritos';
-                mostrarEnlaces();
+                filtrarEnlaces();
                 mostrarNotificacion('Todos los enlaces han sido borrados.');
             }
         }
@@ -1459,7 +1185,7 @@
                     });
 
                     localStorage.setItem('enlaces', JSON.stringify(enlacesGuardados));
-                    mostrarEnlaces();
+                    filtrarEnlaces();
                     mostrarNotificacion('Enlaces importados correctamente. Se han descartados duplicados.');
                 } catch (error) {
                     mostrarNotificacion('El archivo no es válido.');
@@ -1499,7 +1225,7 @@
                     });
 
                     localStorage.setItem('enlaces', JSON.stringify(enlacesGuardados));
-                    mostrarEnlaces();
+                    filtrarEnlaces();
                     mostrarNotificacion('Enlaces importados correctamente. Se han descartados duplicados.');
                     cerrarModalImportar();
                 } catch (error) {
@@ -1508,52 +1234,6 @@
             } else {
                 mostrarNotificacion('No se ha pegado ningún texto.');
             }
-        }
-
-        function limpiarFiltros() {
-            document.getElementById('busqueda').value = '';
-            document.getElementById('filtroDeporte').value = '';
-            document.getElementById('filtroIdioma').value = '';
-            guardarEstadoFiltros();
-            filtrarEnlaces();
-            mostrarNotificacion('Filtros limpiados correctamente.');
-        }
-
-        function filtrarEnlaces() {
-            const busqueda = document.getElementById('busqueda').value.toLowerCase();
-            const filtroDeporte = document.getElementById('filtroDeporte').value;
-            const filtroIdioma = document.getElementById('filtroIdioma').value;
-            const enlaces = document.querySelectorAll('.link-item');
-
-            guardarEstadoFiltros();
-
-            enlaces.forEach((enlace) => {
-                const titulo = enlace.querySelector('div:nth-child(3)').textContent.toLowerCase();
-                const webName = enlace.querySelector('div:nth-child(4)') ? enlace.querySelector('div:nth-child(4)').textContent.toLowerCase() : '';
-                const deporte = enlace.querySelector('div:nth-child(2)').textContent;
-                const idioma = enlace.querySelector('div:nth-child(4)') ? enlace.querySelector('div:nth-child(5)').textContent : enlace.querySelector('div:nth-child(4)').textContent;
-
-                const coincideBusqueda = titulo.includes(busqueda) || webName.includes(busqueda);
-                const coincideDeporte = !filtroDeporte || deporte.includes({
-                    f1: '🏎️',
-                    futbol: '⚽',
-                    nba: '🏀',
-                    tenis: '🎾',
-                    nascar: '🚗',
-                    indy: '🚙',
-                    motogp: '🏍️',
-                    wec: '🏁',
-                    rugby: '🏉',
-                    ciclismo: '🚴',
-                    boxeo: '🥊',
-                    mma: '🥋',
-                    esports: '🎮',
-                    otros: '🏅'
-                }[filtroDeporte]);
-                const coincideIdioma = !filtroIdioma || idioma.includes({ ES: '🇪🇦', EN: '🇬🇧', FR: '🇫🇷', DE: '🇩🇪', OT: '🏳️‍⚧️' }[filtroIdioma]);
-
-                enlace.style.display = coincideBusqueda && coincideDeporte && coincideIdioma ? 'flex' : 'none';
-            });
         }
 
         function mostrarMenuAjustes() {
@@ -1602,6 +1282,21 @@
             titulo.style.opacity = 1;
             botonAgregar.style.opacity = 1;
         }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const modoAperturaGuardado = localStorage.getItem('modoApertura');
+            if (modoAperturaGuardado) {
+                modoApertura = modoAperturaGuardado;
+                document.getElementById('selectorApertura').value = modoApertura;
+            }
+
+            cargarEstadoCategorias();
+            filtrarEnlaces();
+
+            if (mostrarSoloFavoritos) {
+                document.querySelector('.boton-favoritos').textContent = 'Mostrar todos';
+            }
+        });
 
         document.querySelector('.boton-ajustes').addEventListener('click', manejarClicksAjustes);
     </script>
