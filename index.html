@@ -759,6 +759,13 @@
         .etiqueta-opcion.seleccionada {
             background-color: var(--color-primario);
         }
+        .boton-pantalla-completa {
+            background-color: #4CAF50;
+            margin-top: 8px;
+        }
+        .boton-pantalla-completa:hover {
+            background-color: #3e8e41;
+        }
     </style>
 </head>
 <body class="tema-morado">
@@ -789,6 +796,7 @@
                     <option value="todo-reproductor">Abrir todo en reproductor</option>
                 </select>
             </div>
+            <button class="boton-pantalla-completa" onclick="togglePantallaCompleta()">Pantalla Completa</button>
             <button class="boton-exportar" onclick="exportarEnlaces()">Exportar Enlaces</button>
             <button class="boton-importar" onclick="document.getElementById('fileInput').click()">Importar Enlaces</button>
             <button class="boton-importar" onclick="importarDesdeTexto()">Importar Pegando Texto</button>
@@ -959,12 +967,24 @@
         let puntuacionSeleccionada = 0;
         let modoApertura = localStorage.getItem('modoApertura') || 'nueva-pestaña';
         let alturaReproductor = localStorage.getItem('alturaReproductor') || '250px';
-        let mostrarSoloFavoritos = false;
+        let mostrarSoloFavoritos = localStorage.getItem('mostrarSoloFavoritos') === 'true';
         let filtrosEstado = JSON.parse(localStorage.getItem('filtrosEstado')) || {
             busqueda: '',
             deporte: '',
             idioma: ''
         };
+
+        function togglePantallaCompleta() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    mostrarNotificacion(`Error al activar pantalla completa: ${err.message}`);
+                });
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
 
         // Configurar eventos para las etiquetas
         document.addEventListener('DOMContentLoaded', function() {
@@ -1119,6 +1139,10 @@
             cargarEstadoFiltros();
             mostrarEnlaces();
             filtrarEnlaces();
+
+            if (mostrarSoloFavoritos) {
+                document.querySelector('.boton-favoritos').textContent = 'Mostrar todos';
+            }
         });
 
         function mostrarFormulario() {
@@ -1249,6 +1273,7 @@
 
         function filtrarFavoritos() {
             mostrarSoloFavoritos = !mostrarSoloFavoritos;
+            localStorage.setItem('mostrarSoloFavoritos', mostrarSoloFavoritos);
             document.querySelector('.boton-favoritos').textContent = mostrarSoloFavoritos ? 'Mostrar todos' : 'Mostrar solo favoritos';
             mostrarEnlaces();
         }
@@ -1392,6 +1417,9 @@
             if (confirm('¿Estás seguro de que quieres borrar todos los enlaces? Esta acción no se puede deshacer.')) {
                 enlacesGuardados = [];
                 localStorage.setItem('enlaces', JSON.stringify(enlacesGuardados));
+                localStorage.setItem('mostrarSoloFavoritos', false);
+                mostrarSoloFavoritos = false;
+                document.querySelector('.boton-favoritos').textContent = 'Mostrar solo favoritos';
                 mostrarEnlaces();
                 mostrarNotificacion('Todos los enlaces han sido borrados.');
             }
