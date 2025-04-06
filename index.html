@@ -592,7 +592,7 @@
         .boton-pantalla-completa:hover {
             background-color: #3e8e41;
         }
-        /* Estilo modificado para el botón de subir */
+        /* Estilo modificado para el botón de subir con opacidad al 100% */
         .boton-subir {
             position: fixed;
             bottom: 20px;
@@ -609,7 +609,7 @@
             align-items: center;
             justify-content: center;
             z-index: 999;
-            opacity: 0.7;
+            opacity: 1;
             transition: opacity 0.3s;
             box-shadow: 0 2px 5px rgba(0,0,0,0.3);
         }
@@ -802,7 +802,7 @@
 
     <div class="notificacion" id="notificacion"></div>
 
-    <!-- Botón para subir al inicio (modificado) -->
+    <!-- Botón para subir al inicio con opacidad al 100% -->
     <button class="boton-subir" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑</button>
 
     <script>
