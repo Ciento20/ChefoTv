@@ -825,6 +825,15 @@
             ES: '🇪🇦', EN: '🇬🇧', FR: '🇫🇷', DE: '🇩🇪', OT: '🏳️‍⚧️'
         };
 
+        // Función para alternar favoritos
+        function toggleFavorito(index, event) {
+            event.stopPropagation(); // Previene que el clic se propague al contenedor
+            enlacesGuardados[index].favorito = !enlacesGuardados[index].favorito;
+            localStorage.setItem('enlaces', JSON.stringify(enlacesGuardados));
+            filtrarEnlaces();
+            mostrarNotificacion(enlacesGuardados[index].favorito ? 'Añadido a favoritos' : 'Eliminado de favoritos');
+        }
+
         function filtrarEnlaces() {
             const busqueda = document.getElementById('busqueda').value.toLowerCase();
             const filtroDeporte = document.getElementById('filtroDeporte').value;
