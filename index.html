@@ -365,11 +365,12 @@
             position: absolute;
             top: 60px;
             left: 20px;
-            background-color: var(--color-primario);
+            background-color: #333333;
             border-radius: 8px;
             padding: 10px;
             z-index: 1000;
             width: 200px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
         }
         .menu-ajustes.mostrar {
             display: block;
@@ -458,6 +459,15 @@
             height: 100%;
             border: none;
         }
+        .controles-reproductor {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            position: sticky;
+            top: 20px;
+            z-index: 101;
+            margin-bottom: 10px;
+        }
         .boton-cerrar-reproductor {
             width: 30px;
             height: 30px;
@@ -469,18 +479,28 @@
             cursor: pointer;
             font-size: 16px;
             display: none;
-            position: sticky;
-            top: 20px;
-            z-index: 101;
-            margin-bottom: 10px;
-            display: flex;
             align-items: center;
             justify-content: center;
-            margin-left: auto;
-            margin-right: 0;
         }
         .boton-cerrar-reproductor:hover {
             background-color: #9e4a5a;
+        }
+        .boton-refrescar-reproductor {
+            width: 30px;
+            height: 30px;
+            padding: 0;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+        .boton-refrescar-reproductor:hover {
+            background-color: #3e8e41;
         }
         .boton-favorito {
             position: absolute;
@@ -572,11 +592,39 @@
         .boton-pantalla-completa:hover {
             background-color: #3e8e41;
         }
+        /* Estilo modificado para el botón de subir */
+        .boton-subir {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background-color: var(--color-primario);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        
+        .boton-subir:hover {
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <button class="boton-cerrar-reproductor" id="botonCerrarReproductor" onclick="cerrarReproductor()" style="display: none;">×</button>
+        <div class="controles-reproductor">
+            <button class="boton-refrescar-reproductor" id="botonRefrescarReproductor" onclick="refrescarReproductor()" style="display: none;">↻</button>
+            <button class="boton-cerrar-reproductor" id="botonCerrarReproductor" onclick="cerrarReproductor()" style="display: none;">×</button>
+        </div>
         <div class="reproductor" id="reproductor">
             <iframe id="videoFrame" src="" allowfullscreen></iframe>
         </div>
@@ -754,6 +802,9 @@
 
     <div class="notificacion" id="notificacion"></div>
 
+    <!-- Botón para subir al inicio (modificado) -->
+    <button class="boton-subir" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑</button>
+
     <script>
         let enlacesGuardados = JSON.parse(localStorage.getItem('enlaces')) || [];
         let indiceEdicion = null;
@@ -762,6 +813,7 @@
         let modoApertura = localStorage.getItem('modoApertura') || 'nueva-pestaña';
         let alturaReproductor = localStorage.getItem('alturaReproductor') || '250px';
         let mostrarSoloFavoritos = localStorage.getItem('mostrarSoloFavoritos') === 'true';
+        let currentVideoUrl = '';
         
         const iconosDeporte = {
             f1: '🏎️', futbol: '⚽', nba: '🏀', tenis: '🎾', nascar: '🚗',
@@ -845,17 +897,18 @@
             });
         }
 
+        function refrescarReproductor() {
+            if (currentVideoUrl) {
+                const videoFrame = document.getElementById('videoFrame');
+                videoFrame.src = currentVideoUrl;
+                mostrarNotificacion('Reproductor refrescado');
+            }
+        }
+
         function filtrarFavoritos() {
             mostrarSoloFavoritos = !mostrarSoloFavoritos;
             localStorage.setItem('mostrarSoloFavoritos', mostrarSoloFavoritos);
             document.querySelector('.boton-favoritos').textContent = mostrarSoloFavoritos ? 'Mostrar todos' : 'Mostrar solo favoritos';
-            filtrarEnlaces();
-        }
-
-        function toggleFavorito(index, event) {
-            event.stopPropagation();
-            enlacesGuardados[index].favorito = !enlacesGuardados[index].favorito;
-            localStorage.setItem('enlaces', JSON.stringify(enlacesGuardados));
             filtrarEnlaces();
         }
 
@@ -882,14 +935,17 @@
         }
 
         function reproducirEnlace(url) {
+            currentVideoUrl = url;
             const videoFrame = document.getElementById('videoFrame');
             const reproductor = document.getElementById('reproductor');
             const botonCerrar = document.getElementById('botonCerrarReproductor');
+            const botonRefrescar = document.getElementById('botonRefrescarReproductor');
 
             videoFrame.src = url;
             reproductor.style.display = 'block';
             reproductor.style.height = alturaReproductor;
-            botonCerrar.style.display = 'block';
+            botonCerrar.style.display = 'flex';
+            botonRefrescar.style.display = 'flex';
             
             reproductor.addEventListener('pointerup', function() {
                 alturaReproductor = reproductor.style.height;
@@ -901,10 +957,13 @@
             const videoFrame = document.getElementById('videoFrame');
             const reproductor = document.getElementById('reproductor');
             const botonCerrar = document.getElementById('botonCerrarReproductor');
+            const botonRefrescar = document.getElementById('botonRefrescarReproductor');
 
             videoFrame.src = '';
             reproductor.style.display = 'none';
             botonCerrar.style.display = 'none';
+            botonRefrescar.style.display = 'none';
+            currentVideoUrl = '';
         }
 
         function cambiarAperturaEnlaces() {
