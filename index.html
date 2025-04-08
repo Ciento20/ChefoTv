@@ -78,7 +78,7 @@
             align-items: center;
             justify-content: center;
             color: #FFFFFF;
-            border: none;
+            border: 2px solid var(--color-primario);
             border-radius: 8px;
             cursor: pointer;
             text-align: center;
@@ -86,7 +86,7 @@
             font-size: 14px;
             position: relative;
             box-sizing: border-box;
-            background-color: var(--color-primario);
+            background-color: #1E1E1E;
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
         }
         .link-item:hover {
@@ -860,7 +860,7 @@
 
                 const linkItem = document.createElement('div');
                 linkItem.className = 'link-item';
-                linkItem.style.backgroundColor = item.color;
+                linkItem.style.borderColor = item.color;
                 linkItem.onclick = () => {
                     if (indiceCambiar !== null) {
                         cambiarPosicion(index);
