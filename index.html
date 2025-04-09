@@ -250,28 +250,35 @@
             font-size: 14px;
         }
         button:hover {
-            background-color: #200;
+            opacity: 0.9;
         }
         .boton-exportar {
-            background-color: var(--color-primario);
+            background-color: #4CAF50;
             margin-top: 8px;
         }
         .boton-exportar:hover {
-            background-color: #370083;
+            background-color: #3e8e41;
         }
         .boton-importar {
-            background-color: #CF6679;
+            background-color: #2196F3;
             margin-top: 8px;
         }
         .boton-importar:hover {
-            background-color: #9e4a5a;
+            background-color: #0b7dda;
+        }
+        .boton-importar-texto {
+            background-color: #673AB7;
+            margin-top: 8px;
+        }
+        .boton-importar-texto:hover {
+            background-color: #5e35b1;
         }
         .boton-borrar-todo {
-            background-color: #ff4444;
+            background-color: #f44336;
             margin-top: 8px;
         }
         .boton-borrar-todo:hover {
-            background-color: #cc0000;
+            background-color: #d32f2f;
         }
         .separador {
             margin: 20px 0;
@@ -586,13 +593,12 @@
             background-color: var(--color-primario);
         }
         .boton-pantalla-completa {
-            background-color: #4CAF50;
+            background-color: #9C27B0;
             margin-top: 8px;
         }
         .boton-pantalla-completa:hover {
-            background-color: #3e8e41;
+            background-color: #7B1FA2;
         }
-        /* Estilo modificado para el botón de subir con opacidad al 100% */
         .boton-subir {
             position: fixed;
             bottom: 20px;
@@ -617,6 +623,53 @@
         .boton-subir:hover {
             opacity: 1;
         }
+
+        /* Estilos para agrupación por títulos */
+        .titulo-container {
+            margin-bottom: 15px;
+            background-color: rgba(30, 30, 30, 0.3);
+            padding: 10px;
+            border-radius: 8px;
+            width: 100%;
+        }
+
+        .titulo-container h3 {
+            padding: 5px 10px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            color: var(--color-primario);
+            margin: 0 0 5px 0;
+            cursor: pointer;
+        }
+
+        .titulo-container h3::before {
+            content: "▶";
+            margin-right: 8px;
+            font-size: 12px;
+            transition: transform 0.2s;
+        }
+
+        .titulo-container h3.cerrado::before {
+            transform: rotate(90deg);
+        }
+
+        .titulo-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            transition: max-height 0.3s ease;
+            overflow: hidden;
+        }
+
+        .boton-agrupar {
+            background-color: #FF9800;
+            margin-top: 8px;
+        }
+
+        .boton-agrupar:hover {
+            background-color: #F57C00;
+        }
     </style>
 </head>
 <body>
@@ -639,9 +692,10 @@
                 </select>
             </div>
             <button class="boton-pantalla-completa" onclick="togglePantallaCompleta()">Pantalla Completa</button>
+            <button class="boton-agrupar" onclick="alternarAgrupacion()" id="botonAgrupar">Agrupar por título</button>
             <button class="boton-exportar" onclick="exportarEnlaces()">Exportar Enlaces</button>
             <button class="boton-importar" onclick="document.getElementById('fileInput').click()">Importar Enlaces</button>
-            <button class="boton-importar" onclick="importarDesdeTexto()">Importar Pegando Texto</button>
+            <button class="boton-importar-texto" onclick="importarDesdeTexto()">Importar Pegando Texto</button>
             <button class="boton-borrar-todo" onclick="borrarTodosLosEnlaces()">Borrar Todos los Enlaces</button>
             <button class="boton-favoritos" onclick="filtrarFavoritos()">Mostrar solo favoritos</button>
         </div>
@@ -802,7 +856,6 @@
 
     <div class="notificacion" id="notificacion"></div>
 
-    <!-- Botón para subir al inicio con opacidad al 100% -->
     <button class="boton-subir" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑</button>
 
     <script>
@@ -813,6 +866,7 @@
         let modoApertura = localStorage.getItem('modoApertura') || 'nueva-pestaña';
         let alturaReproductor = localStorage.getItem('alturaReproductor') || '250px';
         let mostrarSoloFavoritos = localStorage.getItem('mostrarSoloFavoritos') === 'true';
+        let agrupacionActivada = localStorage.getItem('agrupacionActivada') === 'true';
         let currentVideoUrl = '';
         
         const iconosDeporte = {
@@ -825,9 +879,15 @@
             ES: '🇪🇦', EN: '🇬🇧', FR: '🇫🇷', DE: '🇩🇪', OT: '🏳️‍⚧️'
         };
 
-        // Función para alternar favoritos
+        function alternarAgrupacion() {
+            agrupacionActivada = !agrupacionActivada;
+            localStorage.setItem('agrupacionActivada', agrupacionActivada);
+            document.getElementById('botonAgrupar').textContent = agrupacionActivada ? 'Desagrupar' : 'Agrupar por título';
+            filtrarEnlaces();
+        }
+
         function toggleFavorito(index, event) {
-            event.stopPropagation(); // Previene que el clic se propague al contenedor
+            event.stopPropagation();
             enlacesGuardados[index].favorito = !enlacesGuardados[index].favorito;
             localStorage.setItem('enlaces', JSON.stringify(enlacesGuardados));
             filtrarEnlaces();
@@ -835,6 +895,14 @@
         }
 
         function filtrarEnlaces() {
+            if (agrupacionActivada) {
+                filtrarEnlacesAgrupados();
+            } else {
+                filtrarEnlacesNormales();
+            }
+        }
+
+        function filtrarEnlacesNormales() {
             const busqueda = document.getElementById('busqueda').value.toLowerCase();
             const filtroDeporte = document.getElementById('filtroDeporte').value;
             const filtroIdioma = document.getElementById('filtroIdioma').value;
@@ -903,6 +971,177 @@
                         linkItem.classList.remove('mostrar-menu');
                     }
                 });
+            });
+        }
+
+        function filtrarEnlacesAgrupados() {
+            const busqueda = document.getElementById('busqueda').value.toLowerCase();
+            const filtroDeporte = document.getElementById('filtroDeporte').value;
+            const filtroIdioma = document.getElementById('filtroIdioma').value;
+
+            const linkList = document.getElementById('linkList');
+            const acestreamList = document.getElementById('acestreamList');
+            const multiList = document.getElementById('multiList');
+            
+            linkList.innerHTML = '';
+            acestreamList.innerHTML = '';
+            multiList.innerHTML = '';
+
+            // Agrupar enlaces por título
+            const enlacesPorTitulo = {};
+            
+            enlacesGuardados.forEach((item, index) => {
+                if (mostrarSoloFavoritos && !item.favorito) return;
+                
+                const titulo = item.title.toLowerCase();
+                const webName = item.webName ? item.webName.toLowerCase() : '';
+                const cumpleBusqueda = titulo.includes(busqueda) || webName.includes(busqueda);
+                const cumpleDeporte = !filtroDeporte || item.deporte === filtroDeporte;
+                const cumpleIdioma = !filtroIdioma || item.idioma === filtroIdioma;
+                
+                if (!cumpleBusqueda || !cumpleDeporte || !cumpleIdioma) return;
+
+                const tituloGrupo = item.title;
+                
+                if (!enlacesPorTitulo[tituloGrupo]) {
+                    enlacesPorTitulo[tituloGrupo] = [];
+                }
+                
+                enlacesPorTitulo[tituloGrupo].push({item, index});
+            });
+
+            // Crear contenedores para cada título
+            Object.entries(enlacesPorTitulo).forEach(([tituloGrupo, enlaces]) => {
+                // Solo agrupar si hay más de un enlace con el mismo título
+                if (enlaces.length > 1) {
+                    // Crear contenedor del título
+                    const tituloContainer = document.createElement('div');
+                    tituloContainer.className = 'titulo-container';
+                    
+                    // Crear título del grupo
+                    const tituloElement = document.createElement('h3');
+                    tituloElement.textContent = tituloGrupo;
+                    tituloElement.onclick = () => {
+                        const lista = tituloContainer.querySelector('.titulo-links');
+                        if (lista.style.display === 'none') {
+                            lista.style.display = 'flex';
+                            tituloElement.classList.remove('cerrado');
+                        } else {
+                            lista.style.display = 'none';
+                            tituloElement.classList.add('cerrado');
+                        }
+                    };
+                    
+                    // Crear lista de enlaces del título
+                    const tituloLinks = document.createElement('div');
+                    tituloLinks.className = 'titulo-links';
+                    tituloLinks.style.display = 'flex';
+                    tituloLinks.style.flexWrap = 'wrap';
+                    tituloLinks.style.gap = '10px';
+                    
+                    // Añadir enlaces al contenedor del título
+                    enlaces.forEach(({item, index}) => {
+                        const linkItem = document.createElement('div');
+                        linkItem.className = 'link-item';
+                        linkItem.style.borderColor = item.color;
+                        linkItem.onclick = () => {
+                            if (indiceCambiar !== null) {
+                                cambiarPosicion(index);
+                            } else {
+                                const categoria = item.mostrarIcono ? 'acestream' : item.mostrarMulti ? 'fuentes' : 'web';
+                                manejarClicEnlace(item.link, categoria);
+                            }
+                        };
+
+                        linkItem.innerHTML = `
+                            <button class="boton-favorito" onclick="toggleFavorito(${index}, event)">${item.favorito ? '★' : '☆'}</button>
+                            <div style="font-size:24px">${iconosDeporte[item.deporte]}</div>
+                            <div>${item.webName || 'Sin web especificada'}</div>
+                            <div>${banderasIdioma[item.idioma]}</div>
+                            <div>${'✭'.repeat(item.puntuacion) + '☆'.repeat(5 - item.puntuacion)}</div>
+                            ${(item.etiquetas || []).map(etiqueta => `<span class="etiqueta">${etiqueta}</span>`).join('')}
+                            <div class="menu-contextual">
+                                <button onclick="event.stopPropagation(); editarEnlace(${index})">✏️ Editar</button>
+                                <button onclick="event.stopPropagation(); borrarEnlace(${index})">🗑️ Borrar</button>
+                                <button onclick="event.stopPropagation(); cambiarPosicion(${index})">🔄 Cambiar</button>
+                            </div>
+                        `;
+
+                        linkItem.addEventListener('contextmenu', (e) => {
+                            e.preventDefault();
+                            linkItem.classList.add('mostrar-menu');
+                        });
+
+                        document.addEventListener('click', (e) => {
+                            if (!linkItem.contains(e.target)) {
+                                linkItem.classList.remove('mostrar-menu');
+                            }
+                        });
+
+                        tituloLinks.appendChild(linkItem);
+                    });
+                    
+                    tituloContainer.appendChild(tituloElement);
+                    tituloContainer.appendChild(tituloLinks);
+                    
+                    // Añadir el contenedor del título a la lista correspondiente
+                    const primerEnlace = enlaces[0].item;
+                    if (primerEnlace.mostrarIcono) {
+                        acestreamList.appendChild(tituloContainer);
+                    } else if (primerEnlace.mostrarMulti) {
+                        multiList.appendChild(tituloContainer);
+                    } else {
+                        linkList.appendChild(tituloContainer);
+                    }
+                } else {
+                    // Si solo hay un enlace con este título, mostrarlo normalmente
+                    const {item, index} = enlaces[0];
+                    const linkItem = document.createElement('div');
+                    linkItem.className = 'link-item';
+                    linkItem.style.borderColor = item.color;
+                    linkItem.onclick = () => {
+                        if (indiceCambiar !== null) {
+                            cambiarPosicion(index);
+                        } else {
+                            const categoria = item.mostrarIcono ? 'acestream' : item.mostrarMulti ? 'fuentes' : 'web';
+                            manejarClicEnlace(item.link, categoria);
+                        }
+                    };
+
+                    linkItem.innerHTML = `
+                        <button class="boton-favorito" onclick="toggleFavorito(${index}, event)">${item.favorito ? '★' : '☆'}</button>
+                        <div style="font-size:24px">${iconosDeporte[item.deporte]}</div>
+                        <div>${item.title}</div>
+                        ${item.webName ? `<div>${item.webName}</div>` : ''}
+                        <div>${banderasIdioma[item.idioma]}</div>
+                        <div>${'✭'.repeat(item.puntuacion) + '☆'.repeat(5 - item.puntuacion)}</div>
+                        ${(item.etiquetas || []).map(etiqueta => `<span class="etiqueta">${etiqueta}</span>`).join('')}
+                        <div class="menu-contextual">
+                            <button onclick="event.stopPropagation(); editarEnlace(${index})">✏️ Editar</button>
+                            <button onclick="event.stopPropagation(); borrarEnlace(${index})">🗑️ Borrar</button>
+                            <button onclick="event.stopPropagation(); cambiarPosicion(${index})">🔄 Cambiar</button>
+                        </div>
+                    `;
+
+                    if (item.mostrarIcono) {
+                        acestreamList.appendChild(linkItem);
+                    } else if (item.mostrarMulti) {
+                        multiList.appendChild(linkItem);
+                    } else {
+                        linkList.appendChild(linkItem);
+                    }
+
+                    linkItem.addEventListener('contextmenu', (e) => {
+                        e.preventDefault();
+                        linkItem.classList.add('mostrar-menu');
+                    });
+
+                    document.addEventListener('click', (e) => {
+                        if (!linkItem.contains(e.target)) {
+                            linkItem.classList.remove('mostrar-menu');
+                        }
+                    });
+                }
             });
         }
 
@@ -1363,6 +1602,11 @@
 
             if (mostrarSoloFavoritos) {
                 document.querySelector('.boton-favoritos').textContent = 'Mostrar todos';
+            }
+
+            if (localStorage.getItem('agrupacionActivada') === 'true') {
+                document.getElementById('botonAgrupar').textContent = 'Desagrupar';
+                agrupacionActivada = true;
             }
         });
 
