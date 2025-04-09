@@ -987,8 +987,15 @@
             acestreamList.innerHTML = '';
             multiList.innerHTML = '';
 
-            // Agrupar enlaces por título
-            const enlacesPorTitulo = {};
+            // Cargar estados de grupos guardados
+            const estadosGrupos = JSON.parse(localStorage.getItem('estadosGrupos')) || {};
+
+            // Agrupar enlaces por sección y título
+            const enlacesPorSeccionYTitulo = {
+                web: {},
+                acestream: {},
+                fuentes: {}
+            };
             
             enlacesGuardados.forEach((item, index) => {
                 if (mostrarSoloFavoritos && !item.favorito) return;
@@ -1002,15 +1009,22 @@
                 if (!cumpleBusqueda || !cumpleDeporte || !cumpleIdioma) return;
 
                 const tituloGrupo = item.title;
+                const seccion = item.mostrarIcono ? 'acestream' : item.mostrarMulti ? 'fuentes' : 'web';
                 
-                if (!enlacesPorTitulo[tituloGrupo]) {
-                    enlacesPorTitulo[tituloGrupo] = [];
+                if (!enlacesPorSeccionYTitulo[seccion][tituloGrupo]) {
+                    enlacesPorSeccionYTitulo[seccion][tituloGrupo] = [];
                 }
                 
-                enlacesPorTitulo[tituloGrupo].push({item, index});
+                enlacesPorSeccionYTitulo[seccion][tituloGrupo].push({item, index});
             });
 
-            // Crear contenedores para cada título
+            // Procesar cada sección por separado
+            procesarSeccion('web', linkList, enlacesPorSeccionYTitulo.web, estadosGrupos);
+            procesarSeccion('acestream', acestreamList, enlacesPorSeccionYTitulo.acestream, estadosGrupos);
+            procesarSeccion('fuentes', multiList, enlacesPorSeccionYTitulo.fuentes, estadosGrupos);
+        }
+
+        function procesarSeccion(seccion, contenedor, enlacesPorTitulo, estadosGrupos) {
             Object.entries(enlacesPorTitulo).forEach(([tituloGrupo, enlaces]) => {
                 // Solo agrupar si hay más de un enlace con el mismo título
                 if (enlaces.length > 1) {
@@ -1021,21 +1035,36 @@
                     // Crear título del grupo
                     const tituloElement = document.createElement('h3');
                     tituloElement.textContent = tituloGrupo;
+                    
+                    // Verificar si hay un estado guardado para este grupo
+                    const grupoKey = `${seccion}-${tituloGrupo}`;
+                    const estadoGuardado = estadosGrupos[grupoKey];
+                    const inicialmenteCerrado = estadoGuardado !== undefined ? estadoGuardado : false;
+                    
+                    if (inicialmenteCerrado) {
+                        tituloElement.classList.add('cerrado');
+                    }
+                    
                     tituloElement.onclick = () => {
                         const lista = tituloContainer.querySelector('.titulo-links');
                         if (lista.style.display === 'none') {
                             lista.style.display = 'flex';
                             tituloElement.classList.remove('cerrado');
+                            // Actualizar estado en localStorage
+                            estadosGrupos[grupoKey] = false;
                         } else {
                             lista.style.display = 'none';
                             tituloElement.classList.add('cerrado');
+                            // Actualizar estado en localStorage
+                            estadosGrupos[grupoKey] = true;
                         }
+                        localStorage.setItem('estadosGrupos', JSON.stringify(estadosGrupos));
                     };
                     
                     // Crear lista de enlaces del título
                     const tituloLinks = document.createElement('div');
                     tituloLinks.className = 'titulo-links';
-                    tituloLinks.style.display = 'flex';
+                    tituloLinks.style.display = inicialmenteCerrado ? 'none' : 'flex';
                     tituloLinks.style.flexWrap = 'wrap';
                     tituloLinks.style.gap = '10px';
                     
@@ -1084,15 +1113,7 @@
                     tituloContainer.appendChild(tituloElement);
                     tituloContainer.appendChild(tituloLinks);
                     
-                    // Añadir el contenedor del título a la lista correspondiente
-                    const primerEnlace = enlaces[0].item;
-                    if (primerEnlace.mostrarIcono) {
-                        acestreamList.appendChild(tituloContainer);
-                    } else if (primerEnlace.mostrarMulti) {
-                        multiList.appendChild(tituloContainer);
-                    } else {
-                        linkList.appendChild(tituloContainer);
-                    }
+                    contenedor.appendChild(tituloContainer);
                 } else {
                     // Si solo hay un enlace con este título, mostrarlo normalmente
                     const {item, index} = enlaces[0];
@@ -1123,13 +1144,7 @@
                         </div>
                     `;
 
-                    if (item.mostrarIcono) {
-                        acestreamList.appendChild(linkItem);
-                    } else if (item.mostrarMulti) {
-                        multiList.appendChild(linkItem);
-                    } else {
-                        linkList.appendChild(linkItem);
-                    }
+                    contenedor.appendChild(linkItem);
 
                     linkItem.addEventListener('contextmenu', (e) => {
                         e.preventDefault();
