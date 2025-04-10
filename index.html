@@ -624,42 +624,77 @@
             opacity: 1;
         }
 
-        /* Estilos para agrupación por títulos */
+        /* Estilos mejorados para agrupación por títulos */
         .titulo-container {
             margin-bottom: 15px;
             background-color: rgba(30, 30, 30, 0.3);
-            padding: 10px;
+            padding: 0;
             border-radius: 8px;
             width: 100%;
+            border: 1px solid var(--color-primario);
+            overflow: hidden;
         }
 
         .titulo-container h3 {
-            padding: 5px 10px;
+            padding: 10px 15px;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: white;
+            cursor: pointer;
+            background-color: rgba(187, 134, 252, 0.1);
+            transition: background-color 0.3s ease;
+        }
+
+        .titulo-container h3:hover {
+            background-color: rgba(187, 134, 252, 0.2);
+        }
+
+        .titulo-info {
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+            font-weight: bold;
+        }
+
+        .titulo-controles {
+            display: flex;
+            gap: 8px;
+            margin-left: 10px;
+        }
+
+        .titulo-controles button {
+            width: 24px;
+            height: 24px;
+            padding: 0;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
             border-radius: 4px;
             display: flex;
             align-items: center;
-            color: var(--color-primario);
-            margin: 0 0 5px 0;
-            cursor: pointer;
-        }
-
-        .titulo-container h3::before {
-            content: "▶";
-            margin-right: 8px;
+            justify-content: center;
             font-size: 12px;
-            transition: transform 0.2s;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
         }
 
-        .titulo-container h3.cerrado::before {
-            transform: rotate(90deg);
+        .titulo-controles button:hover {
+            background: rgba(255, 255, 255, 0.2);
         }
 
         .titulo-links {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
-            transition: max-height 0.3s ease;
-            overflow: hidden;
+            padding: 15px;
+            background-color: rgba(30, 30, 30, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .titulo-links.cerrado {
+            display: none;
         }
 
         .boton-agrupar {
@@ -1034,39 +1069,28 @@
                     
                     // Crear título del grupo
                     const tituloElement = document.createElement('h3');
-                    tituloElement.textContent = tituloGrupo;
+                    const grupoKey = `${seccion}-${tituloGrupo}`;
+                    tituloElement.dataset.grupo = grupoKey;
+                    
+                    tituloElement.innerHTML = `
+                        <span class="titulo-info">${tituloGrupo}</span>
+                        <span class="titulo-controles">
+                            <button onclick="event.stopPropagation(); agregarEnlaceAGrupo('${seccion}', '${tituloGrupo}')" title="Añadir enlace">+</button>
+                            <button onclick="event.stopPropagation(); expandirColapsarGrupo(this)" title="Expandir/Colapsar">▼</button>
+                        </span>
+                    `;
                     
                     // Verificar si hay un estado guardado para este grupo
-                    const grupoKey = `${seccion}-${tituloGrupo}`;
                     const estadoGuardado = estadosGrupos[grupoKey];
                     const inicialmenteCerrado = estadoGuardado !== undefined ? estadoGuardado : false;
-                    
-                    if (inicialmenteCerrado) {
-                        tituloElement.classList.add('cerrado');
-                    }
-                    
-                    tituloElement.onclick = () => {
-                        const lista = tituloContainer.querySelector('.titulo-links');
-                        if (lista.style.display === 'none') {
-                            lista.style.display = 'flex';
-                            tituloElement.classList.remove('cerrado');
-                            // Actualizar estado en localStorage
-                            estadosGrupos[grupoKey] = false;
-                        } else {
-                            lista.style.display = 'none';
-                            tituloElement.classList.add('cerrado');
-                            // Actualizar estado en localStorage
-                            estadosGrupos[grupoKey] = true;
-                        }
-                        localStorage.setItem('estadosGrupos', JSON.stringify(estadosGrupos));
-                    };
                     
                     // Crear lista de enlaces del título
                     const tituloLinks = document.createElement('div');
                     tituloLinks.className = 'titulo-links';
-                    tituloLinks.style.display = inicialmenteCerrado ? 'none' : 'flex';
-                    tituloLinks.style.flexWrap = 'wrap';
-                    tituloLinks.style.gap = '10px';
+                    if (inicialmenteCerrado) {
+                        tituloLinks.classList.add('cerrado');
+                        tituloElement.querySelector('.titulo-controles button:nth-child(2)').textContent = '▶';
+                    }
                     
                     // Añadir enlaces al contenedor del título
                     enlaces.forEach(({item, index}) => {
@@ -1113,6 +1137,22 @@
                     tituloContainer.appendChild(tituloElement);
                     tituloContainer.appendChild(tituloLinks);
                     
+                    // Manejar clic en el título del grupo
+                    tituloElement.onclick = () => {
+                        const lista = tituloContainer.querySelector('.titulo-links');
+                        const boton = tituloElement.querySelector('.titulo-controles button:nth-child(2)');
+                        lista.classList.toggle('cerrado');
+                        
+                        if (lista.classList.contains('cerrado')) {
+                            boton.textContent = '▶';
+                        } else {
+                            boton.textContent = '▼';
+                        }
+                        
+                        estadosGrupos[grupoKey] = lista.classList.contains('cerrado');
+                        localStorage.setItem('estadosGrupos', JSON.stringify(estadosGrupos));
+                    };
+                    
                     contenedor.appendChild(tituloContainer);
                 } else {
                     // Si solo hay un enlace con este título, mostrarlo normalmente
@@ -1158,6 +1198,33 @@
                     });
                 }
             });
+        }
+
+        function agregarEnlaceAGrupo(seccion, tituloGrupo) {
+            mostrarFormulario();
+            document.getElementById('tipoEnlace').value = seccion === 'acestream' ? 'acestream' : seccion === 'fuentes' ? 'fuentes' : 'web';
+            document.getElementById('title').value = tituloGrupo;
+            mostrarNotificacion(`Añadiendo enlace al grupo: ${tituloGrupo}`);
+        }
+
+        function expandirColapsarGrupo(boton) {
+            const tituloElement = boton.closest('h3');
+            const tituloContainer = tituloElement.closest('.titulo-container');
+            const lista = tituloContainer.querySelector('.titulo-links');
+            const grupoKey = tituloElement.dataset.grupo;
+            
+            lista.classList.toggle('cerrado');
+            
+            if (lista.classList.contains('cerrado')) {
+                boton.textContent = '▶';
+            } else {
+                boton.textContent = '▼';
+            }
+            
+            // Actualizar estado en localStorage
+            const estadosGrupos = JSON.parse(localStorage.getItem('estadosGrupos')) || {};
+            estadosGrupos[grupoKey] = lista.classList.contains('cerrado');
+            localStorage.setItem('estadosGrupos', JSON.stringify(estadosGrupos));
         }
 
         function refrescarReproductor() {
@@ -1628,4 +1695,4 @@
         document.querySelector('.boton-ajustes').addEventListener('click', manejarClicksAjustes);
     </script>
 </body>
-</html>
+</html> 
