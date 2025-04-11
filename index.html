@@ -430,6 +430,8 @@
         .modal-importar button:hover {
             opacity: 0.8;
         }
+        
+        /* REPRODUCTOR CON BORDE ORIGINAL Y ANIMACIONES DE TV */
         .reproductor {
             width: 92%;
             height: 250px;
@@ -451,44 +453,72 @@
             opacity: 1;
         }
 
-        .reproductor.mostrar {
-            display: block;
-            animation: fadeIn 0.3s ease;
+        /* Efecto de encendido de TV */
+        @keyframes tvTurnOn {
+            0% {
+                opacity: 0;
+                transform: scale(0.8) translateY(-20px);
+            }
+            20% {
+                opacity: 0.3;
+            }
+            40% {
+                opacity: 0.7;
+            }
+            60% {
+                opacity: 0.9;
+            }
+            80% {
+                transform: scale(1.02);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* Efecto de apagado de TV */
+        @keyframes tvTurnOff {
+            0% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+            20% {
+                opacity: 0.8;
+                transform: scale(0.98);
+            }
+            40% {
+                opacity: 0.6;
+            }
+            60% {
+                opacity: 0.3;
+                transform: scale(0.9);
+            }
+            80% {
+                opacity: 0.1;
+                transform: scale(0.85);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0.8) translateY(-20px);
+            }
+        }
+
+        .reproductor.mostrar {
+            display: block;
+            animation: tvTurnOn 0.6s ease forwards;
         }
 
         .reproductor.ocultar {
-            animation: fadeOut 0.3s ease;
+            animation: tvTurnOff 0.5s ease forwards;
         }
 
-        @keyframes fadeOut {
-            from { opacity: 1; transform: translateY(0); }
-            to { opacity: 0; transform: translateY(-20px); }
-        }
-
-        .reproductor::after {
-            content: "◿";
-             position: absolute;
-            bottom: 0;
-            right: 0;
-            width: 20px;
-            height: 20px;
-            background-color: rgba(0,0,0,0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: ns-resize;
-            z-index: 10;
-        }
         .reproductor iframe {
             width: 100%;
             height: 100%;
             border: none;
         }
+
         .controles-reproductor {
             display: flex;
             justify-content: flex-end;
@@ -498,6 +528,7 @@
             z-index: 101;
             margin-bottom: 10px;
         }
+
         .boton-cerrar-reproductor {
             width: 30px;
             height: 30px;
@@ -512,9 +543,11 @@
             align-items: center;
             justify-content: center;
         }
+
         .boton-cerrar-reproductor:hover {
             background-color: #9e4a5a;
         }
+
         .boton-refrescar-reproductor {
             width: 30px;
             height: 30px;
@@ -529,9 +562,11 @@
             align-items: center;
             justify-content: center;
         }
+
         .boton-refrescar-reproductor:hover {
             background-color: #3e8e41;
         }
+
         .boton-favorito {
             position: absolute;
             top: 5px;
@@ -549,14 +584,17 @@
             align-items: center;
             justify-content: center;
         }
+
         .boton-favoritos {
             background-color: #FFD700;
             color: #000;
             margin-top: 8px;
         }
+
         .boton-favoritos:hover {
             background-color: #FFC000;
         }
+
         .boton-limpiar-filtros {
             background-color: var(--color-primario);
             padding: 0;
@@ -570,9 +608,11 @@
             border: none;
             cursor: pointer;
         }
+
         .boton-limpiar-filtros:hover {
             background-color: #370083;
         }
+
         .etiquetas {
             display: flex;
             flex-wrap: wrap;
@@ -580,6 +620,7 @@
             margin-top: 5px;
             justify-content: center;
         }
+
         .etiqueta {
             background-color: rgba(0, 0, 0, 0.3);
             padding: 2px 6px;
@@ -587,19 +628,23 @@
             font-size: 10px;
             white-space: nowrap;
         }
+
         .selector-etiquetas {
             margin-top: 10px;
         }
+
         .selector-etiquetas label {
             display: block;
             margin-bottom: 5px;
             font-size: 14px;
         }
+
         .etiquetas-opciones {
             display: flex;
             flex-wrap: wrap;
             gap: 5px;
         }
+
         .etiqueta-opcion {
             display: flex;
             align-items: center;
@@ -609,19 +654,24 @@
             cursor: pointer;
             font-size: 12px;
         }
+
         .etiqueta-opcion input {
             margin-right: 4px;
         }
+
         .etiqueta-opcion.seleccionada {
             background-color: var(--color-primario);
         }
+
         .boton-pantalla-completa {
             background-color: #9C27B0;
             margin-top: 8px;
         }
+
         .boton-pantalla-completa:hover {
             background-color: #7B1FA2;
         }
+
         .boton-subir {
             position: fixed;
             bottom: 20px;
@@ -1257,11 +1307,53 @@
             localStorage.setItem('estadosGrupos', JSON.stringify(estadosGrupos));
         }
 
+        function reproducirEnlace(url) {
+            currentVideoUrl = url;
+            const videoFrame = document.getElementById('videoFrame');
+            const reproductor = document.getElementById('reproductor');
+            const botonCerrar = document.getElementById('botonCerrarReproductor');
+            const botonRefrescar = document.getElementById('botonRefrescarReproductor');
+
+            reproductor.classList.add('mostrar');
+            videoFrame.src = url;
+            reproductor.style.height = alturaReproductor;
+            botonCerrar.style.display = 'flex';
+            botonRefrescar.style.display = 'flex';
+            
+            reproductor.addEventListener('pointerup', function() {
+                alturaReproductor = reproductor.style.height;
+                localStorage.setItem('alturaReproductor', alturaReproductor);
+            });
+        }
+
+        function cerrarReproductor() {
+            const videoFrame = document.getElementById('videoFrame');
+            const reproductor = document.getElementById('reproductor');
+            const botonCerrar = document.getElementById('botonCerrarReproductor');
+            const botonRefrescar = document.getElementById('botonRefrescarReproductor');
+
+            reproductor.classList.add('ocultar');
+            
+            setTimeout(() => {
+                reproductor.classList.remove('mostrar', 'ocultar');
+                videoFrame.src = '';
+                botonCerrar.style.display = 'none';
+                botonRefrescar.style.display = 'none';
+                currentVideoUrl = '';
+            }, 500);
+        }
+
         function refrescarReproductor() {
             if (currentVideoUrl) {
                 const videoFrame = document.getElementById('videoFrame');
-                videoFrame.src = currentVideoUrl;
-                mostrarNotificacion('Reproductor refrescado');
+                const reproductor = document.getElementById('reproductor');
+                
+                reproductor.classList.remove('mostrar');
+                setTimeout(() => {
+                    videoFrame.src = currentVideoUrl;
+                    reproductor.classList.add('mostrar');
+                    mostrarNotificacion('Reproductor refrescado');
+                }, 300);
             }
         }
 
@@ -1292,43 +1384,6 @@
                     document.exitFullscreen();
                 }
             }
-        }
-
-        function reproducirEnlace(url) {
-            currentVideoUrl = url;
-            const videoFrame = document.getElementById('videoFrame');
-            const reproductor = document.getElementById('reproductor');
-            const botonCerrar = document.getElementById('botonCerrarReproductor');
-            const botonRefrescar = document.getElementById('botonRefrescarReproductor');
-
-            reproductor.classList.remove('ocultar');
-            videoFrame.src = url;
-            reproductor.classList.add('mostrar');
-            reproductor.style.height = alturaReproductor;
-            botonCerrar.style.display = 'flex';
-            botonRefrescar.style.display = 'flex';
-            
-            reproductor.addEventListener('pointerup', function() {
-                alturaReproductor = reproductor.style.height;
-                localStorage.setItem('alturaReproductor', alturaReproductor);
-            });
-        }
-
-        function cerrarReproductor() {
-            const videoFrame = document.getElementById('videoFrame');
-            const reproductor = document.getElementById('reproductor');
-            const botonCerrar = document.getElementById('botonCerrarReproductor');
-            const botonRefrescar = document.getElementById('botonRefrescarReproductor');
-
-            reproductor.classList.add('ocultar');
-            
-            setTimeout(() => {
-                reproductor.classList.remove('mostrar', 'ocultar');
-                videoFrame.src = '';
-                botonCerrar.style.display = 'none';
-                botonRefrescar.style.display = 'none';
-                currentVideoUrl = '';
-            }, 300);
         }
 
         function cambiarAperturaEnlaces() {
