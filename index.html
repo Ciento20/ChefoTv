@@ -851,7 +851,7 @@
             <button class="boton-limpiar-filtros" onclick="limpiarFiltros()" title="Limpiar filtros">⥀</button>
         </div>
 
-        <div class="categoria">
+        <div class="categoria" id="categoriaWeb">
             <h2>
                 Vía WEB
                 <button class="toggle-categoria" onclick="toggleCategoria(this)">▼</button>
@@ -861,7 +861,7 @@
 
         <hr class="separador">
 
-        <div class="categoria">
+        <div class="categoria" id="categoriaAcestream">
             <h2>
                 Vía Acestream
                 <button class="toggle-categoria" onclick="toggleCategoria(this)">▼</button>
@@ -871,7 +871,7 @@
 
         <hr class="separador">
 
-        <div class="categoria">
+        <div class="categoria" id="categoriaFuentes">
             <h2>
                 FUENTES
                 <button class="toggle-categoria" onclick="toggleCategoria(this)">▼</button>
@@ -1024,13 +1024,33 @@
             const filtroDeporte = document.getElementById('filtroDeporte').value;
             const filtroIdioma = document.getElementById('filtroIdioma').value;
 
-            const linkList = document.getElementById('linkList');
-            const acestreamList = document.getElementById('acestreamList');
-            const multiList = document.getElementById('multiList');
-            
-            linkList.innerHTML = '';
-            acestreamList.innerHTML = '';
-            multiList.innerHTML = '';
+            const categorias = {
+                web: document.getElementById('categoriaWeb'),
+                acestream: document.getElementById('categoriaAcestream'),
+                fuentes: document.getElementById('categoriaFuentes')
+            };
+
+            const listas = {
+                web: document.getElementById('linkList'),
+                acestream: document.getElementById('acestreamList'),
+                fuentes: document.getElementById('multiList')
+            };
+
+            // Ocultar todas las categorías inicialmente
+            Object.values(categorias).forEach(categoria => {
+                categoria.style.display = 'none';
+            });
+
+            // Limpiar todas las listas
+            Object.values(listas).forEach(lista => {
+                lista.innerHTML = '';
+            });
+
+            let enlacesVisibles = {
+                web: 0,
+                acestream: 0,
+                fuentes: 0
+            };
 
             enlacesGuardados.forEach((item, index) => {
                 if (mostrarSoloFavoritos && !item.favorito) return;
@@ -1043,6 +1063,9 @@
                 
                 if (!cumpleBusqueda || !cumpleDeporte || !cumpleIdioma) return;
 
+                const categoria = item.mostrarIcono ? 'acestream' : item.mostrarMulti ? 'fuentes' : 'web';
+                const lista = listas[categoria];
+                
                 const linkItem = document.createElement('div');
                 linkItem.className = 'link-item';
                 linkItem.style.borderColor = item.color;
@@ -1050,7 +1073,6 @@
                     if (indiceCambiar !== null) {
                         cambiarPosicion(index);
                     } else {
-                        const categoria = item.mostrarIcono ? 'acestream' : item.mostrarMulti ? 'fuentes' : 'web';
                         manejarClicEnlace(item.link, categoria);
                     }
                 };
@@ -1070,13 +1092,8 @@
                     </div>
                 `;
 
-                if (item.mostrarIcono) {
-                    acestreamList.appendChild(linkItem);
-                } else if (item.mostrarMulti) {
-                    multiList.appendChild(linkItem);
-                } else {
-                    linkList.appendChild(linkItem);
-                }
+                lista.appendChild(linkItem);
+                enlacesVisibles[categoria]++;
 
                 linkItem.addEventListener('contextmenu', (e) => {
                     e.preventDefault();
@@ -1089,6 +1106,13 @@
                     }
                 });
             });
+
+            // Mostrar solo las categorías que tienen enlaces visibles
+            Object.keys(enlacesVisibles).forEach(categoria => {
+                if (enlacesVisibles[categoria] > 0) {
+                    categorias[categoria].style.display = 'block';
+                }
+            });
         }
 
         function filtrarEnlacesAgrupados() {
@@ -1096,13 +1120,33 @@
             const filtroDeporte = document.getElementById('filtroDeporte').value;
             const filtroIdioma = document.getElementById('filtroIdioma').value;
 
-            const linkList = document.getElementById('linkList');
-            const acestreamList = document.getElementById('acestreamList');
-            const multiList = document.getElementById('multiList');
-            
-            linkList.innerHTML = '';
-            acestreamList.innerHTML = '';
-            multiList.innerHTML = '';
+            const categorias = {
+                web: document.getElementById('categoriaWeb'),
+                acestream: document.getElementById('categoriaAcestream'),
+                fuentes: document.getElementById('categoriaFuentes')
+            };
+
+            const listas = {
+                web: document.getElementById('linkList'),
+                acestream: document.getElementById('acestreamList'),
+                fuentes: document.getElementById('multiList')
+            };
+
+            // Ocultar todas las categorías inicialmente
+            Object.values(categorias).forEach(categoria => {
+                categoria.style.display = 'none';
+            });
+
+            // Limpiar todas las listas
+            Object.values(listas).forEach(lista => {
+                lista.innerHTML = '';
+            });
+
+            let enlacesVisibles = {
+                web: 0,
+                acestream: 0,
+                fuentes: 0
+            };
 
             // Cargar estados de grupos guardados
             const estadosGrupos = JSON.parse(localStorage.getItem('estadosGrupos')) || {};
@@ -1133,12 +1177,20 @@
                 }
                 
                 enlacesPorSeccionYTitulo[seccion][tituloGrupo].push({item, index});
+                enlacesVisibles[seccion]++;
             });
 
             // Procesar cada sección por separado
-            procesarSeccion('web', linkList, enlacesPorSeccionYTitulo.web, estadosGrupos);
-            procesarSeccion('acestream', acestreamList, enlacesPorSeccionYTitulo.acestream, estadosGrupos);
-            procesarSeccion('fuentes', multiList, enlacesPorSeccionYTitulo.fuentes, estadosGrupos);
+            procesarSeccion('web', listas.web, enlacesPorSeccionYTitulo.web, estadosGrupos);
+            procesarSeccion('acestream', listas.acestream, enlacesPorSeccionYTitulo.acestream, estadosGrupos);
+            procesarSeccion('fuentes', listas.fuentes, enlacesPorSeccionYTitulo.fuentes, estadosGrupos);
+
+            // Mostrar solo las categorías que tienen enlaces visibles
+            Object.keys(enlacesVisibles).forEach(categoria => {
+                if (enlacesVisibles[categoria] > 0) {
+                    categorias[categoria].style.display = 'block';
+                }
+            });
         }
 
         function procesarSeccion(seccion, contenedor, enlacesPorTitulo, estadosGrupos) {
