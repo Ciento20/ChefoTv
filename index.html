@@ -433,7 +433,6 @@
         .reproductor {
             width: 92%;
             height: 250px;
-            margin-bottom: 40px;
             background-color: #000;
             border-radius: 8px;
             overflow: hidden;
@@ -442,11 +441,35 @@
             min-height: 250px;
             max-height: 80vh;
             position: sticky;
-            top: 60px;
+            top: 20px;
             z-index: 100;
             border: 15px solid rgba(30, 30, 30, 0.2);
             margin-left: 0;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            transform: translateY(0);
+            opacity: 1;
         }
+
+        .reproductor.mostrar {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .reproductor.ocultar {
+            animation: fadeOut 0.3s ease;
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; transform: translateY(0); }
+            to { opacity: 0; transform: translateY(-20px); }
+        }
+
         .reproductor::after {
             content: "◿";
              position: absolute;
@@ -1278,8 +1301,9 @@
             const botonCerrar = document.getElementById('botonCerrarReproductor');
             const botonRefrescar = document.getElementById('botonRefrescarReproductor');
 
+            reproductor.classList.remove('ocultar');
             videoFrame.src = url;
-            reproductor.style.display = 'block';
+            reproductor.classList.add('mostrar');
             reproductor.style.height = alturaReproductor;
             botonCerrar.style.display = 'flex';
             botonRefrescar.style.display = 'flex';
@@ -1296,11 +1320,15 @@
             const botonCerrar = document.getElementById('botonCerrarReproductor');
             const botonRefrescar = document.getElementById('botonRefrescarReproductor');
 
-            videoFrame.src = '';
-            reproductor.style.display = 'none';
-            botonCerrar.style.display = 'none';
-            botonRefrescar.style.display = 'none';
-            currentVideoUrl = '';
+            reproductor.classList.add('ocultar');
+            
+            setTimeout(() => {
+                reproductor.classList.remove('mostrar', 'ocultar');
+                videoFrame.src = '';
+                botonCerrar.style.display = 'none';
+                botonRefrescar.style.display = 'none';
+                currentVideoUrl = '';
+            }, 300);
         }
 
         function cambiarAperturaEnlaces() {
