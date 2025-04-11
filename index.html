@@ -923,6 +923,13 @@
 
         function toggleFavorito(index, event) {
             event.stopPropagation();
+            
+            if (enlacesGuardados[index].favorito) {
+                if (!confirm('¿Estás seguro de que quieres quitar este enlace de favoritos?')) {
+                    return;
+                }
+            }
+            
             enlacesGuardados[index].favorito = !enlacesGuardados[index].favorito;
             localStorage.setItem('enlaces', JSON.stringify(enlacesGuardados));
             filtrarEnlaces();
@@ -1695,4 +1702,4 @@
         document.querySelector('.boton-ajustes').addEventListener('click', manejarClicksAjustes);
     </script>
 </body>
-</html> 
+</html>
