@@ -281,6 +281,13 @@
         .boton-borrar-todo:hover {
             background-color: #d32f2f;
         }
+        .boton-persistencia {
+            background-color: #FF9800;
+            margin-top: 8px;
+        }
+        .boton-persistencia:hover {
+            background-color: #F57C00;
+        }
         .separador {
             margin: 20px 0;
             border: 1px solid var(--color-primario);
@@ -803,6 +810,7 @@
             </div>
             <button class="boton-pantalla-completa" onclick="togglePantallaCompleta()">Pantalla Completa</button>
             <button class="boton-agrupar" onclick="alternarAgrupacion()" id="botonAgrupar">Agrupar por título</button>
+            <button class="boton-persistencia" onclick="solicitarPersistencia()">Solicitar almacenamiento persistente</button>
             <button class="boton-exportar" onclick="exportarEnlaces()">Exportar Enlaces</button>
             <button class="boton-importar" onclick="document.getElementById('fileInput').click()">Importar Enlaces</button>
             <button class="boton-importar-texto" onclick="importarDesdeTexto()">Importar Pegando Texto</button>
@@ -988,6 +996,20 @@
         const banderasIdioma = {
             ES: '🇪🇦', EN: '🇬🇧', FR: '🇫🇷', DE: '🇩🇪', OT: '🏳️‍⚧️'
         };
+
+        function solicitarPersistencia() {
+            if (navigator.storage && navigator.storage.persist) {
+                navigator.storage.persist().then(granted => {
+                    if (granted) {
+                        mostrarNotificacion("¡Almacenamiento persistente concedido! Tus datos se conservarán mejor.");
+                    } else {
+                        mostrarNotificacion("El navegador no ha concedido almacenamiento persistente. Los datos podrían borrarse en situaciones de bajo espacio.");
+                    }
+                });
+            } else {
+                mostrarNotificacion("Tu navegador no soporta almacenamiento persistente o ya lo gestiona automáticamente.");
+            }
+        }
 
         function alternarAgrupacion() {
             agrupacionActivada = !agrupacionActivada;
@@ -1817,6 +1839,18 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            // Solicitar almacenamiento persistente al cargar la página
+            if (navigator.storage && navigator.storage.persist) {
+                navigator.storage.persist().then(granted => {
+                    if (granted) {
+                        console.log("El almacenamiento persistente ha sido concedido");
+                    } else {
+                        console.log("El almacenamiento persistente no ha sido concedido");
+                        mostrarNotificacion("Advertencia: Los datos podrían borrarse si el navegador necesita espacio. Para evitarlo, concede permisos de almacenamiento persistente.");
+                    }
+                });
+            }
+
             const modoAperturaGuardado = localStorage.getItem('modoApertura');
             if (modoAperturaGuardado) {
                 modoApertura = modoAperturaGuardado;
@@ -1839,4 +1873,4 @@
         document.querySelector('.boton-ajustes').addEventListener('click', manejarClicksAjustes);
     </script>
 </body>
-</html>
+</html> 
