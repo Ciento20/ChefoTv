@@ -780,6 +780,15 @@
         .boton-agrupar:hover {
             background-color: #F57C00;
         }
+
+        .boton-persistencia {
+            background-color: #607D8B;
+            margin-top: 8px;
+        }
+
+        .boton-persistencia:hover {
+            background-color: #455A64;
+        }
     </style>
 </head>
 <body>
@@ -803,6 +812,7 @@
             </div>
             <button class="boton-pantalla-completa" onclick="togglePantallaCompleta()">Pantalla Completa</button>
             <button class="boton-agrupar" onclick="alternarAgrupacion()" id="botonAgrupar">Agrupar por título</button>
+            <button class="boton-persistencia" onclick="solicitarPersistencia()">Habilitar almacenamiento persistente</button>
             <button class="boton-exportar" onclick="exportarEnlaces()">Exportar Enlaces</button>
             <button class="boton-importar" onclick="document.getElementById('fileInput').click()">Importar Enlaces</button>
             <button class="boton-importar-texto" onclick="importarDesdeTexto()">Importar Pegando Texto</button>
@@ -989,6 +999,20 @@
             ES: '🇪🇦', EN: '🇬🇧', FR: '🇫🇷', DE: '🇩🇪', OT: '🏳️‍⚧️'
         };
 
+        function solicitarPersistencia() {
+            if (navigator.storage && navigator.storage.persist) {
+                navigator.storage.persist().then(granted => {
+                    if (granted) {
+                        mostrarNotificacion('Almacenamiento persistente habilitado. Los enlaces se guardarán permanentemente.');
+                    } else {
+                        mostrarNotificacion('No se pudo habilitar el almacenamiento persistente. Usando almacenamiento temporal.');
+                    }
+                });
+            } else {
+                mostrarNotificacion('Esta función no está disponible en tu navegador.');
+            }
+        }
+
         function alternarAgrupacion() {
             agrupacionActivada = !agrupacionActivada;
             localStorage.setItem('agrupacionActivada', agrupacionActivada);
@@ -1036,12 +1060,10 @@
                 fuentes: document.getElementById('multiList')
             };
 
-            // Ocultar todas las categorías inicialmente
             Object.values(categorias).forEach(categoria => {
                 categoria.style.display = 'none';
             });
 
-            // Limpiar todas las listas
             Object.values(listas).forEach(lista => {
                 lista.innerHTML = '';
             });
@@ -1107,7 +1129,6 @@
                 });
             });
 
-            // Mostrar solo las categorías que tienen enlaces visibles
             Object.keys(enlacesVisibles).forEach(categoria => {
                 if (enlacesVisibles[categoria] > 0) {
                     categorias[categoria].style.display = 'block';
@@ -1132,12 +1153,10 @@
                 fuentes: document.getElementById('multiList')
             };
 
-            // Ocultar todas las categorías inicialmente
             Object.values(categorias).forEach(categoria => {
                 categoria.style.display = 'none';
             });
 
-            // Limpiar todas las listas
             Object.values(listas).forEach(lista => {
                 lista.innerHTML = '';
             });
@@ -1148,10 +1167,8 @@
                 fuentes: 0
             };
 
-            // Cargar estados de grupos guardados
             const estadosGrupos = JSON.parse(localStorage.getItem('estadosGrupos')) || {};
 
-            // Agrupar enlaces por sección y título
             const enlacesPorSeccionYTitulo = {
                 web: {},
                 acestream: {},
@@ -1180,12 +1197,10 @@
                 enlacesVisibles[seccion]++;
             });
 
-            // Procesar cada sección por separado
             procesarSeccion('web', listas.web, enlacesPorSeccionYTitulo.web, estadosGrupos);
             procesarSeccion('acestream', listas.acestream, enlacesPorSeccionYTitulo.acestream, estadosGrupos);
             procesarSeccion('fuentes', listas.fuentes, enlacesPorSeccionYTitulo.fuentes, estadosGrupos);
 
-            // Mostrar solo las categorías que tienen enlaces visibles
             Object.keys(enlacesVisibles).forEach(categoria => {
                 if (enlacesVisibles[categoria] > 0) {
                     categorias[categoria].style.display = 'block';
@@ -1195,13 +1210,10 @@
 
         function procesarSeccion(seccion, contenedor, enlacesPorTitulo, estadosGrupos) {
             Object.entries(enlacesPorTitulo).forEach(([tituloGrupo, enlaces]) => {
-                // Solo agrupar si hay más de un enlace con el mismo título
                 if (enlaces.length > 1) {
-                    // Crear contenedor del título
                     const tituloContainer = document.createElement('div');
                     tituloContainer.className = 'titulo-container';
                     
-                    // Crear título del grupo
                     const tituloElement = document.createElement('h3');
                     const grupoKey = `${seccion}-${tituloGrupo}`;
                     tituloElement.dataset.grupo = grupoKey;
@@ -1214,11 +1226,9 @@
                         </span>
                     `;
                     
-                    // Verificar si hay un estado guardado para este grupo
                     const estadoGuardado = estadosGrupos[grupoKey];
                     const inicialmenteCerrado = estadoGuardado !== undefined ? estadoGuardado : false;
                     
-                    // Crear lista de enlaces del título
                     const tituloLinks = document.createElement('div');
                     tituloLinks.className = 'titulo-links';
                     if (inicialmenteCerrado) {
@@ -1226,7 +1236,6 @@
                         tituloElement.querySelector('.titulo-controles button:nth-child(2)').textContent = '▶';
                     }
                     
-                    // Añadir enlaces al contenedor del título
                     enlaces.forEach(({item, index}) => {
                         const linkItem = document.createElement('div');
                         linkItem.className = 'link-item';
@@ -1271,7 +1280,6 @@
                     tituloContainer.appendChild(tituloElement);
                     tituloContainer.appendChild(tituloLinks);
                     
-                    // Manejar clic en el título del grupo
                     tituloElement.onclick = () => {
                         const lista = tituloContainer.querySelector('.titulo-links');
                         const boton = tituloElement.querySelector('.titulo-controles button:nth-child(2)');
@@ -1289,7 +1297,6 @@
                     
                     contenedor.appendChild(tituloContainer);
                 } else {
-                    // Si solo hay un enlace con este título, mostrarlo normalmente
                     const {item, index} = enlaces[0];
                     const linkItem = document.createElement('div');
                     linkItem.className = 'link-item';
@@ -1355,7 +1362,6 @@
                 boton.textContent = '▼';
             }
             
-            // Actualizar estado en localStorage
             const estadosGrupos = JSON.parse(localStorage.getItem('estadosGrupos')) || {};
             estadosGrupos[grupoKey] = lista.classList.contains('cerrado');
             localStorage.setItem('estadosGrupos', JSON.stringify(estadosGrupos));
