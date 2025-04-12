@@ -281,13 +281,6 @@
         .boton-borrar-todo:hover {
             background-color: #d32f2f;
         }
-        .boton-persistencia {
-            background-color: #FF9800;
-            margin-top: 8px;
-        }
-        .boton-persistencia:hover {
-            background-color: #F57C00;
-        }
         .separador {
             margin: 20px 0;
             border: 1px solid var(--color-primario);
@@ -810,7 +803,6 @@
             </div>
             <button class="boton-pantalla-completa" onclick="togglePantallaCompleta()">Pantalla Completa</button>
             <button class="boton-agrupar" onclick="alternarAgrupacion()" id="botonAgrupar">Agrupar por título</button>
-            <button class="boton-persistencia" onclick="solicitarPersistencia()">Información de almacenamiento</button>
             <button class="boton-exportar" onclick="exportarEnlaces()">Exportar Enlaces</button>
             <button class="boton-importar" onclick="document.getElementById('fileInput').click()">Importar Enlaces</button>
             <button class="boton-importar-texto" onclick="importarDesdeTexto()">Importar Pegando Texto</button>
@@ -997,10 +989,6 @@
             ES: '🇪🇦', EN: '🇬🇧', FR: '🇫🇷', DE: '🇩🇪', OT: '🏳️‍⚧️'
         };
 
-        function solicitarPersistencia() {
-            mostrarNotificacion("En Tor Browser, los datos se guardan localmente pero pueden borrarse al cerrar el navegador. Usa 'Exportar Enlaces' para respaldar tu información.");
-        }
-
         function alternarAgrupacion() {
             agrupacionActivada = !agrupacionActivada;
             localStorage.setItem('agrupacionActivada', agrupacionActivada);
@@ -1023,13 +1011,812 @@
             mostrarNotificacion(enlacesGuardados[index].favorito ? 'Añadido a favoritos' : 'Eliminado de favoritos');
         }
 
-        // [Todas las demás funciones se mantienen igual]
-        // ...
+        function filtrarEnlaces() {
+            if (agrupacionActivada) {
+                filtrarEnlacesAgrupados();
+            } else {
+                filtrarEnlacesNormales();
+            }
+        }
+
+        function filtrarEnlacesNormales() {
+            const busqueda = document.getElementById('busqueda').value.toLowerCase();
+            const filtroDeporte = document.getElementById('filtroDeporte').value;
+            const filtroIdioma = document.getElementById('filtroIdioma').value;
+
+            const categorias = {
+                web: document.getElementById('categoriaWeb'),
+                acestream: document.getElementById('categoriaAcestream'),
+                fuentes: document.getElementById('categoriaFuentes')
+            };
+
+            const listas = {
+                web: document.getElementById('linkList'),
+                acestream: document.getElementById('acestreamList'),
+                fuentes: document.getElementById('multiList')
+            };
+
+            // Ocultar todas las categorías inicialmente
+            Object.values(categorias).forEach(categoria => {
+                categoria.style.display = 'none';
+            });
+
+            // Limpiar todas las listas
+            Object.values(listas).forEach(lista => {
+                lista.innerHTML = '';
+            });
+
+            let enlacesVisibles = {
+                web: 0,
+                acestream: 0,
+                fuentes: 0
+            };
+
+            enlacesGuardados.forEach((item, index) => {
+                if (mostrarSoloFavoritos && !item.favorito) return;
+                
+                const titulo = item.title.toLowerCase();
+                const webName = item.webName ? item.webName.toLowerCase() : '';
+                const cumpleBusqueda = titulo.includes(busqueda) || webName.includes(busqueda);
+                const cumpleDeporte = !filtroDeporte || item.deporte === filtroDeporte;
+                const cumpleIdioma = !filtroIdioma || item.idioma === filtroIdioma;
+                
+                if (!cumpleBusqueda || !cumpleDeporte || !cumpleIdioma) return;
+
+                const categoria = item.mostrarIcono ? 'acestream' : item.mostrarMulti ? 'fuentes' : 'web';
+                const lista = listas[categoria];
+                
+                const linkItem = document.createElement('div');
+                linkItem.className = 'link-item';
+                linkItem.style.borderColor = item.color;
+                linkItem.onclick = () => {
+                    if (indiceCambiar !== null) {
+                        cambiarPosicion(index);
+                    } else {
+                        manejarClicEnlace(item.link, categoria);
+                    }
+                };
+
+                linkItem.innerHTML = `
+                    <button class="boton-favorito" onclick="toggleFavorito(${index}, event)">${item.favorito ? '★' : '☆'}</button>
+                    <div style="font-size:24px">${iconosDeporte[item.deporte]}</div>
+                    <div>${item.title}</div>
+                    ${item.webName ? `<div>${item.webName}</div>` : ''}
+                    <div>${banderasIdioma[item.idioma]}</div>
+                    <div>${'✭'.repeat(item.puntuacion) + '☆'.repeat(5 - item.puntuacion)}</div>
+                    ${(item.etiquetas || []).map(etiqueta => `<span class="etiqueta">${etiqueta}</span>`).join('')}
+                    <div class="menu-contextual">
+                        <button onclick="event.stopPropagation(); editarEnlace(${index})">✏️ Editar</button>
+                        <button onclick="event.stopPropagation(); borrarEnlace(${index})">🗑️ Borrar</button>
+                        <button onclick="event.stopPropagation(); cambiarPosicion(${index})">🔄 Cambiar</button>
+                    </div>
+                `;
+
+                lista.appendChild(linkItem);
+                enlacesVisibles[categoria]++;
+
+                linkItem.addEventListener('contextmenu', (e) => {
+                    e.preventDefault();
+                    linkItem.classList.add('mostrar-menu');
+                });
+
+                document.addEventListener('click', (e) => {
+                    if (!linkItem.contains(e.target)) {
+                        linkItem.classList.remove('mostrar-menu');
+                    }
+                });
+            });
+
+            // Mostrar solo las categorías que tienen enlaces visibles
+            Object.keys(enlacesVisibles).forEach(categoria => {
+                if (enlacesVisibles[categoria] > 0) {
+                    categorias[categoria].style.display = 'block';
+                }
+            });
+        }
+
+        function filtrarEnlacesAgrupados() {
+            const busqueda = document.getElementById('busqueda').value.toLowerCase();
+            const filtroDeporte = document.getElementById('filtroDeporte').value;
+            const filtroIdioma = document.getElementById('filtroIdioma').value;
+
+            const categorias = {
+                web: document.getElementById('categoriaWeb'),
+                acestream: document.getElementById('categoriaAcestream'),
+                fuentes: document.getElementById('categoriaFuentes')
+            };
+
+            const listas = {
+                web: document.getElementById('linkList'),
+                acestream: document.getElementById('acestreamList'),
+                fuentes: document.getElementById('multiList')
+            };
+
+            // Ocultar todas las categorías inicialmente
+            Object.values(categorias).forEach(categoria => {
+                categoria.style.display = 'none';
+            });
+
+            // Limpiar todas las listas
+            Object.values(listas).forEach(lista => {
+                lista.innerHTML = '';
+            });
+
+            let enlacesVisibles = {
+                web: 0,
+                acestream: 0,
+                fuentes: 0
+            };
+
+            // Cargar estados de grupos guardados
+            const estadosGrupos = JSON.parse(localStorage.getItem('estadosGrupos')) || {};
+
+            // Agrupar enlaces por sección y título
+            const enlacesPorSeccionYTitulo = {
+                web: {},
+                acestream: {},
+                fuentes: {}
+            };
+            
+            enlacesGuardados.forEach((item, index) => {
+                if (mostrarSoloFavoritos && !item.favorito) return;
+                
+                const titulo = item.title.toLowerCase();
+                const webName = item.webName ? item.webName.toLowerCase() : '';
+                const cumpleBusqueda = titulo.includes(busqueda) || webName.includes(busqueda);
+                const cumpleDeporte = !filtroDeporte || item.deporte === filtroDeporte;
+                const cumpleIdioma = !filtroIdioma || item.idioma === filtroIdioma;
+                
+                if (!cumpleBusqueda || !cumpleDeporte || !cumpleIdioma) return;
+
+                const tituloGrupo = item.title;
+                const seccion = item.mostrarIcono ? 'acestream' : item.mostrarMulti ? 'fuentes' : 'web';
+                
+                if (!enlacesPorSeccionYTitulo[seccion][tituloGrupo]) {
+                    enlacesPorSeccionYTitulo[seccion][tituloGrupo] = [];
+                }
+                
+                enlacesPorSeccionYTitulo[seccion][tituloGrupo].push({item, index});
+                enlacesVisibles[seccion]++;
+            });
+
+            // Procesar cada sección por separado
+            procesarSeccion('web', listas.web, enlacesPorSeccionYTitulo.web, estadosGrupos);
+            procesarSeccion('acestream', listas.acestream, enlacesPorSeccionYTitulo.acestream, estadosGrupos);
+            procesarSeccion('fuentes', listas.fuentes, enlacesPorSeccionYTitulo.fuentes, estadosGrupos);
+
+            // Mostrar solo las categorías que tienen enlaces visibles
+            Object.keys(enlacesVisibles).forEach(categoria => {
+                if (enlacesVisibles[categoria] > 0) {
+                    categorias[categoria].style.display = 'block';
+                }
+            });
+        }
+
+        function procesarSeccion(seccion, contenedor, enlacesPorTitulo, estadosGrupos) {
+            Object.entries(enlacesPorTitulo).forEach(([tituloGrupo, enlaces]) => {
+                // Solo agrupar si hay más de un enlace con el mismo título
+                if (enlaces.length > 1) {
+                    // Crear contenedor del título
+                    const tituloContainer = document.createElement('div');
+                    tituloContainer.className = 'titulo-container';
+                    
+                    // Crear título del grupo
+                    const tituloElement = document.createElement('h3');
+                    const grupoKey = `${seccion}-${tituloGrupo}`;
+                    tituloElement.dataset.grupo = grupoKey;
+                    
+                    tituloElement.innerHTML = `
+                        <span class="titulo-info">${tituloGrupo}</span>
+                        <span class="titulo-controles">
+                            <button onclick="event.stopPropagation(); agregarEnlaceAGrupo('${seccion}', '${tituloGrupo}')" title="Añadir enlace">+</button>
+                            <button onclick="event.stopPropagation(); expandirColapsarGrupo(this)" title="Expandir/Colapsar">▼</button>
+                        </span>
+                    `;
+                    
+                    // Verificar si hay un estado guardado para este grupo
+                    const estadoGuardado = estadosGrupos[grupoKey];
+                    const inicialmenteCerrado = estadoGuardado !== undefined ? estadoGuardado : false;
+                    
+                    // Crear lista de enlaces del título
+                    const tituloLinks = document.createElement('div');
+                    tituloLinks.className = 'titulo-links';
+                    if (inicialmenteCerrado) {
+                        tituloLinks.classList.add('cerrado');
+                        tituloElement.querySelector('.titulo-controles button:nth-child(2)').textContent = '▶';
+                    }
+                    
+                    // Añadir enlaces al contenedor del título
+                    enlaces.forEach(({item, index}) => {
+                        const linkItem = document.createElement('div');
+                        linkItem.className = 'link-item';
+                        linkItem.style.borderColor = item.color;
+                        linkItem.onclick = () => {
+                            if (indiceCambiar !== null) {
+                                cambiarPosicion(index);
+                            } else {
+                                const categoria = item.mostrarIcono ? 'acestream' : item.mostrarMulti ? 'fuentes' : 'web';
+                                manejarClicEnlace(item.link, categoria);
+                            }
+                        };
+
+                        linkItem.innerHTML = `
+                            <button class="boton-favorito" onclick="toggleFavorito(${index}, event)">${item.favorito ? '★' : '☆'}</button>
+                            <div style="font-size:24px">${iconosDeporte[item.deporte]}</div>
+                            <div>${item.webName || 'Sin web especificada'}</div>
+                            <div>${banderasIdioma[item.idioma]}</div>
+                            <div>${'✭'.repeat(item.puntuacion) + '☆'.repeat(5 - item.puntuacion)}</div>
+                            ${(item.etiquetas || []).map(etiqueta => `<span class="etiqueta">${etiqueta}</span>`).join('')}
+                            <div class="menu-contextual">
+                                <button onclick="event.stopPropagation(); editarEnlace(${index})">✏️ Editar</button>
+                                <button onclick="event.stopPropagation(); borrarEnlace(${index})">🗑️ Borrar</button>
+                                <button onclick="event.stopPropagation(); cambiarPosicion(${index})">🔄 Cambiar</button>
+                            </div>
+                        `;
+
+                        linkItem.addEventListener('contextmenu', (e) => {
+                            e.preventDefault();
+                            linkItem.classList.add('mostrar-menu');
+                        });
+
+                        document.addEventListener('click', (e) => {
+                            if (!linkItem.contains(e.target)) {
+                                linkItem.classList.remove('mostrar-menu');
+                            }
+                        });
+
+                        tituloLinks.appendChild(linkItem);
+                    });
+                    
+                    tituloContainer.appendChild(tituloElement);
+                    tituloContainer.appendChild(tituloLinks);
+                    
+                    // Manejar clic en el título del grupo
+                    tituloElement.onclick = () => {
+                        const lista = tituloContainer.querySelector('.titulo-links');
+                        const boton = tituloElement.querySelector('.titulo-controles button:nth-child(2)');
+                        lista.classList.toggle('cerrado');
+                        
+                        if (lista.classList.contains('cerrado')) {
+                            boton.textContent = '▶';
+                        } else {
+                            boton.textContent = '▼';
+                        }
+                        
+                        estadosGrupos[grupoKey] = lista.classList.contains('cerrado');
+                        localStorage.setItem('estadosGrupos', JSON.stringify(estadosGrupos));
+                    };
+                    
+                    contenedor.appendChild(tituloContainer);
+                } else {
+                    // Si solo hay un enlace con este título, mostrarlo normalmente
+                    const {item, index} = enlaces[0];
+                    const linkItem = document.createElement('div');
+                    linkItem.className = 'link-item';
+                    linkItem.style.borderColor = item.color;
+                    linkItem.onclick = () => {
+                        if (indiceCambiar !== null) {
+                            cambiarPosicion(index);
+                        } else {
+                            const categoria = item.mostrarIcono ? 'acestream' : item.mostrarMulti ? 'fuentes' : 'web';
+                            manejarClicEnlace(item.link, categoria);
+                        }
+                    };
+
+                    linkItem.innerHTML = `
+                        <button class="boton-favorito" onclick="toggleFavorito(${index}, event)">${item.favorito ? '★' : '☆'}</button>
+                        <div style="font-size:24px">${iconosDeporte[item.deporte]}</div>
+                        <div>${item.title}</div>
+                        ${item.webName ? `<div>${item.webName}</div>` : ''}
+                        <div>${banderasIdioma[item.idioma]}</div>
+                        <div>${'✭'.repeat(item.puntuacion) + '☆'.repeat(5 - item.puntuacion)}</div>
+                        ${(item.etiquetas || []).map(etiqueta => `<span class="etiqueta">${etiqueta}</span>`).join('')}
+                        <div class="menu-contextual">
+                            <button onclick="event.stopPropagation(); editarEnlace(${index})">✏️ Editar</button>
+                            <button onclick="event.stopPropagation(); borrarEnlace(${index})">🗑️ Borrar</button>
+                            <button onclick="event.stopPropagation(); cambiarPosicion(${index})">🔄 Cambiar</button>
+                        </div>
+                    `;
+
+                    contenedor.appendChild(linkItem);
+
+                    linkItem.addEventListener('contextmenu', (e) => {
+                        e.preventDefault();
+                        linkItem.classList.add('mostrar-menu');
+                    });
+
+                    document.addEventListener('click', (e) => {
+                        if (!linkItem.contains(e.target)) {
+                            linkItem.classList.remove('mostrar-menu');
+                        }
+                    });
+                }
+            });
+        }
+
+        function agregarEnlaceAGrupo(seccion, tituloGrupo) {
+            mostrarFormulario();
+            document.getElementById('tipoEnlace').value = seccion === 'acestream' ? 'acestream' : seccion === 'fuentes' ? 'fuentes' : 'web';
+            document.getElementById('title').value = tituloGrupo;
+            mostrarNotificacion(`Añadiendo enlace al grupo: ${tituloGrupo}`);
+        }
+
+        function expandirColapsarGrupo(boton) {
+            const tituloElement = boton.closest('h3');
+            const tituloContainer = tituloElement.closest('.titulo-container');
+            const lista = tituloContainer.querySelector('.titulo-links');
+            const grupoKey = tituloElement.dataset.grupo;
+            
+            lista.classList.toggle('cerrado');
+            
+            if (lista.classList.contains('cerrado')) {
+                boton.textContent = '▶';
+            } else {
+                boton.textContent = '▼';
+            }
+            
+            // Actualizar estado en localStorage
+            const estadosGrupos = JSON.parse(localStorage.getItem('estadosGrupos')) || {};
+            estadosGrupos[grupoKey] = lista.classList.contains('cerrado');
+            localStorage.setItem('estadosGrupos', JSON.stringify(estadosGrupos));
+        }
+
+        function reproducirEnlace(url) {
+            currentVideoUrl = url;
+            const videoFrame = document.getElementById('videoFrame');
+            const reproductor = document.getElementById('reproductor');
+            const botonCerrar = document.getElementById('botonCerrarReproductor');
+            const botonRefrescar = document.getElementById('botonRefrescarReproductor');
+
+            reproductor.classList.add('mostrar');
+            videoFrame.src = url;
+            reproductor.style.height = alturaReproductor;
+            botonCerrar.style.display = 'flex';
+            botonRefrescar.style.display = 'flex';
+            
+            reproductor.addEventListener('pointerup', function() {
+                alturaReproductor = reproductor.style.height;
+                localStorage.setItem('alturaReproductor', alturaReproductor);
+            });
+        }
+
+        function cerrarReproductor() {
+            const videoFrame = document.getElementById('videoFrame');
+            const reproductor = document.getElementById('reproductor');
+            const botonCerrar = document.getElementById('botonCerrarReproductor');
+            const botonRefrescar = document.getElementById('botonRefrescarReproductor');
+
+            reproductor.classList.add('ocultar');
+            
+            setTimeout(() => {
+                reproductor.classList.remove('mostrar', 'ocultar');
+                videoFrame.src = '';
+                botonCerrar.style.display = 'none';
+                botonRefrescar.style.display = 'none';
+                currentVideoUrl = '';
+            }, 500);
+        }
+
+        function refrescarReproductor() {
+            if (currentVideoUrl) {
+                const videoFrame = document.getElementById('videoFrame');
+                const reproductor = document.getElementById('reproductor');
+                
+                reproductor.classList.remove('mostrar');
+                setTimeout(() => {
+                    videoFrame.src = currentVideoUrl;
+                    reproductor.classList.add('mostrar');
+                    mostrarNotificacion('Reproductor refrescado');
+                }, 300);
+            }
+        }
+
+        function filtrarFavoritos() {
+            mostrarSoloFavoritos = !mostrarSoloFavoritos;
+            localStorage.setItem('mostrarSoloFavoritos', mostrarSoloFavoritos);
+            document.querySelector('.boton-favoritos').textContent = mostrarSoloFavoritos ? 'Mostrar todos' : 'Mostrar solo favoritos';
+            filtrarEnlaces();
+        }
+
+        function limpiarFiltros() {
+            document.getElementById('busqueda').value = '';
+            document.getElementById('filtroDeporte').value = '';
+            document.getElementById('filtroIdioma').value = '';
+            mostrarSoloFavoritos = false;
+            localStorage.setItem('mostrarSoloFavoritos', false);
+            document.querySelector('.boton-favoritos').textContent = 'Mostrar solo favoritos';
+            filtrarEnlaces();
+        }
+
+        function togglePantallaCompleta() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    mostrarNotificacion(`Error al activar pantalla completa: ${err.message}`);
+                });
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+
+        function cambiarAperturaEnlaces() {
+            const selector = document.getElementById('selectorApertura');
+            modoApertura = selector.value;
+            localStorage.setItem('modoApertura', modoApertura);
+        }
+
+        function manejarClicEnlace(url, categoria) {
+            if (modoApertura === 'nueva-pestaña') {
+                window.open(url, '_blank');
+            } else if (modoApertura === 'solo-web-reproductor' && categoria === 'web') {
+                reproducirEnlace(url);
+            } else if (modoApertura === 'todo-reproductor') {
+                reproducirEnlace(url);
+            } else {
+                window.open(url, '_blank');
+            }
+        }
+
+        function guardarEstadoCategorias() {
+            const categorias = document.querySelectorAll('.categoria');
+            const estadoCategorias = {};
+
+            categorias.forEach((categoria, index) => {
+                estadoCategorias[`categoria-${index}`] = categoria.classList.contains('oculta');
+            });
+
+            localStorage.setItem('estadoCategorias', JSON.stringify(estadoCategorias));
+        }
+
+        function cargarEstadoCategorias() {
+            const estadoCategorias = JSON.parse(localStorage.getItem('estadoCategorias')) || {};
+            const categorias = document.querySelectorAll('.categoria');
+
+            categorias.forEach((categoria, index) => {
+                const estado = estadoCategorias[`categoria-${index}`];
+                if (estado !== undefined) {
+                    if (estado) {
+                        categoria.classList.add('oculta');
+                        categoria.querySelector('.toggle-categoria').textContent = '▲';
+                    } else {
+                        categoria.classList.remove('oculta');
+                        categoria.querySelector('.toggle-categoria').textContent = '▼';
+                    }
+                }
+            });
+        }
+
+        function toggleCategoria(boton) {
+            const categoria = boton.closest('.categoria');
+            categoria.classList.toggle('oculta');
+
+            if (categoria.classList.contains('oculta')) {
+                boton.textContent = '▲';
+            } else {
+                boton.textContent = '▼';
+            }
+
+            guardarEstadoCategorias();
+        }
+
+        function mostrarFormulario() {
+            const formContainer = document.getElementById('formContainer');
+            const botonAgregar = document.getElementById('botonAgregar');
+            formContainer.classList.toggle('mostrar');
+            botonAgregar.textContent = formContainer.classList.contains('mostrar') ? '×' : '+';
+        }
+
+        function mostrarNotificacion(mensaje) {
+            const notificacion = document.getElementById('notificacion');
+            notificacion.textContent = mensaje;
+            notificacion.style.display = 'block';
+            setTimeout(() => notificacion.style.display = 'none', 3000);
+        }
+
+        function actualizarCodigoColor() {
+            const colorPicker = document.getElementById('color');
+            const codigoColor = document.getElementById('codigoColor');
+            codigoColor.value = colorPicker.value;
+        }
+
+        function seleccionarPuntuacion(puntos) {
+            puntuacionSeleccionada = puntos;
+            const botones = document.querySelectorAll('#puntuacion button');
+            botones.forEach((boton, index) => {
+                if (index < puntos) {
+                    boton.textContent = '✭';
+                    boton.classList.add('seleccionado');
+                } else {
+                    boton.textContent = '☆';
+                    boton.classList.remove('seleccionado');
+                }
+            });
+        }
+
+        function obtenerEtiquetasSeleccionadas() {
+            const checkboxes = document.querySelectorAll('.etiquetas-opciones input[type="checkbox"]:checked');
+            return Array.from(checkboxes).map(checkbox => checkbox.value);
+        }
+
+        function establecerEtiquetasSeleccionadas(etiquetas) {
+            const checkboxes = document.querySelectorAll('.etiquetas-opciones input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = etiquetas.includes(checkbox.value);
+                const label = checkbox.parentElement;
+                if (checkbox.checked) {
+                    label.classList.add('seleccionada');
+                } else {
+                    label.classList.remove('seleccionada');
+                }
+            });
+        }
+
+        function guardarEnlace() {
+            const link = document.getElementById('link').value;
+            const title = document.getElementById('title').value;
+            const webName = document.getElementById('webName').value;
+            const deporte = document.getElementById('deporte').value;
+            const color = document.getElementById('codigoColor').value;
+            const idioma = document.getElementById('idioma').value;
+            const tipoEnlace = document.getElementById('tipoEnlace').value;
+            const puntuacion = puntuacionSeleccionada;
+            const etiquetas = obtenerEtiquetasSeleccionadas();
+
+            const mostrarIcono = tipoEnlace === 'acestream';
+            const mostrarMulti = tipoEnlace === 'fuentes';
+
+            if (link && title) {
+                if (indiceEdicion !== null) {
+                    enlacesGuardados[indiceEdicion] = { 
+                        link, 
+                        title, 
+                        webName, 
+                        deporte, 
+                        color, 
+                        idioma, 
+                        mostrarIcono, 
+                        mostrarMulti, 
+                        puntuacion, 
+                        etiquetas,
+                        favorito: enlacesGuardados[indiceEdicion].favorito || false 
+                    };
+                    indiceEdicion = null;
+                    mostrarNotificacion('Enlace actualizado correctamente.');
+                } else {
+                    const enlaceExistente = enlacesGuardados.some((enlace) => enlace.link === link);
+                    if (enlaceExistente) {
+                        mostrarNotificacion('Este enlace ya existe. No se puede duplicar.');
+                        return;
+                    }
+
+                    enlacesGuardados.push({ 
+                        link, 
+                        title, 
+                        webName, 
+                        deporte, 
+                        color, 
+                        idioma, 
+                        mostrarIcono, 
+                        mostrarMulti, 
+                        puntuacion, 
+                        etiquetas,
+                        favorito: false 
+                    });
+                    mostrarNotificacion('Enlace guardado correctamente.');
+                }
+
+                document.getElementById('link').value = '';
+                document.getElementById('title').value = '';
+                document.getElementById('webName').value = '';
+                seleccionarPuntuacion(0);
+                establecerEtiquetasSeleccionadas([]);
+                mostrarFormulario();
+                localStorage.setItem('enlaces', JSON.stringify(enlacesGuardados));
+                filtrarEnlaces();
+            } else {
+                mostrarNotificacion('Por favor, ingresa un enlace y un título.');
+            }
+        }
+
+        function editarEnlace(index) {
+            const enlace = enlacesGuardados[index];
+            indiceEdicion = index;
+
+            document.getElementById('link').value = enlace.link;
+            document.getElementById('title').value = enlace.title;
+            document.getElementById('webName').value = enlace.webName || '';
+            document.getElementById('deporte').value = enlace.deporte;
+            document.getElementById('color').value = enlace.color;
+            document.getElementById('codigoColor').value = enlace.color;
+            document.getElementById('idioma').value = enlace.idioma;
+            
+            const tipoEnlace = enlace.mostrarMulti ? 'fuentes' : enlace.mostrarIcono ? 'acestream' : 'web';
+            document.getElementById('tipoEnlace').value = tipoEnlace;
+            
+            seleccionarPuntuacion(enlace.puntuacion);
+            establecerEtiquetasSeleccionadas(enlace.etiquetas || []);
+
+            mostrarFormulario();
+        }
+
+        function cambiarPosicion(index) {
+            if (indiceCambiar === null) {
+                indiceCambiar = index;
+                mostrarNotificacion('Selecciona otro enlace para mover el primero detrás del segundo.');
+            } else {
+                if (indiceCambiar === index) {
+                    mostrarNotificacion('No puedes mover un enlace detrás de sí mismo.');
+                    indiceCambiar = null;
+                    return;
+                }
+
+                const enlaceMovido = enlacesGuardados[indiceCambiar];
+                enlacesGuardados.splice(indiceCambiar, 1);
+                const nuevaPosicion = index > indiceCambiar ? index : index + 1;
+                enlacesGuardados.splice(nuevaPosicion, 0, enlaceMovido);
+
+                localStorage.setItem('enlaces', JSON.stringify(enlacesGuardados));
+                filtrarEnlaces();
+                mostrarNotificacion('Enlace movido correctamente.');
+                indiceCambiar = null;
+            }
+        }
+
+        function borrarEnlace(index) {
+            if (confirm('¿Estás seguro de que quieres eliminar este enlace?')) {
+                enlacesGuardados.splice(index, 1);
+                localStorage.setItem('enlaces', JSON.stringify(enlacesGuardados));
+                filtrarEnlaces();
+                mostrarNotificacion('Enlace eliminado correctamente.');
+            }
+        }
+
+        function borrarTodosLosEnlaces() {
+            if (confirm('¿Estás seguro de que quieres borrar todos los enlaces? Esta acción no se puede deshacer.')) {
+                enlacesGuardados = [];
+                localStorage.setItem('enlaces', JSON.stringify(enlacesGuardados));
+                localStorage.setItem('mostrarSoloFavoritos', false);
+                mostrarSoloFavoritos = false;
+                document.querySelector('.boton-favoritos').textContent = 'Mostrar solo favoritos';
+                filtrarEnlaces();
+                mostrarNotificacion('Todos los enlaces han sido borrados.');
+            }
+        }
+
+        function exportarEnlaces() {
+            const contenido = JSON.stringify(enlacesGuardados, null, 2);
+            const blob = new Blob([contenido], { type: 'application/json' });
+            const enlaceDescarga = document.createElement('a');
+            enlaceDescarga.href = URL.createObjectURL(blob);
+            enlaceDescarga.download = 'enlaces_chefo_tv.json';
+            enlaceDescarga.click();
+            mostrarNotificacion('Enlaces exportados correctamente.');
+        }
+
+        function importarEnlaces(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const nuevosEnlaces = JSON.parse(e.target.result);
+                    if (!Array.isArray(nuevosEnlaces)) throw new Error('Formato inválido');
+
+                    nuevosEnlaces.forEach((nuevoEnlace) => {
+                        const existe = enlacesGuardados.some(
+                            (enlace) => enlace.link === nuevoEnlace.link
+                        );
+                        if (!existe) {
+                            enlacesGuardados.push({ 
+                                ...nuevoEnlace, 
+                                favorito: nuevoEnlace.favorito || false,
+                                etiquetas: nuevoEnlace.etiquetas || []
+                            });
+                        }
+                    });
+
+                    localStorage.setItem('enlaces', JSON.stringify(enlacesGuardados));
+                    filtrarEnlaces();
+                    mostrarNotificacion('Enlaces importados correctamente. Se han descartados duplicados.');
+                } catch (error) {
+                    mostrarNotificacion('El archivo no es válido.');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function importarDesdeTexto() {
+            const modal = document.getElementById('modalImportar');
+            modal.style.display = 'block';
+        }
+
+        function cerrarModalImportar() {
+            const modal = document.getElementById('modalImportar');
+            modal.style.display = 'none';
+        }
+
+        function procesarTextoImportado() {
+            const texto = document.getElementById('textoImportar').value;
+            if (texto) {
+                try {
+                    const nuevosEnlaces = JSON.parse(texto);
+                    if (!Array.isArray(nuevosEnlaces)) throw new Error('Formato inválido');
+
+                    nuevosEnlaces.forEach((nuevoEnlace) => {
+                        const existe = enlacesGuardados.some(
+                            (enlace) => enlace.link === nuevoEnlace.link
+                        );
+                        if (!existe) {
+                            enlacesGuardados.push({ 
+                                ...nuevoEnlace, 
+                                favorito: nuevoEnlace.favorito || false,
+                                etiquetas: nuevoEnlace.etiquetas || []
+                            });
+                        }
+                    });
+
+                    localStorage.setItem('enlaces', JSON.stringify(enlacesGuardados));
+                    filtrarEnlaces();
+                    mostrarNotificacion('Enlaces importados correctamente. Se han descartados duplicados.');
+                    cerrarModalImportar();
+                } catch (error) {
+                    mostrarNotificacion('El texto no es válido. Asegúrate de pegar un JSON correcto.');
+                }
+            } else {
+                mostrarNotificacion('No se ha pegado ningún texto.');
+            }
+        }
+
+        function mostrarMenuAjustes() {
+            const menuAjustes = document.getElementById('menuAjustes');
+            menuAjustes.classList.toggle('mostrar');
+            
+            if (menuAjustes.classList.contains('mostrar')) {
+                setTimeout(() => {
+                    document.addEventListener('click', cerrarMenuSiClickFuera);
+                }, 0);
+            } else {
+                document.removeEventListener('click', cerrarMenuSiClickFuera);
+            }
+        }
+
+        function cerrarMenuSiClickFuera(event) {
+            const menuAjustes = document.getElementById('menuAjustes');
+            const botonAjustes = document.querySelector('.boton-ajustes');
+            
+            if (!menuAjustes.contains(event.target) && !botonAjustes.contains(event.target)) {
+                menuAjustes.classList.remove('mostrar');
+                document.removeEventListener('click', cerrarMenuSiClickFuera);
+            }
+        }
+
+        let contadorClicks = 0;
+        let temporizador = null;
+
+        function manejarClicksAjustes() {
+            contadorClicks++;
+
+            if (contadorClicks === 1) {
+                temporizador = setTimeout(() => {
+                    contadorClicks = 0;
+                }, 1000);
+            } else if (contadorClicks === 3) {
+                clearTimeout(temporizador);
+                mostrarElementosOcultos();
+                contadorClicks = 0;
+            }
+        }
+
+        function mostrarElementosOcultos() {
+            const titulo = document.querySelector('h1');
+            const botonAgregar = document.getElementById('botonAgregar');
+            titulo.style.opacity = 1;
+            botonAgregar.style.opacity = 1;
+        }
 
         document.addEventListener('DOMContentLoaded', () => {
-            // Mostrar advertencia específica para Tor
-            mostrarNotificacion("Modo Tor: Usa 'Exportar Enlaces' para respaldar tus datos.");
-
             const modoAperturaGuardado = localStorage.getItem('modoApertura');
             if (modoAperturaGuardado) {
                 modoApertura = modoAperturaGuardado;
@@ -1049,22 +1836,7 @@
             }
         });
 
-        document.querySelector('.boton-ajustes').addEventListener('click', function(e) {
-            mostrarMenuAjustes();
-            e.stopPropagation();
-        });
-
-        // Función para manejar clics fuera del menú de ajustes
-        document.addEventListener('click', function(e) {
-            const menuAjustes = document.getElementById('menuAjustes');
-            const botonAjustes = document.querySelector('.boton-ajustes');
-            
-            if (menuAjustes.classList.contains('mostrar') && 
-                !menuAjustes.contains(e.target) && 
-                !botonAjustes.contains(e.target)) {
-                menuAjustes.classList.remove('mostrar');
-            }
-        });
+        document.querySelector('.boton-ajustes').addEventListener('click', manejarClicksAjustes);
     </script>
 </body>
 </html>
