@@ -850,13 +850,13 @@
         <div class="menu-ajustes" id="menuAjustes">
             <div class="selector-apertura-enlaces">
                 <select id="selectorApertura" onchange="cambiarAperturaEnlaces()">
+                    <option value="todo-reproductor" selected>Abrir todo en reproductor</option>
                     <option value="nueva-pestaña">Abrir en otra pestaña</option>
                     <option value="solo-web-reproductor">Abrir solo "Vía WEB" en reproductor</option>
-                    <option value="todo-reproductor">Abrir todo en reproductor</option>
                 </select>
             </div>
             <button class="boton-pantalla-completa" onclick="togglePantallaCompleta()">Pantalla Completa</button>
-            <button class="boton-agrupar" onclick="alternarAgrupacion()" id="botonAgrupar">Agrupar por título</button>
+            <button class="boton-agrupar" onclick="alternarAgrupacion()" id="botonAgrupar">Desagrupar</button>
             <button class="boton-exportar" onclick="exportarEnlaces()">Exportar Enlaces</button>
             <button class="boton-importar" onclick="importarConMensaje()">Importar Enlaces</button>
             <button class="boton-importar-texto" onclick="importarDesdeTexto()">Importar Pegando Texto</button>
@@ -1227,10 +1227,10 @@
         let indiceEdicion = null;
         let indiceCambiar = null;
         let puntuacionSeleccionada = 0;
-        let modoApertura = localStorage.getItem('modoApertura') || 'nueva-pestaña';
+        let modoApertura = localStorage.getItem('modoApertura') || 'todo-reproductor'; // Cambiado a reproductor por defecto
         let alturaReproductor = localStorage.getItem('alturaReproductor') || '250px';
         let mostrarSoloFavoritos = localStorage.getItem('mostrarSoloFavoritos') === 'true';
-        let agrupacionActivada = localStorage.getItem('agrupacionActivada') === 'true';
+        let agrupacionActivada = localStorage.getItem('agrupacionActivada') !== 'false'; // Cambiado para que sea true por defecto
         let currentVideoUrl = '';
         
         // Variables para el triple clic
@@ -1616,8 +1616,9 @@
                         </span>
                     `;
                     
+                    // Por defecto los grupos estarán plegados
                     const estadoGuardado = estadosGrupos[grupoKey];
-                    const inicialmenteCerrado = estadoGuardado !== undefined ? estadoGuardado : false;
+                    const inicialmenteCerrado = estadoGuardado !== undefined ? estadoGuardado : true;
                     
                     const tituloLinks = document.createElement('div');
                     tituloLinks.className = 'titulo-links';
@@ -2172,10 +2173,28 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            // Configuración por defecto
+            document.getElementById('selectorApertura').value = 'todo-reproductor';
+            document.getElementById('botonAgrupar').textContent = 'Desagrupar';
+            
+            // Cargar estados guardados o aplicar config por defecto
             const modoAperturaGuardado = localStorage.getItem('modoApertura');
             if (modoAperturaGuardado) {
                 modoApertura = modoAperturaGuardado;
                 document.getElementById('selectorApertura').value = modoApertura;
+            } else {
+                localStorage.setItem('modoApertura', 'todo-reproductor');
+            }
+
+            // Grupos plegados por defecto
+            if (!localStorage.getItem('estadosGrupos')) {
+                localStorage.setItem('estadosGrupos', JSON.stringify({}));
+            }
+
+            // Agrupación activada por defecto
+            if (localStorage.getItem('agrupacionActivada') === null) {
+                localStorage.setItem('agrupacionActivada', 'true');
+                agrupacionActivada = true;
             }
 
             cargarEstadoCategorias();
@@ -2183,11 +2202,6 @@
 
             if (mostrarSoloFavoritos) {
                 document.querySelector('.boton-favoritos').textContent = 'Mostrar todos';
-            }
-
-            if (localStorage.getItem('agrupacionActivada') === 'true') {
-                document.getElementById('botonAgrupar').textContent = 'Desagrupar';
-                agrupacionActivada = true;
             }
 
             // Aplicar estado de visibilidad al cargar
@@ -2198,4 +2212,4 @@
         });
     </script>
 </body>
-</html> 
+</html>
