@@ -412,6 +412,8 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
             z-index: 1000;
             display: none;
+            width: 80%;
+            max-width: 500px;
         }
         .modal-importar textarea {
             width: 100%;
@@ -789,6 +791,58 @@
         .boton-importar-gist:hover {
             background-color: #F57C00;
         }
+
+        /* Nuevos estilos para opciones de importación */
+        .opciones-importacion {
+            margin-bottom: 15px;
+        }
+
+        .opciones-importacion h4 {
+            margin: 10px 0 5px 0;
+            color: var(--color-primario);
+            font-size: 14px;
+        }
+
+        .opciones-importacion .grupo-opciones {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .opciones-importacion .opcion-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 13px;
+        }
+
+        .opciones-importacion .opcion-checkbox input {
+            margin: 0;
+        }
+
+        .opciones-importacion .seccion-opciones {
+            background-color: rgba(30, 30, 30, 0.5);
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+
+        /* Modal para importar desde Gist */
+        .modal-gist {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #121212;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            display: none;
+            width: 80%;
+            max-width: 500px;
+        }
     </style>
 </head>
 <body>
@@ -813,7 +867,7 @@
             <button class="boton-pantalla-completa" onclick="togglePantallaCompleta()">Pantalla Completa</button>
             <button class="boton-agrupar" onclick="alternarAgrupacion()" id="botonAgrupar">Agrupar por título</button>
             <button class="boton-exportar" onclick="exportarEnlaces()">Exportar Enlaces</button>
-            <button class="boton-importar" onclick="document.getElementById('fileInput').click()">Importar Enlaces</button>
+            <button class="boton-importar" onclick="importarConMensaje()">Importar Enlaces</button>
             <button class="boton-importar-texto" onclick="importarDesdeTexto()">Importar Pegando Texto</button>
             <button class="boton-importar-gist" onclick="importarDesdeGist()">Importar desde Gist</button>
             <button class="boton-borrar-todo" onclick="borrarTodosLosEnlaces()">Borrar Todos los Enlaces</button>
@@ -821,10 +875,210 @@
         </div>
 
         <div class="modal-importar" id="modalImportar">
+            <h3>Opciones de Importación</h3>
+            
+            <div class="opciones-importacion">
+                <div class="seccion-opciones">
+                    <h4>Secciones a Importar:</h4>
+                    <div class="grupo-opciones">
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" id="importarWeb" checked> Vía WEB
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" id="importarAcestream" checked> Vía Acestream
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" id="importarFuentes" checked> FUENTES
+                        </label>
+                    </div>
+                </div>
+
+                <div class="seccion-opciones">
+                    <h4>Deportes a Importar:</h4>
+                    <div class="grupo-opciones">
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="deporte-checkbox" value="f1" checked> Fórmula 1
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="deporte-checkbox" value="futbol" checked> Fútbol
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="deporte-checkbox" value="nba" checked> NBA
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="deporte-checkbox" value="tenis" checked> Tenis
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="deporte-checkbox" value="nascar" checked> NASCAR
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="deporte-checkbox" value="indy" checked> Indy
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="deporte-checkbox" value="motogp" checked> Moto GP
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="deporte-checkbox" value="wec" checked> WEC
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="deporte-checkbox" value="rugby" checked> Rugby
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="deporte-checkbox" value="ciclismo" checked> Ciclismo
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="deporte-checkbox" value="boxeo" checked> Boxeo
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="deporte-checkbox" value="mma" checked> MMA
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="deporte-checkbox" value="esports" checked> eSports
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="deporte-checkbox" value="otros" checked> Otros
+                        </label>
+                    </div>
+                </div>
+
+                <div class="seccion-opciones">
+                    <h4>Idiomas a Importar:</h4>
+                    <div class="grupo-opciones">
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="idioma-checkbox" value="ES" checked> Español
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="idioma-checkbox" value="EN" checked> Inglés
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="idioma-checkbox" value="FR" checked> Francés
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="idioma-checkbox" value="DE" checked> Alemán
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="idioma-checkbox" value="OT" checked> Otros
+                        </label>
+                    </div>
+                </div>
+
+                <div class="seccion-opciones">
+                    <h4>Otras Opciones:</h4>
+                    <div class="grupo-opciones">
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" id="conservarFavoritos" checked> Conservar favoritos
+                        </label>
+                    </div>
+                </div>
+            </div>
+
             <h3>Pega tu copia de seguridad JSON</h3>
             <textarea id="textoImportar" rows="10" cols="50" placeholder="Pega aquí el contenido JSON..."></textarea>
             <button onclick="procesarTextoImportado()">Importar</button>
             <button onclick="cerrarModalImportar()">Cancelar</button>
+        </div>
+
+        <!-- Modal para importar desde Gist -->
+        <div class="modal-gist" id="modalGist">
+            <h3>Opciones de Importación desde Gist</h3>
+            
+            <div class="opciones-importacion">
+                <div class="seccion-opciones">
+                    <h4>Secciones a Importar:</h4>
+                    <div class="grupo-opciones">
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" id="importarWebGist" checked> Vía WEB
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" id="importarAcestreamGist" checked> Vía Acestream
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" id="importarFuentesGist" checked> FUENTES
+                        </label>
+                    </div>
+                </div>
+
+                <div class="seccion-opciones">
+                    <h4>Deportes a Importar:</h4>
+                    <div class="grupo-opciones">
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="deporte-checkbox-gist" value="f1" checked> Fórmula 1
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="deporte-checkbox-gist" value="futbol" checked> Fútbol
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="deporte-checkbox-gist" value="nba" checked> NBA
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="deporte-checkbox-gist" value="tenis" checked> Tenis
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="deporte-checkbox-gist" value="nascar" checked> NASCAR
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="deporte-checkbox-gist" value="indy" checked> Indy
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="deporte-checkbox-gist" value="motogp" checked> Moto GP
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="deporte-checkbox-gist" value="wec" checked> WEC
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="deporte-checkbox-gist" value="rugby" checked> Rugby
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="deporte-checkbox-gist" value="ciclismo" checked> Ciclismo
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="deporte-checkbox-gist" value="boxeo" checked> Boxeo
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="deporte-checkbox-gist" value="mma" checked> MMA
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="deporte-checkbox-gist" value="esports" checked> eSports
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="deporte-checkbox-gist" value="otros" checked> Otros
+                        </label>
+                    </div>
+                </div>
+
+                <div class="seccion-opciones">
+                    <h4>Idiomas a Importar:</h4>
+                    <div class="grupo-opciones">
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="idioma-checkbox-gist" value="ES" checked> Español
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="idioma-checkbox-gist" value="EN" checked> Inglés
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="idioma-checkbox-gist" value="FR" checked> Francés
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="idioma-checkbox-gist" value="DE" checked> Alemán
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="idioma-checkbox-gist" value="OT" checked> Otros
+                        </label>
+                    </div>
+                </div>
+
+                <div class="seccion-opciones">
+                    <h4>Otras Opciones:</h4>
+                    <div class="grupo-opciones">
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" id="conservarFavoritosGist" checked> Conservar favoritos
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="confirmarImportarGist()">Importar</button>
+            <button onclick="cerrarModalGist()">Cancelar</button>
         </div>
 
         <h1>🧔 Chefo TV 📺</h1>
@@ -1000,31 +1254,56 @@
         };
 
         function importarDesdeGist() {
-            if (!confirm('¿Importar enlaces desde el gist público? Esto añadirá nuevos enlaces sin borrar los existentes.')) {
-                return;
-            }
+            mostrarNotificacion('Preparando importación desde Gist...');
+            document.getElementById('modalGist').style.display = 'block';
+        }
 
-            mostrarNotificacion('Importando enlaces desde el gist...');
+        function confirmarImportarGist() {
+            mostrarNotificacion('Importando desde Gist...');
             
+            const importarWeb = document.getElementById('importarWebGist').checked;
+            const importarAcestream = document.getElementById('importarAcestreamGist').checked;
+            const importarFuentes = document.getElementById('importarFuentesGist').checked;
+            const conservarFavoritos = document.getElementById('conservarFavoritosGist').checked;
+            
+            const deportesSeleccionados = [];
+            document.querySelectorAll('.deporte-checkbox-gist:checked').forEach(checkbox => {
+                deportesSeleccionados.push(checkbox.value);
+            });
+            
+            const idiomasSeleccionados = [];
+            document.querySelectorAll('.idioma-checkbox-gist:checked').forEach(checkbox => {
+                idiomasSeleccionados.push(checkbox.value);
+            });
+
             fetch('https://gist.githubusercontent.com/Ciento20/be82cec2fed5b9886b07fc171f2d9744/raw')
                 .then(response => {
-                    if (!response.ok) {
-                        throw new Error('No se pudo cargar el gist');
-                    }
+                    if (!response.ok) throw new Error('No se pudo cargar el gist');
                     return response.json();
                 })
                 .then(nuevosEnlaces => {
-                    if (!Array.isArray(nuevosEnlaces)) {
-                        throw new Error('Formato de gist inválido');
-                    }
+                    if (!Array.isArray(nuevosEnlaces)) throw new Error('Formato de gist inválido');
 
                     let contador = 0;
                     nuevosEnlaces.forEach(nuevoEnlace => {
+                        const esWeb = !nuevoEnlace.mostrarIcono && !nuevoEnlace.mostrarMulti;
+                        const esAcestream = nuevoEnlace.mostrarIcono;
+                        const esFuentes = nuevoEnlace.mostrarMulti;
+                        
+                        if (!(
+                            (esWeb && importarWeb) || 
+                            (esAcestream && importarAcestream) || 
+                            (esFuentes && importarFuentes)
+                        )) return;
+                        
+                        if (!deportesSeleccionados.includes(nuevoEnlace.deporte)) return;
+                        if (!idiomasSeleccionados.includes(nuevoEnlace.idioma)) return;
+                        
                         const existe = enlacesGuardados.some(enlace => enlace.link === nuevoEnlace.link);
                         if (!existe) {
-                            enlacesGuardados.push({
-                                ...nuevoEnlace,
-                                favorito: false,
+                            enlacesGuardados.push({ 
+                                ...nuevoEnlace, 
+                                favorito: conservarFavoritos ? (nuevoEnlace.favorito || false) : false,
                                 etiquetas: nuevoEnlace.etiquetas || []
                             });
                             contador++;
@@ -1033,12 +1312,37 @@
 
                     localStorage.setItem('enlaces', JSON.stringify(enlacesGuardados));
                     filtrarEnlaces();
-                    mostrarNotificacion(`Importados ${contador} nuevos enlaces desde el gist. ${nuevosEnlaces.length - contador} ya existían.`);
+                    mostrarNotificacion(`Importados ${contador} nuevos enlaces desde Gist.`);
+                    cerrarModalGist();
                 })
                 .catch(error => {
                     console.error('Error al importar desde gist:', error);
-                    mostrarNotificacion('Error al importar desde gist: ' + error.message);
+                    mostrarNotificacion('Error al importar desde Gist: ' + error.message);
                 });
+        }
+
+        function cerrarModalGist() {
+            document.getElementById('modalGist').style.display = 'none';
+        }
+
+        function importarConMensaje() {
+            mostrarNotificacion('Selecciona el archivo JSON para importar');
+            document.getElementById('fileInput').click();
+        }
+
+        function importarEnlaces(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            mostrarNotificacion('Preparando importación desde archivo...');
+            document.getElementById('modalImportar').style.display = 'block';
+            document.getElementById('textoImportar').value = '';
+            
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                document.getElementById('textoImportar').value = e.target.result;
+            };
+            reader.readAsText(file);
         }
 
         function alternarAgrupacion() {
@@ -1728,40 +2032,8 @@
             mostrarNotificacion('Enlaces exportados correctamente.');
         }
 
-        function importarEnlaces(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                try {
-                    const nuevosEnlaces = JSON.parse(e.target.result);
-                    if (!Array.isArray(nuevosEnlaces)) throw new Error('Formato inválido');
-
-                    nuevosEnlaces.forEach((nuevoEnlace) => {
-                        const existe = enlacesGuardados.some(
-                            (enlace) => enlace.link === nuevoEnlace.link
-                        );
-                        if (!existe) {
-                            enlacesGuardados.push({ 
-                                ...nuevoEnlace, 
-                                favorito: nuevoEnlace.favorito || false,
-                                etiquetas: nuevoEnlace.etiquetas || []
-                            });
-                        }
-                    });
-
-                    localStorage.setItem('enlaces', JSON.stringify(enlacesGuardados));
-                    filtrarEnlaces();
-                    mostrarNotificacion('Enlaces importados correctamente. Se han descartados duplicados.');
-                } catch (error) {
-                    mostrarNotificacion('El archivo no es válido.');
-                }
-            };
-            reader.readAsText(file);
-        }
-
         function importarDesdeTexto() {
+            mostrarNotificacion('Preparando para importar desde texto...');
             const modal = document.getElementById('modalImportar');
             modal.style.display = 'block';
         }
@@ -1778,22 +2050,50 @@
                     const nuevosEnlaces = JSON.parse(texto);
                     if (!Array.isArray(nuevosEnlaces)) throw new Error('Formato inválido');
 
-                    nuevosEnlaces.forEach((nuevoEnlace) => {
-                        const existe = enlacesGuardados.some(
-                            (enlace) => enlace.link === nuevoEnlace.link
-                        );
+                    const importarWeb = document.getElementById('importarWeb').checked;
+                    const importarAcestream = document.getElementById('importarAcestream').checked;
+                    const importarFuentes = document.getElementById('importarFuentes').checked;
+                    const conservarFavoritos = document.getElementById('conservarFavoritos').checked;
+                    
+                    const deportesSeleccionados = [];
+                    document.querySelectorAll('.deporte-checkbox:checked').forEach(checkbox => {
+                        deportesSeleccionados.push(checkbox.value);
+                    });
+                    
+                    const idiomasSeleccionados = [];
+                    document.querySelectorAll('.idioma-checkbox:checked').forEach(checkbox => {
+                        idiomasSeleccionados.push(checkbox.value);
+                    });
+
+                    let contador = 0;
+                    nuevosEnlaces.forEach(nuevoEnlace => {
+                        const esWeb = !nuevoEnlace.mostrarIcono && !nuevoEnlace.mostrarMulti;
+                        const esAcestream = nuevoEnlace.mostrarIcono;
+                        const esFuentes = nuevoEnlace.mostrarMulti;
+                        
+                        if (!(
+                            (esWeb && importarWeb) || 
+                            (esAcestream && importarAcestream) || 
+                            (esFuentes && importarFuentes)
+                        )) return;
+                        
+                        if (!deportesSeleccionados.includes(nuevoEnlace.deporte)) return;
+                        if (!idiomasSeleccionados.includes(nuevoEnlace.idioma)) return;
+                        
+                        const existe = enlacesGuardados.some(enlace => enlace.link === nuevoEnlace.link);
                         if (!existe) {
                             enlacesGuardados.push({ 
                                 ...nuevoEnlace, 
-                                favorito: nuevoEnlace.favorito || false,
+                                favorito: conservarFavoritos ? (nuevoEnlace.favorito || false) : false,
                                 etiquetas: nuevoEnlace.etiquetas || []
                             });
+                            contador++;
                         }
                     });
 
                     localStorage.setItem('enlaces', JSON.stringify(enlacesGuardados));
                     filtrarEnlaces();
-                    mostrarNotificacion('Enlaces importados correctamente. Se han descartados duplicados.');
+                    mostrarNotificacion(`Importados ${contador} nuevos enlaces. Se han descartado duplicados y filtrados según tus opciones.`);
                     cerrarModalImportar();
                 } catch (error) {
                     mostrarNotificacion('El texto no es válido. Asegúrate de pegar un JSON correcto.');
@@ -1873,4 +2173,4 @@
         document.querySelector('.boton-ajustes').addEventListener('click', manejarClicksAjustes);
     </script>
 </body>
-</html> 
+</html>
