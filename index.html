@@ -783,15 +783,6 @@
             background-color: #F57C00;
         }
 
-        .boton-importar-gist {
-            background-color: #FF9800;
-            margin-top: 8px;
-        }
-
-        .boton-importar-gist:hover {
-            background-color: #F57C00;
-        }
-
         /* Nuevos estilos para opciones de importación */
         .opciones-importacion {
             margin-bottom: 15px;
@@ -869,7 +860,6 @@
             <button class="boton-exportar" onclick="exportarEnlaces()">Exportar Enlaces</button>
             <button class="boton-importar" onclick="importarConMensaje()">Importar Enlaces</button>
             <button class="boton-importar-texto" onclick="importarDesdeTexto()">Importar Pegando Texto</button>
-            <button class="boton-importar-gist" onclick="importarDesdeGist()">Importar desde Gist</button>
             <button class="boton-borrar-todo" onclick="borrarTodosLosEnlaces()">Borrar Todos los Enlaces</button>
             <button class="boton-favoritos" onclick="filtrarFavoritos()">Mostrar solo favoritos</button>
         </div>
@@ -1144,7 +1134,7 @@
         </div>
 
         <div class="link-list">
-            <div class="boton-agregar" id="botonAgregar" onclick="mostrarFormulario()">+</div>
+            <div class="boton-agregar" id="botonAgregar" onclick="manejarClicAgregar()">+</div>
         </div>
 
         <div class="form-container" id="formContainer">
@@ -1243,6 +1233,10 @@
         let agrupacionActivada = localStorage.getItem('agrupacionActivada') === 'true';
         let currentVideoUrl = '';
         
+        // Variables para el triple clic
+        let contadorClicksAgregar = 0;
+        let temporizadorAgregar = null;
+        
         const iconosDeporte = {
             f1: '🏎️', futbol: '⚽', nba: '🏀', tenis: '🎾', nascar: '🚗',
             indy: '🚙', motogp: '🏍️', wec: '🏁', rugby: '🏉', ciclismo: '🚴',
@@ -1252,6 +1246,23 @@
         const banderasIdioma = {
             ES: '🇪🇦', EN: '🇬🇧', FR: '🇫🇷', DE: '🇩🇪', OT: '🏳️‍⚧️'
         };
+
+        // Función modificada para manejar el clic en el botón +
+        function manejarClicAgregar() {
+            contadorClicksAgregar++;
+            
+            if (contadorClicksAgregar === 1) {
+                temporizadorAgregar = setTimeout(() => {
+                    // Comportamiento normal con un solo clic
+                    mostrarFormulario();
+                    contadorClicksAgregar = 0;
+                }, 300);
+            } else if (contadorClicksAgregar === 3) {
+                clearTimeout(temporizadorAgregar);
+                contadorClicksAgregar = 0;
+                importarDesdeGist(); // Triple clic ejecuta importar desde Gist
+            }
+        }
 
         function importarDesdeGist() {
             mostrarNotificacion('Preparando importación desde Gist...');
@@ -2126,30 +2137,6 @@
             }
         }
 
-        let contadorClicks = 0;
-        let temporizador = null;
-
-        function manejarClicksAjustes() {
-            contadorClicks++;
-
-            if (contadorClicks === 1) {
-                temporizador = setTimeout(() => {
-                    contadorClicks = 0;
-                }, 1000);
-            } else if (contadorClicks === 3) {
-                clearTimeout(temporizador);
-                mostrarElementosOcultos();
-                contadorClicks = 0;
-            }
-        }
-
-        function mostrarElementosOcultos() {
-            const titulo = document.querySelector('h1');
-            const botonAgregar = document.getElementById('botonAgregar');
-            titulo.style.opacity = 1;
-            botonAgregar.style.opacity = 1;
-        }
-
         document.addEventListener('DOMContentLoaded', () => {
             const modoAperturaGuardado = localStorage.getItem('modoApertura');
             if (modoAperturaGuardado) {
@@ -2169,8 +2156,6 @@
                 agrupacionActivada = true;
             }
         });
-
-        document.querySelector('.boton-ajustes').addEventListener('click', manejarClicksAjustes);
     </script>
 </body>
-</html>
+</html> 
