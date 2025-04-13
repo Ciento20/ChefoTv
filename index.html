@@ -26,7 +26,7 @@
             text-align: center;
             color: #FFFFFF;
             margin-bottom: 20px;
-            opacity: 0;
+            opacity: 1;
             transition: opacity 0.3s ease;
         }
         .categoria {
@@ -140,7 +140,7 @@
             cursor: pointer;
             font-size: 24px;
             margin: 0 auto;
-            opacity: 0;
+            opacity: 1;
             transition: opacity 0.3s ease;
         }
         .boton-agregar:hover {
@@ -1236,6 +1236,9 @@
         // Variables para el triple clic
         let contadorClicksAgregar = 0;
         let temporizadorAgregar = null;
+        let contadorClicksAjustes = 0;
+        let temporizadorAjustes = null;
+        let elementosOcultos = localStorage.getItem('elementosOcultos') === 'true';
         
         const iconosDeporte = {
             f1: '🏎️', futbol: '⚽', nba: '🏀', tenis: '🎾', nascar: '🚗',
@@ -1261,6 +1264,50 @@
                 clearTimeout(temporizadorAgregar);
                 contadorClicksAgregar = 0;
                 importarDesdeGist(); // Triple clic ejecuta importar desde Gist
+            }
+        }
+
+        function alternarVisibilidadElementos() {
+            elementosOcultos = !elementosOcultos;
+            localStorage.setItem('elementosOcultos', elementosOcultos);
+            
+            const titulo = document.querySelector('h1');
+            const botonAgregar = document.getElementById('botonAgregar');
+            
+            if (elementosOcultos) {
+                titulo.style.opacity = '0';
+                botonAgregar.style.opacity = '0';
+            } else {
+                titulo.style.opacity = '1';
+                botonAgregar.style.opacity = '1';
+            }
+            
+            mostrarNotificacion(elementosOcultos ? 'Elementos ocultos' : 'Elementos visibles');
+        }
+
+        function mostrarMenuAjustes() {
+            contadorClicksAjustes++;
+            
+            if (contadorClicksAjustes === 1) {
+                temporizadorAjustes = setTimeout(() => {
+                    // Comportamiento normal con un solo clic
+                    const menuAjustes = document.getElementById('menuAjustes');
+                    menuAjustes.classList.toggle('mostrar');
+                    
+                    if (menuAjustes.classList.contains('mostrar')) {
+                        setTimeout(() => {
+                            document.addEventListener('click', cerrarMenuSiClickFuera);
+                        }, 0);
+                    } else {
+                        document.removeEventListener('click', cerrarMenuSiClickFuera);
+                    }
+                    
+                    contadorClicksAjustes = 0;
+                }, 2000);
+            } else if (contadorClicksAjustes === 3) {
+                clearTimeout(temporizadorAjustes);
+                contadorClicksAjustes = 0;
+                alternarVisibilidadElementos();
             }
         }
 
@@ -1693,7 +1740,7 @@
 
         function expandirColapsarGrupo(boton) {
             const tituloElement = boton.closest('h3');
-            const tituloContainer = tituloElement.closest('.titulo-container');
+            const tituloContainer = boton.closest('.titulo-container');
             const lista = tituloContainer.querySelector('.titulo-links');
             const grupoKey = tituloElement.dataset.grupo;
             
@@ -2114,19 +2161,6 @@
             }
         }
 
-        function mostrarMenuAjustes() {
-            const menuAjustes = document.getElementById('menuAjustes');
-            menuAjustes.classList.toggle('mostrar');
-            
-            if (menuAjustes.classList.contains('mostrar')) {
-                setTimeout(() => {
-                    document.addEventListener('click', cerrarMenuSiClickFuera);
-                }, 0);
-            } else {
-                document.removeEventListener('click', cerrarMenuSiClickFuera);
-            }
-        }
-
         function cerrarMenuSiClickFuera(event) {
             const menuAjustes = document.getElementById('menuAjustes');
             const botonAjustes = document.querySelector('.boton-ajustes');
@@ -2155,7 +2189,13 @@
                 document.getElementById('botonAgrupar').textContent = 'Desagrupar';
                 agrupacionActivada = true;
             }
+
+            // Aplicar estado de visibilidad al cargar
+            if (elementosOcultos) {
+                document.querySelector('h1').style.opacity = '0';
+                document.getElementById('botonAgregar').style.opacity = '0';
+            }
         });
     </script>
 </body>
-</html> 
+</html>
