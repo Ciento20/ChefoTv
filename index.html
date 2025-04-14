@@ -389,17 +389,27 @@
             width: 100%;
             margin: 5px 0;
         }
-        .selector-apertura-enlaces {
-            margin-bottom: 10px;
+        .boton-pantalla-completa {
+            background-color: #9C27B0;
+            margin-top: 8px;
         }
-        .selector-apertura-enlaces select {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid var(--color-primario);
+        .boton-pantalla-completa:hover {
+            background-color: #7B1FA2;
+        }
+        .boton-apertura {
+            background-color: var(--color-primario);
+            color: white;
+            border: none;
             border-radius: 4px;
-            background-color: #121212;
-            color: #FFFFFF;
+            padding: 8px;
+            cursor: pointer;
             font-size: 14px;
+            margin-bottom: 10px;
+            width: 100%;
+            text-align: center;
+        }
+        .boton-apertura:hover {
+            opacity: 0.9;
         }
         .modal-importar {
             position: fixed;
@@ -706,15 +716,6 @@
             background-color: var(--color-primario);
         }
 
-        .boton-pantalla-completa {
-            background-color: #9C27B0;
-            margin-top: 8px;
-        }
-
-        .boton-pantalla-completa:hover {
-            background-color: #7B1FA2;
-        }
-
         .boton-subir {
             position: fixed;
             bottom: 20px;
@@ -889,13 +890,7 @@
 
         <button class="boton-ajustes" onclick="mostrarMenuAjustes()">⚙️</button>
         <div class="menu-ajustes" id="menuAjustes">
-            <div class="selector-apertura-enlaces">
-                <select id="selectorApertura" onchange="cambiarAperturaEnlaces()">
-                    <option value="todo-reproductor" selected>Abrir todo en reproductor</option>
-                    <option value="nueva-pestaña">Abrir en otra pestaña</option>
-                    <option value="solo-web-reproductor">Abrir solo "Vía WEB" en reproductor</option>
-                </select>
-            </div>
+            <button class="boton-apertura" onclick="cambiarModoApertura()" id="botonModoApertura">Modo: Reproductor</button>
             <button class="boton-pantalla-completa" onclick="togglePantallaCompleta()">Pantalla Completa</button>
             <button class="boton-agrupar" onclick="alternarAgrupacion()" id="botonAgrupar">Desagrupar</button>
             <button class="boton-exportar" onclick="exportarEnlaces()">Exportar Enlaces</button>
@@ -1799,6 +1794,26 @@
             localStorage.setItem('estadosGrupos', JSON.stringify(estadosGrupos));
         }
 
+        function cambiarModoApertura() {
+            const modos = [
+                { valor: 'todo-reproductor', texto: 'Modo: Reproductor' },
+                { valor: 'nueva-pestaña', texto: 'Modo: Nueva pestaña' },
+                { valor: 'solo-web-reproductor', texto: 'Modo: WEB en reproductor' }
+            ];
+            
+            // Encuentra el índice del modo actual
+            const indiceActual = modos.findIndex(modo => modo.valor === modoApertura);
+            const siguienteIndice = (indiceActual + 1) % modos.length;
+            
+            modoApertura = modos[siguienteIndice].valor;
+            localStorage.setItem('modoApertura', modoApertura);
+            
+            const boton = document.getElementById('botonModoApertura');
+            boton.textContent = modos[siguienteIndice].texto;
+            
+            mostrarNotificacion(modos[siguienteIndice].texto);
+        }
+
         function reproducirEnlace(url) {
             currentVideoUrl = url;
             const videoFrame = document.getElementById('videoFrame');
@@ -1902,12 +1917,6 @@
                     document.exitFullscreen();
                 }
             }
-        }
-
-        function cambiarAperturaEnlaces() {
-            const selector = document.getElementById('selectorApertura');
-            modoApertura = selector.value;
-            localStorage.setItem('modoApertura', modoApertura);
         }
 
         function manejarClicEnlace(url, categoria) {
@@ -2240,18 +2249,18 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            // Configuración por defecto
-            document.getElementById('selectorApertura').value = 'todo-reproductor';
-            document.getElementById('botonAgrupar').textContent = 'Desagrupar';
+            // Configuración de modos de apertura
+            const modos = [
+                { valor: 'todo-reproductor', texto: 'Modo: Reproductor' },
+                { valor: 'nueva-pestaña', texto: 'Modo: Nueva pestaña' },
+                { valor: 'solo-web-reproductor', texto: 'Modo: WEB en reproductor' }
+            ];
             
-            // Cargar estados guardados o aplicar config por defecto
-            const modoAperturaGuardado = localStorage.getItem('modoApertura');
-            if (modoAperturaGuardado) {
-                modoApertura = modoAperturaGuardado;
-                document.getElementById('selectorApertura').value = modoApertura;
-            } else {
-                localStorage.setItem('modoApertura', 'todo-reproductor');
-            }
+            const modoAperturaGuardado = localStorage.getItem('modoApertura') || 'todo-reproductor';
+            modoApertura = modoAperturaGuardado;
+            
+            const modoActual = modos.find(modo => modo.valor === modoApertura) || modos[0];
+            document.getElementById('botonModoApertura').textContent = modoActual.texto;
 
             // Grupos plegados por defecto
             if (!localStorage.getItem('estadosGrupos')) {
