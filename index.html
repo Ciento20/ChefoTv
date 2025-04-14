@@ -1023,16 +1023,17 @@
         
         <!-- NUEVO MENÚ DE AJUSTES MEJORADO -->
         <div class="menu-ajustes" id="menuAjustes">
-            <div class="seccion-ajustes">
-                <h3>Reproducción</h3>
-                <button class="boton-apertura" onclick="cambiarModoApertura()" id="botonModoApertura">Modo de Apertura</button>
-                <button class="boton-pantalla-completa" onclick="togglePantallaCompleta()">Pantalla Completa</button>
-            </div>
-            
+            <!-- Sección de Visualización movida primero -->
             <div class="seccion-ajustes">
                 <h3>Visualización</h3>
                 <button class="boton-agrupar" onclick="alternarAgrupacion()" id="botonAgrupar">Agrupación de Enlaces</button>
                 <button class="boton-favoritos" onclick="filtrarFavoritos()">Mostrar Favoritos</button>
+            </div>
+            
+            <div class="seccion-ajustes">
+                <h3>Reproducción</h3>
+                <button class="boton-apertura" onclick="cambiarModoApertura()" id="botonModoApertura">Modo de Apertura</button>
+                <button class="boton-pantalla-completa" onclick="togglePantallaCompleta()">Pantalla Completa</button>
             </div>
             
             <div class="seccion-ajustes">
@@ -2433,4 +2434,4 @@
         });
     </script>
 </body>
-</html> 
+</html>
