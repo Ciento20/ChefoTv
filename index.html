@@ -571,6 +571,45 @@
             background-color: #3e8e41;
         }
 
+        /* Nuevos botones para ajustar tamaño del reproductor */
+        .boton-agrandar-reproductor {
+            width: 30px;
+            height: 30px;
+            padding: 0;
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .boton-agrandar-reproductor:hover {
+            background-color: #0b7dda;
+        }
+
+        .boton-reducir-reproductor {
+            width: 30px;
+            height: 30px;
+            padding: 0;
+            background-color: #FF9800;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .boton-reducir-reproductor:hover {
+            background-color: #e68a00;
+        }
+
         .boton-favorito {
             position: absolute;
             top: 5px;
@@ -839,6 +878,8 @@
 <body>
     <div class="container">
         <div class="controles-reproductor">
+            <button class="boton-reducir-reproductor" id="botonReducirReproductor" onclick="reducirReproductor()" style="display: none;">−</button>
+            <button class="boton-agrandar-reproductor" id="botonAgrandarReproductor" onclick="agrandarReproductor()" style="display: none;">+</button>
             <button class="boton-refrescar-reproductor" id="botonRefrescarReproductor" onclick="refrescarReproductor()" style="display: none;">↻</button>
             <button class="boton-cerrar-reproductor" id="botonCerrarReproductor" onclick="cerrarReproductor()" style="display: none;">×</button>
         </div>
@@ -1764,12 +1805,16 @@
             const reproductor = document.getElementById('reproductor');
             const botonCerrar = document.getElementById('botonCerrarReproductor');
             const botonRefrescar = document.getElementById('botonRefrescarReproductor');
+            const botonAgrandar = document.getElementById('botonAgrandarReproductor');
+            const botonReducir = document.getElementById('botonReducirReproductor');
 
             reproductor.classList.add('mostrar');
             videoFrame.src = url;
             reproductor.style.height = alturaReproductor;
             botonCerrar.style.display = 'flex';
             botonRefrescar.style.display = 'flex';
+            botonAgrandar.style.display = 'flex';
+            botonReducir.style.display = 'flex';
             
             reproductor.addEventListener('pointerup', function() {
                 alturaReproductor = reproductor.style.height;
@@ -1782,6 +1827,8 @@
             const reproductor = document.getElementById('reproductor');
             const botonCerrar = document.getElementById('botonCerrarReproductor');
             const botonRefrescar = document.getElementById('botonRefrescarReproductor');
+            const botonAgrandar = document.getElementById('botonAgrandarReproductor');
+            const botonReducir = document.getElementById('botonReducirReproductor');
 
             reproductor.classList.add('ocultar');
             
@@ -1790,6 +1837,8 @@
                 videoFrame.src = '';
                 botonCerrar.style.display = 'none';
                 botonRefrescar.style.display = 'none';
+                botonAgrandar.style.display = 'none';
+                botonReducir.style.display = 'none';
                 currentVideoUrl = '';
             }, 500);
         }
@@ -1806,6 +1855,24 @@
                     mostrarNotificacion('Reproductor refrescado');
                 }, 300);
             }
+        }
+
+        function agrandarReproductor() {
+            const reproductor = document.getElementById('reproductor');
+            const currentHeight = parseInt(reproductor.style.height || '250');
+            const newHeight = Math.min(currentHeight + 50, 800); // Máximo 800px
+            reproductor.style.height = `${newHeight}px`;
+            alturaReproductor = `${newHeight}px`;
+            localStorage.setItem('alturaReproductor', alturaReproductor);
+        }
+
+        function reducirReproductor() {
+            const reproductor = document.getElementById('reproductor');
+            const currentHeight = parseInt(reproductor.style.height || '250');
+            const newHeight = Math.max(currentHeight - 50, 150); // Mínimo 150px
+            reproductor.style.height = `${newHeight}px`;
+            alturaReproductor = `${newHeight}px`;
+            localStorage.setItem('alturaReproductor', alturaReproductor);
         }
 
         function filtrarFavoritos() {
@@ -2212,4 +2279,4 @@
         });
     </script>
 </body>
-</html> 
+</html>
