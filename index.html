@@ -369,26 +369,157 @@
         .boton-ajustes:hover {
             opacity: 0.8;
         }
+        
+        /* NUEVO ESTILO PARA EL MENÚ DE AJUSTES */
         .menu-ajustes {
             display: none;
             position: absolute;
             top: 60px;
             left: 20px;
-            background-color: #333333;
-            border-radius: 8px;
-            padding: 10px;
+            background-color: #1E1E1E;
+            border-radius: 12px;
+            padding: 15px;
             z-index: 1000;
-            width: 200px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            width: 280px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--color-primario);
+            animation: fadeIn 0.2s ease-out;
         }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .menu-ajustes.mostrar {
             display: block;
         }
-        .menu-ajustes button {
-            display: block;
-            width: 100%;
-            margin: 5px 0;
+
+        .seccion-ajustes {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(187, 134, 252, 0.2);
         }
+
+        .seccion-ajustes:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .seccion-ajustes h3 {
+            color: var(--color-primario);
+            margin: 0 0 12px 0;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+        }
+
+        .seccion-ajustes h3::before {
+            content: "";
+            display: inline-block;
+            width: 4px;
+            height: 14px;
+            background-color: var(--color-primario);
+            margin-right: 8px;
+            border-radius: 2px;
+        }
+
+        .menu-ajustes button {
+            width: 100%;
+            padding: 10px 15px;
+            margin: 5px 0;
+            background-color: rgba(187, 134, 252, 0.1);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+        }
+
+        .menu-ajustes button:hover {
+            background-color: rgba(187, 134, 252, 0.2);
+            border-color: rgba(187, 134, 252, 0.3);
+            transform: translateX(3px);
+        }
+
+        .menu-ajustes button::before {
+            content: "→";
+            margin-right: 10px;
+            color: var(--color-primario);
+            font-size: 12px;
+            opacity: 0;
+            transition: all 0.2s ease;
+        }
+
+        .menu-ajustes button:hover::before {
+            opacity: 1;
+        }
+
+        /* Estilos específicos para botones especiales */
+        .boton-pantalla-completa {
+            background-color: rgba(156, 39, 176, 0.1) !important;
+            border-color: rgba(156, 39, 176, 0.3) !important;
+        }
+
+        .boton-agrupar {
+            background-color: rgba(255, 152, 0, 0.1) !important;
+            border-color: rgba(255, 152, 0, 0.3) !important;
+        }
+
+        .boton-exportar {
+            background-color: rgba(76, 175, 80, 0.1) !important;
+            border-color: rgba(76, 175, 80, 0.3) !important;
+        }
+
+        .boton-importar {
+            background-color: rgba(33, 150, 243, 0.1) !important;
+            border-color: rgba(33, 150, 243, 0.3) !important;
+        }
+
+        .boton-importar-texto {
+            background-color: rgba(103, 58, 183, 0.1) !important;
+            border-color: rgba(103, 58, 183, 0.3) !important;
+        }
+
+        .boton-borrar-todo {
+            background-color: rgba(244, 67, 54, 0.1) !important;
+            border-color: rgba(244, 67, 54, 0.3) !important;
+        }
+
+        .boton-favoritos {
+            background-color: rgba(255, 215, 0, 0.1) !important;
+            border-color: rgba(255, 215, 0, 0.3) !important;
+        }
+
+        /* Iconos para los botones */
+        .menu-ajustes button::after {
+            margin-left: auto;
+            font-size: 16px;
+        }
+
+        .boton-apertura::after { content: "📺"; }
+        .boton-pantalla-completa::after { content: "🖥️"; }
+        .boton-agrupar::after { content: "🗂️"; }
+        .boton-exportar::after { content: "📤"; }
+        .boton-importar::after { content: "📥"; }
+        .boton-importar-texto::after { content: "📋"; }
+        .boton-borrar-todo::after { content: "🗑️"; }
+        .boton-favoritos::after { content: "⭐"; }
+        
+        .boton-pantalla-completa {
+            margin-top: 8px;
+        }
+        
+        /* FIN DEL NUEVO ESTILO PARA MENÚ DE AJUSTES */
+
         .boton-pantalla-completa {
             background-color: #9C27B0;
             margin-top: 8px;
@@ -889,16 +1020,30 @@
         </div>
 
         <button class="boton-ajustes" onclick="mostrarMenuAjustes()">⚙️</button>
+        
+        <!-- NUEVO MENÚ DE AJUSTES MEJORADO -->
         <div class="menu-ajustes" id="menuAjustes">
-            <button class="boton-apertura" onclick="cambiarModoApertura()" id="botonModoApertura">Modo: Reproductor</button>
-            <button class="boton-pantalla-completa" onclick="togglePantallaCompleta()">Pantalla Completa</button>
-            <button class="boton-agrupar" onclick="alternarAgrupacion()" id="botonAgrupar">Desagrupar</button>
-            <button class="boton-exportar" onclick="exportarEnlaces()">Exportar Enlaces</button>
-            <button class="boton-importar" onclick="importarConMensaje()">Importar Enlaces</button>
-            <button class="boton-importar-texto" onclick="importarDesdeTexto()">Importar Pegando Texto</button>
-            <button class="boton-borrar-todo" onclick="borrarTodosLosEnlaces()">Borrar Todos los Enlaces</button>
-            <button class="boton-favoritos" onclick="filtrarFavoritos()">Mostrar solo favoritos</button>
+            <div class="seccion-ajustes">
+                <h3>Reproducción</h3>
+                <button class="boton-apertura" onclick="cambiarModoApertura()" id="botonModoApertura">Modo de Apertura</button>
+                <button class="boton-pantalla-completa" onclick="togglePantallaCompleta()">Pantalla Completa</button>
+            </div>
+            
+            <div class="seccion-ajustes">
+                <h3>Visualización</h3>
+                <button class="boton-agrupar" onclick="alternarAgrupacion()" id="botonAgrupar">Agrupación de Enlaces</button>
+                <button class="boton-favoritos" onclick="filtrarFavoritos()">Mostrar Favoritos</button>
+            </div>
+            
+            <div class="seccion-ajustes">
+                <h3>Gestión de Datos</h3>
+                <button class="boton-exportar" onclick="exportarEnlaces()">Exportar Enlaces</button>
+                <button class="boton-importar" onclick="importarConMensaje()">Importar Enlaces</button>
+                <button class="boton-importar-texto" onclick="importarDesdeTexto()">Importar desde Texto</button>
+                <button class="boton-borrar-todo" onclick="borrarTodosLosEnlaces()">Borrar Todos</button>
+            </div>
         </div>
+        <!-- FIN DEL NUEVO MENÚ DE AJUSTES -->
 
         <div class="modal-importar" id="modalImportar">
             <h3>Opciones de Importación</h3>
@@ -2288,4 +2433,4 @@
         });
     </script>
 </body>
-</html>
+</html> 
