@@ -3,504 +3,602 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Canales Deportivos DaddyLive TV</title>
+    <title>🧔 Chefo TV 📺</title>
     <style>
-        :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #3498db;
-            --accent-color: #e74c3c;
-            --success-color: #27ae60;
-            --light-color: #ecf0f1;
-            --dark-color: #2c3e50;
-            --text-color: #333;
-            --text-light: #7f8c8d;
-            --shadow: 0 2px 4px rgba(0,0,0,0.1);
-            --transition: all 0.2s ease;
-        }
-        
-        body.dark-mode {
-            background-color: #121212;
-            color: #e0e0e0;
-        }
-
-        body.dark-mode .container {
-            background-color: #1e1e1e;
-            color: #e0e0e0;
-        }
-
-        body.dark-mode .channel-btn {
-            background-color: #2d2d2d;
-            border-color: #333;
-            color: #e0e0e0;
-        }
-
-        body.dark-mode .channel-btn:hover {
-            background-color: #333;
-        }
-
-        body.dark-mode .channel-name {
-            color: #e0e0e0;
-        }
-
-        body.dark-mode .channel-event {
-            color: #aaa;
-        }
-
-        body.dark-mode .direct-channel-input input {
-            background-color: #2d2d2d;
-            border-color: #333;
-            color: #e0e0e0;
-        }
-
-        body.dark-mode #searchInput {
-            background-color: #2d2d2d;
-            border-color: #333;
-            color: #e0e0e0;
-        }
-
-        body.dark-mode .filter-button {
-            background-color: #2d2d2d;
-            border-color: #333;
-            color: #e0e0e0;
-        }
-
-        body.dark-mode .filter-button.active {
-            background-color: var(--secondary-color);
-            color: white;
-        }
-
-        body.dark-mode .modal-contenido {
-            background-color: #2d2d2d;
-            color: #e0e0e0;
-        }
-
-        body.dark-mode .modal-contenido input {
-            background-color: #333;
-            border-color: #444;
-            color: #e0e0e0;
-        }
-        
-        * {
-            box-sizing: border-box;
-        }
-        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            margin: 0;
+            font-family: Arial, sans-serif;
+            margin: 10px;
             padding: 0;
-            background-color: #f5f5f5;
-            color: var(--text-color);
-            line-height: 1.5;
-            font-size: 15px;
-            transition: background-color 0.3s ease, color 0.3s ease;
+            background-color: #121212;
+            color: #FFFFFF;
+            --color-primario: #BB86FC;
         }
-        
-        .tv-container {
-            width: 100%;
-            padding: 10px;
-            margin: 0 auto;
-        }
-        
         .container {
-            background-color: white;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: var(--shadow);
-            margin-bottom: 15px;
-            transition: background-color 0.3s ease;
-        }
-        
-        .channel-counter {
-            display: block;
-            text-align: center;
-            font-size: 14px;
-            color: var(--success-color);
-            font-weight: bold;
-            margin-bottom: 15px;
-            padding: 5px;
-            background-color: rgba(39, 174, 96, 0.1);
-            border-radius: 15px;
-            cursor: pointer;
-        }
-        
-        .tv-controls {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-        
-        .search-box {
-            margin-bottom: 15px;
+            max-width: 1200px;
+            margin:0 auto;
+            background: #121212;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             position: relative;
         }
-        
-        #searchInput {
-            width: 100%;
-            padding: 10px 15px 10px 35px;
-            border: 1px solid #ddd;
-            border-radius: 20px;
-            font-size: 15px;
-            transition: background-color 0.3s ease, border-color 0.3s ease;
-        }
-        
-        .search-box::before {
-            content: "🔍";
-            position: absolute;
-            left: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-light);
-        }
-
-        .search-box::after {
-            content: "#";
-            position: absolute;
-            left: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-light);
-            opacity: 0;
+        h1 {
+            text-align: center;
+            color: #FFFFFF;
+            margin-bottom: 20px;
+            opacity: 1;
             transition: opacity 0.3s ease;
         }
-
-        .search-box.number-mode::before {
-            opacity: 0;
+        .categoria {
+            margin-bottom: 20px;
         }
-
-        .search-box.number-mode::after {
-            opacity: 1;
-        }
-        
-        .filter-buttons {
+        .categoria h2 {
+            font-size: 18px;
+            color: var(--color-primario);
+            margin-bottom: 10px;
             display: flex;
-            gap: 8px;
-            margin-bottom: 15px;
+            align-items: center;
         }
-        
-        .filter-button {
-            flex: 1;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 20px;
-            background-color: white;
+        .link-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+            transition: opacity 0.3s ease, max-height 0.3s ease;
+            overflow: hidden;
+        }
+        .categoria.oculta .link-list {
+            opacity: 0;
+            max-height: 0;
+        }
+        .toggle-categoria {
+            background: none;
+            border: none;
             cursor: pointer;
-            transition: var(--transition);
             font-size: 14px;
-            transition: all 0.3s ease;
+            color: var(--color-primario);
+            margin-left: 10px;
+            padding: 0;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
-        
-        .filter-button.active {
-            background-color: var(--secondary-color);
-            color: white;
-            border-color: var(--secondary-color);
+        .toggle-categoria:hover {
+            background-color: rgba(187, 134, 252, 0.1);
         }
-        
-        .loading {
+        .link-item {
+            flex: 1 1 calc(33.33% - 10px);
+            height: 150px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #FFFFFF;
+            border: 2px solid var(--color-primario);
+            border-radius: 8px;
+            cursor: pointer;
             text-align: center;
-            padding: 20px;
+            padding: 10px;
+            font-size: 14px;
+            position: relative;
+            box-sizing: border-box;
+            background-color: #1E1E1E;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+        }
+        .link-item:hover {
+            opacity: 0.9;
+        }
+        .menu-contextual {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            border-radius: 8px;
+            padding: 5px;
+            font-size: 12px;
+            z-index: 10;
+        }
+        .menu-contextual button {
+            margin: 5px;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .menu-contextual button:nth-child(1) {
+            background-color: #CF6679;
+            color: white;
+        }
+        .menu-contextual button:nth-child(2) {
+            background-color: #370083;
+            color: white;
+        }
+        .menu-contextual button:nth-child(3) {
+            background-color: #28a745;
+            color: white;
+        }
+        .link-item.mostrar-menu .menu-contextual {
+            display: block;
+        }
+        .boton-agregar {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--color-primario);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 24px;
+            margin: 0 auto;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+        .boton-agregar:hover {
+            background-color: #200;
+        }
+        .form-container {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid var(--color-primario);
             display: none;
         }
-        
-        .loading::after {
-            content: '';
-            display: inline-block;
+        .form-container.mostrar {
+            display: block;
+        }
+        input[type="text"], select {
+            width: 100%;
+            padding: 8px;
+            margin: 8px 0;
+            border: 1px solid var(--color-primario);
+            border-radius: 4px;
+            background-color: #121212;
+            color: #FFFFFF;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        .selectores {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 8px 0;
+        }
+        .color-picker {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .color-picker input[type="color"] {
+            width: 30px;
+            height: 30px;
+            padding: 3px;
+            border: 2px solid var(--color-primario);
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .color-picker input[type="text"] {
+            width: 70px;
+            padding: 6px;
+            border: 1px solid var(--color-primario);
+            border-radius: 4px;
+            background-color: #121212;
+            color: #FFFFFF;
+            font-size: 12px;
+        }
+        .deporte-selector select {
+            width: auto;
+            padding: 8px;
+            border: 2px solid var(--color-primario);
+            border-radius: 6px;
+            cursor: pointer;
+            background-color: #121212;
+            color: #FFFFFF;
+            font-size: 14px;
+        }
+        .idioma-selector select {
+            width: auto;
+            padding: 8px;
+            border: 2px solid var(--color-primario);
+            border-radius: 6px;
+            cursor: pointer;
+            background-color: #121212;
+            color: #FFFFFF;
+            font-size: 14px;
+        }
+        .toggle-icono {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        .checkbox-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+        .icono {
+            font-size: 24px;
+            text-align: center;
+        }
+        .toggle-icono label {
+            font-size: 14px;
+            color: #FFFFFF;
+            cursor: pointer;
+        }
+        .toggle-icono input[type="checkbox"] {
             width: 16px;
             height: 16px;
-            border: 2px solid rgba(52, 152, 219, 0.3);
-            border-radius: 50%;
-            border-top-color: var(--secondary-color);
-            animation: spin 1s linear infinite;
-            margin-left: 8px;
+            cursor: pointer;
+            accent-color: var(--color-primario);
         }
-        
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-        
-        .channel-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-            gap: 8px;
-        }
-        
-        .channel-time {
-            font-family: 'Courier New', monospace;
-            font-weight: bold;
-            color: var(--accent-color);
-            min-width: 50px;
-            text-align: center;
+        button {
+            width: 100%;
+            padding: 8px;
+            background-color: var(--color-primario);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
             font-size: 14px;
-            background-color: rgba(231, 76, 60, 0.1);
-            padding: 5px;
-            border-radius: 5px;
         }
-        
-        .channel-btn {
+        button:hover {
+            opacity: 0.9;
+        }
+        .boton-exportar {
+            background-color: #4CAF50;
+            margin-top: 8px;
+        }
+        .boton-exportar:hover {
+            background-color: #3e8e41;
+        }
+        .boton-importar {
+            background-color: #2196F3;
+            margin-top: 8px;
+        }
+        .boton-importar:hover {
+            background-color: #0b7dda;
+        }
+        .boton-importar-texto {
+            background-color: #673AB7;
+            margin-top: 8px;
+        }
+        .boton-importar-texto:hover {
+            background-color: #5e35b1;
+        }
+        .boton-borrar-todo {
+            background-color: #f44336;
+            margin-top: 8px;
+        }
+        .boton-borrar-todo:hover {
+            background-color: #d32f2f;
+        }
+        .separador {
+            margin: 20px 0;
+            border: 1px solid var(--color-primario);
+        }
+        .notificacion {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--color-primario);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: none;
+            z-index: 1000;
+        }
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0; }
+            10%, 90% { opacity: 1; }
+        }
+        .barra-busqueda {
+            margin-bottom: 20px;
+        }
+        .barra-busqueda input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--color-primario);
+            border-radius: 4px;
+            background-color: #121212;
+            color: #FFFFFF;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        .form-container input[type="text"] {
+            width: calc(100% - 16px);
+            margin-left: 0;
+        }
+        .filtros {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+        .filtros select {
             flex: 1;
-            padding: 12px 15px;
-            background-color: white;
-            border: 1px solid #eee;
-            border-radius: 8px;
-            text-align: left;
-            transition: var(--transition);
-        }
-        
-        .channel-btn:hover {
-            background-color: #f9f9f9;
-        }
-        
-        .channel-name-container {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 5px;
-        }
-        
-        .channel-name {
-            font-weight: 600;
-            color: var(--primary-color);
-        }
-        
-        .channel-number {
-            color: var(--secondary-color);
-            font-weight: bold;
-            font-size: 14px;
-        }
-        
-        .channel-event {
-            color: var(--text-light);
-            font-size: 13px;
-        }
-        
-        .reproductor-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            display: none;
-            flex-direction: column;
-            z-index: 100;
-            background-color: #000;
-            box-shadow: 0 0 30px rgba(0,0,0,0.8);
-        }
-
-        .reproductor-container.mostrar {
-            display: flex;
-            animation: tvTurnOn 0.6s ease forwards;
-        }
-
-        .reproductor-container.ocultar {
-            animation: tvTurnOff 0.5s ease forwards;
-        }
-
-        .reproductor {
-            width: 100%;
-            height: 350px;
-            background-color: #000;
-            overflow: hidden;
-            resize: vertical;
-            min-height: 300px;
-            max-height: 80vh;
-            border: none;
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
-        }
-        
-        .reproductor iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-        
-        .player-controls {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            background-color: rgba(0,0,0,0.95);
-            padding: 15px;
-            width: 100%;
-            border-top: 1px solid rgba(255,255,255,0.1);
-        }
-        
-        .tv-control-button {
-            width: 35px;
-            height: 35px;
-            padding: 0;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.4);
-            color: white;
-            margin: 0 5px;
-        }
-        
-        .tv-control-button:hover {
-            transform: scale(1.15);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-        }
-        
-        .tv-control-red {
-            background: linear-gradient(135deg, #e74c3c, #c0392b);
-        }
-        
-        .tv-control-green {
-            background: linear-gradient(135deg, #2ecc71, #27ae60);
-        }
-        
-        .tv-control-blue {
-            background: linear-gradient(135deg, #3498db, #2980b9);
-        }
-        
-        .tv-control-purple {
-            background: linear-gradient(135deg, #9b59b6, #8e44ad);
-        }
-        
-        .tv-control-yellow {
-            background: linear-gradient(135deg, #f39c12, #e67e22);
-        }
-        
-        .favoritos-container {
-            margin-top: 20px;
-            padding: 15px;
-            background-color: rgba(52, 152, 219, 0.05);
-            border-radius: 8px;
-        }
-        
-        .favoritos-title {
-            font-weight: 600;
-            color: var(--primary-color);
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .favoritos-title::before {
-            content: "★";
-            color: #f1c40f;
-        }
-        
-        .modal-favorito {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.5);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-        }
-        
-        .modal-contenido {
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            width: 90%;
-            max-width: 350px;
-            transition: background-color 0.3s ease;
-        }
-        
-        .modal-contenido h3 {
-            margin-top: 0;
-        }
-        
-        .modal-contenido input {
-            width: 100%;
             padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            transition: all 0.3s ease;
+            border: 1px solid var(--color-primario);
+            border-radius: 4px;
+            background-color: #121212;
+            color: #FFFFFF;
+            height: 40px;
         }
-        
-        .modal-contenido button {
-            padding: 8px 15px;
-            margin-right: 10px;
+        .puntuacion {
+            display: flex;
+            gap: 5px;
+            margin-top: 10px;
+            justify-content: center;
+        }
+        .puntuacion button {
+            background: none;
             border: none;
-            border-radius: 5px;
             cursor: pointer;
-        }
-        
-        .channel-list-container {
-            position: fixed;
-            top: 0;
-            right: 0;
-            width: 300px;
-            height: 350px;
-            background-color: rgba(0,0,0,0.9);
-            z-index: 1002;
-            overflow-y: auto;
-            padding: 20px;
-            transform: translateX(100%);
-            transition: transform 0.3s ease;
-        }
-        
-        .channel-list-container.show {
-            transform: translateX(0);
-        }
-        
-        .channel-list-title {
-            color: white;
             font-size: 18px;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid rgba(255,255,255,0.2);
+            color: #CCCCCC;
+            padding: 0;
+            transition: color 0.3s ease;
         }
-        
-        .channel-list-search {
-            padding: 10px 15px;
-            margin-bottom: 15px;
-            position: relative;
+        .puntuacion button.seleccionado {
+            color: var(--color-primario);
         }
-
-        .channel-list-search input {
-            width: 100%;
-            padding: 8px 15px 8px 35px;
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 20px;
-            background-color: rgba(0,0,0,0.3);
-            color: white;
-            font-size: 14px;
-        }
-
-        .channel-list-search::before {
-            content: "🔍";
+        .boton-ajustes {
             position: absolute;
-            left: 25px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: rgba(255,255,255,0.6);
-            z-index: 1;
-        }
-        
-        .channel-list-item {
-            padding: 10px;
-            color: white;
+            top: 20px;
+            left: 20px;
+            background: none;
+            border: none;
+            font-size: 24px;
             cursor: pointer;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            color: var(--color-primario);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .boton-ajustes:hover {
+            opacity: 0.8;
         }
         
-        .channel-list-item:hover {
-            background-color: rgba(255,255,255,0.1);
+        /* NUEVO ESTILO PARA EL MENÚ DE AJUSTES */
+        .menu-ajustes {
+            display: none;
+            position: absolute;
+            top: 60px;
+            left: 20px;
+            background-color: #1E1E1E;
+            border-radius: 12px;
+            padding: 15px;
+            z-index: 1000;
+            width: 280px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--color-primario);
+            animation: fadeIn 0.2s ease-out;
         }
-        
-        .channel-list-item.current {
-            background-color: rgba(52, 152, 219, 0.3);
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        
-        .channel-list-number {
-            color: var(--secondary-color);
+
+        .menu-ajustes.mostrar {
+            display: block;
+        }
+
+        .seccion-ajustes {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(187, 134, 252, 0.2);
+        }
+
+        .seccion-ajustes:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .seccion-ajustes h3 {
+            color: var(--color-primario);
+            margin: 0 0 12px 0;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+        }
+
+        .seccion-ajustes h3::before {
+            content: "";
+            display: inline-block;
+            width: 4px;
+            height: 14px;
+            background-color: var(--color-primario);
+            margin-right: 8px;
+            border-radius: 2px;
+        }
+
+        .menu-ajustes button {
+            width: 100%;
+            padding: 10px 15px;
+            margin: 5px 0;
+            background-color: rgba(187, 134, 252, 0.1);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+        }
+
+        .menu-ajustes button:hover {
+            background-color: rgba(187, 134, 252, 0.2);
+            border-color: rgba(187, 134, 252, 0.3);
+            transform: translateX(3px);
+        }
+
+        .menu-ajustes button::before {
+            content: "→";
             margin-right: 10px;
-            font-weight: bold;
+            color: var(--color-primario);
+            font-size: 12px;
+            opacity: 0;
+            transition: all 0.2s ease;
+        }
+
+        .menu-ajustes button:hover::before {
+            opacity: 1;
+        }
+
+        /* Estilos específicos para botones especiales */
+        .boton-pantalla-completa {
+            background-color: rgba(156, 39, 176, 0.1) !important;
+            border-color: rgba(156, 39, 176, 0.3) !important;
+        }
+
+        .boton-agrupar {
+            background-color: rgba(255, 152, 0, 0.1) !important;
+            border-color: rgba(255, 152, 0, 0.3) !important;
+        }
+
+        .boton-exportar {
+            background-color: rgba(76, 175, 80, 0.1) !important;
+            border-color: rgba(76, 175, 80, 0.3) !important;
+        }
+
+        .boton-importar {
+            background-color: rgba(33, 150, 243, 0.1) !important;
+            border-color: rgba(33, 150, 243, 0.3) !important;
+        }
+
+        .boton-importar-texto {
+            background-color: rgba(103, 58, 183, 0.1) !important;
+            border-color: rgba(103, 58, 183, 0.3) !important;
+        }
+
+        .boton-borrar-todo {
+            background-color: rgba(244, 67, 54, 0.1) !important;
+            border-color: rgba(244, 67, 54, 0.3) !important;
+        }
+
+        .boton-favoritos {
+            background-color: rgba(255, 215, 0, 0.1) !important;
+            border-color: rgba(255, 215, 0, 0.3) !important;
+        }
+
+        /* Iconos para los botones */
+        .menu-ajustes button::after {
+            margin-left: auto;
+            font-size: 16px;
+        }
+
+        .boton-apertura::after { content: "📺"; }
+        .boton-pantalla-completa::after { content: "🖥️"; }
+        .boton-agrupar::after { content: "🗂️"; }
+        .boton-exportar::after { content: "📤"; }
+        .boton-importar::after { content: "📥"; }
+        .boton-importar-texto::after { content: "📋"; }
+        .boton-borrar-todo::after { content: "🗑️"; }
+        .boton-favoritos::after { content: "⭐"; }
+        
+        .boton-pantalla-completa {
+            margin-top: 8px;
         }
         
+        /* FIN DEL NUEVO ESTILO PARA MENÚ DE AJUSTES */
+
+        .boton-pantalla-completa {
+            background-color: #9C27B0;
+            margin-top: 8px;
+        }
+        .boton-pantalla-completa:hover {
+            background-color: #7B1FA2;
+        }
+        .boton-apertura {
+            background-color: var(--color-primario);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-bottom: 10px;
+            width: 100%;
+            text-align: center;
+        }
+        .boton-apertura:hover {
+            opacity: 0.9;
+        }
+        .modal-importar {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #121212;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            display: none;
+            width: 80%;
+            max-width: 500px;
+        }
+        .modal-importar textarea {
+            width: 100%;
+            margin-bottom: 10px;
+            background-color: #121212;
+            color: #FFFFFF;
+            border: 1px solid var(--color-primario);
+            border-radius: 4px;
+            padding: 8px;
+        }
+        .modal-importar button {
+            padding: 8px 16px;
+            margin-right: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .modal-importar button:hover {
+            opacity: 0.8;
+        }
+        
+        /* REPRODUCTOR CON BORDE ORIGINAL Y ANIMACIONES DE TV */
+        .reproductor {
+            width: 92%;
+            height: 250px;
+            background-color: #000;
+            border-radius: 8px;
+            overflow: hidden;
+            display: none;
+            resize: vertical;
+            min-height: 250px;
+            max-height: 80vh;
+            position: sticky;
+            top: 20px;
+            z-index: 100;
+            border: 15px solid rgba(30, 30, 30, 0.2);
+            margin-left: 0;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Efecto de encendido de TV */
         @keyframes tvTurnOn {
             0% {
                 opacity: 0;
@@ -524,6 +622,7 @@
             }
         }
 
+        /* Efecto de apagado de TV */
         @keyframes tvTurnOff {
             0% {
                 opacity: 1;
@@ -550,620 +649,1785 @@
             }
         }
 
-        @media (min-width: 768px) {
-            .tv-container {
-                max-width: 600px;
-            }
-            
-            .tv-controls {
-                flex-direction: row;
-                align-items: center;
-            }
-            
-            .filter-buttons {
-                flex-direction: row;
-            }
+        .reproductor.mostrar {
+            display: block;
+            animation: tvTurnOn 0.6s ease forwards;
         }
 
-        .dark-mode-toggle {
+        .reproductor.ocultar {
+            animation: tvTurnOff 0.5s ease forwards;
+        }
+
+        .reproductor iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .controles-reproductor {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            position: sticky;
+            top: 20px;
+            z-index: 101;
+            margin-bottom: 10px;
+        }
+
+        .boton-cerrar-reproductor {
+            width: 30px;
+            height: 30px;
+            padding: 0;
+            background-color: #CF6679;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .boton-cerrar-reproductor:hover {
+            background-color: #9e4a5a;
+        }
+
+        .boton-refrescar-reproductor {
+            width: 30px;
+            height: 30px;
+            padding: 0;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .boton-refrescar-reproductor:hover {
+            background-color: #3e8e41;
+        }
+
+        /* Nuevos botones para ajustar tamaño del reproductor */
+        .boton-agrandar-reproductor {
+            width: 30px;
+            height: 30px;
+            padding: 0;
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .boton-agrandar-reproductor:hover {
+            background-color: #0b7dda;
+        }
+
+        .boton-reducir-reproductor {
+            width: 30px;
+            height: 30px;
+            padding: 0;
+            background-color: #FF9800;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .boton-reducir-reproductor:hover {
+            background-color: #e68a00;
+        }
+
+        .boton-favorito {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            color: #FFD700;
+            z-index: 1;
+            padding: 0;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .boton-favoritos {
+            background-color: #FFD700;
+            color: #000;
+            margin-top: 8px;
+        }
+
+        .boton-favoritos:hover {
+            background-color: #FFC000;
+        }
+
+        .boton-limpiar-filtros {
+            background-color: var(--color-primario);
+            padding: 0;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .boton-limpiar-filtros:hover {
+            background-color: #370083;
+        }
+
+        .etiquetas {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-top: 5px;
+            justify-content: center;
+        }
+
+        .etiqueta {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-size: 10px;
+            white-space: nowrap;
+        }
+
+        .selector-etiquetas {
+            margin-top: 10px;
+        }
+
+        .selector-etiquetas label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .etiquetas-opciones {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .etiqueta-opcion {
+            display: flex;
+            align-items: center;
+            background-color: rgba(187, 134, 252, 0.2);
+            padding: 4px 8px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .etiqueta-opcion input {
+            margin-right: 4px;
+        }
+
+        .etiqueta-opcion.seleccionada {
+            background-color: var(--color-primario);
+        }
+
+        .boton-subir {
             position: fixed;
             bottom: 20px;
             right: 20px;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background-color: var(--secondary-color);
+            width: 40px;
+            height: 40px;
+            background-color: var(--color-primario);
             color: white;
             border: none;
+            border-radius: 50%;
             cursor: pointer;
+            font-size: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-            z-index: 1000;
+            z-index: 999;
+            opacity: 1;
+            transition: opacity 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        
+        .boton-subir:hover {
+            opacity: 1;
         }
 
-        .fullscreen-toggle {
-            position: fixed;
-            bottom: 80px;
-            right: 20px;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background-color: var(--accent-color);
+        /* Estilos mejorados para agrupación por títulos */
+        .titulo-container {
+            margin-bottom: 15px;
+            background-color: rgba(30, 30, 30, 0.3);
+            padding: 0;
+            border-radius: 8px;
+            width: 100%;
+            border: 1px solid var(--color-primario);
+            overflow: hidden;
+        }
+
+        .titulo-container h3 {
+            padding: 10px 15px;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             color: white;
-            border: none;
             cursor: pointer;
+            background-color: rgba(187, 134, 252, 0.1);
+            transition: background-color 0.3s ease;
+        }
+
+        .titulo-container h3:hover {
+            background-color: rgba(187, 134, 252, 0.2);
+        }
+
+        .titulo-info {
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+            font-weight: bold;
+        }
+
+        .titulo-controles {
+            display: flex;
+            gap: 8px;
+            margin-left: 10px;
+        }
+
+        .titulo-controles button {
+            width: 24px;
+            height: 24px;
+            padding: 0;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 4px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            font-size: 12px;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .titulo-controles button:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .titulo-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 15px;
+            background-color: rgba(30, 30, 30, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .titulo-links.cerrado {
+            display: none;
+        }
+
+        .boton-agrupar {
+            background-color: #FF9800;
+            margin-top: 8px;
+        }
+
+        .boton-agrupar:hover {
+            background-color: #F57C00;
+        }
+
+        /* Nuevos estilos para opciones de importación */
+        .opciones-importacion {
+            margin-bottom: 15px;
+        }
+
+        .opciones-importacion h4 {
+            margin: 10px 0 5px 0;
+            color: var(--color-primario);
+            font-size: 14px;
+        }
+
+        .opciones-importacion .grupo-opciones {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .opciones-importacion .opcion-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 13px;
+        }
+
+        .opciones-importacion .opcion-checkbox input {
+            margin: 0;
+        }
+
+        .opciones-importacion .seccion-opciones {
+            background-color: rgba(30, 30, 30, 0.5);
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+
+        /* Modal para importar desde Gist */
+        .modal-gist {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #121212;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
             z-index: 1000;
+            display: none;
+            width: 80%;
+            max-width: 500px;
         }
     </style>
 </head>
 <body>
-    <div class="reproductor-container" id="reproductorContainer">
+    <div class="container">
+        <div class="controles-reproductor">
+            <button class="boton-reducir-reproductor" id="botonReducirReproductor" onclick="reducirReproductor()" style="display: none;">−</button>
+            <button class="boton-agrandar-reproductor" id="botonAgrandarReproductor" onclick="agrandarReproductor()" style="display: none;">+</button>
+            <button class="boton-refrescar-reproductor" id="botonRefrescarReproductor" onclick="refrescarReproductor()" style="display: none;">↻</button>
+            <button class="boton-cerrar-reproductor" id="botonCerrarReproductor" onclick="cerrarReproductor()" style="display: none;">×</button>
+        </div>
         <div class="reproductor" id="reproductor">
             <iframe id="videoFrame" src="" allowfullscreen></iframe>
         </div>
-        <div class="player-controls">
-            <button class="tv-control-button tv-control-green" id="botonGuardarReproductor" onclick="mostrarModalFavorito()" title="Guardar en favoritos">★</button>
-            <button class="tv-control-button tv-control-yellow" id="botonListaCanales" onclick="mostrarListaCanales()" title="Lista de canales">≡</button>
-            <button class="tv-control-button tv-control-red" id="botonCerrarReproductor" onclick="cerrarReproductor()" title="Cerrar">×</button>
+
+        <button class="boton-ajustes" onclick="mostrarMenuAjustes()">⚙️</button>
+        
+        <!-- NUEVO MENÚ DE AJUSTES MEJORADO -->
+        <div class="menu-ajustes" id="menuAjustes">
+            <!-- Sección de Visualización movida primero -->
+            <div class="seccion-ajustes">
+                <h3>Visualización</h3>
+                <button class="boton-agrupar" onclick="alternarAgrupacion()" id="botonAgrupar">Agrupación de Enlaces</button>
+                <button class="boton-favoritos" onclick="filtrarFavoritos()">Mostrar Favoritos</button>
+            </div>
+            
+            <div class="seccion-ajustes">
+                <h3>Reproducción</h3>
+                <button class="boton-apertura" onclick="cambiarModoApertura()" id="botonModoApertura">Modo de Apertura</button>
+                <button class="boton-pantalla-completa" onclick="togglePantallaCompleta()">Pantalla Completa</button>
+            </div>
+            
+            <div class="seccion-ajustes">
+                <h3>Gestión de Datos</h3>
+                <button class="boton-exportar" onclick="exportarEnlaces()">Exportar Enlaces</button>
+                <button class="boton-importar" onclick="importarConMensaje()">Importar Enlaces</button>
+                <button class="boton-importar-texto" onclick="importarDesdeTexto()">Importar desde Texto</button>
+                <button class="boton-borrar-todo" onclick="borrarTodosLosEnlaces()">Borrar Todos</button>
+            </div>
+        </div>
+        <!-- FIN DEL NUEVO MENÚ DE AJUSTES -->
+
+        <div class="modal-importar" id="modalImportar">
+            <h3>Opciones de Importación</h3>
+            
+            <div class="opciones-importacion">
+                <div class="seccion-opciones">
+                    <h4>Secciones a Importar:</h4>
+                    <div class="grupo-opciones">
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" id="importarWeb" checked> Vía WEB
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" id="importarAcestream" checked> Vía Acestream
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" id="importarFuentes" checked> FUENTES
+                        </label>
+                    </div>
+                </div>
+
+                <div class="seccion-opciones">
+                    <h4>Deportes a Importar:</h4>
+                    <div class="grupo-opciones">
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="deporte-checkbox" value="f1" checked> Fórmula 1
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="deporte-checkbox" value="futbol" checked> Fútbol
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="deporte-checkbox" value="nba" checked> NBA
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="deporte-checkbox" value="tenis" checked> Tenis
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="deporte-checkbox" value="nascar" checked> NASCAR
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="deporte-checkbox" value="indy" checked> Indy
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="deporte-checkbox" value="motogp" checked> Moto GP
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="deporte-checkbox" value="wec" checked> WEC
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="deporte-checkbox" value="rugby" checked> Rugby
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="deporte-checkbox" value="ciclismo" checked> Ciclismo
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="deporte-checkbox" value="boxeo" checked> Boxeo
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="deporte-checkbox" value="mma" checked> MMA
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="deporte-checkbox" value="esports" checked> eSports
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="deporte-checkbox" value="otros" checked> Otros
+                        </label>
+                    </div>
+                </div>
+
+                <div class="seccion-opciones">
+                    <h4>Idiomas a Importar:</h4>
+                    <div class="grupo-opciones">
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="idioma-checkbox" value="ES" checked> Español
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="idioma-checkbox" value="EN" checked> Inglés
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="idioma-checkbox" value="FR" checked> Francés
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="idioma-checkbox" value="DE" checked> Alemán
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="idioma-checkbox" value="OT" checked> Otros
+                        </label>
+                    </div>
+                </div>
+
+                <div class="seccion-opciones">
+                    <h4>Otras Opciones:</h4>
+                    <div class="grupo-opciones">
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" id="conservarFavoritos" checked> Conservar favoritos
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Pega tu copia de seguridad JSON</h3>
+            <textarea id="textoImportar" rows="10" cols="50" placeholder="Pega aquí el contenido JSON..."></textarea>
+            <button onclick="procesarTextoImportado()">Importar</button>
+            <button onclick="cerrarModalImportar()">Cancelar</button>
+        </div>
+
+        <!-- Modal para importar desde Gist -->
+        <div class="modal-gist" id="modalGist">
+            <h3>Opciones de Importación desde Gist</h3>
+            
+            <div class="opciones-importacion">
+                <div class="seccion-opciones">
+                    <h4>Secciones a Importar:</h4>
+                    <div class="grupo-opciones">
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" id="importarWebGist" checked> Vía WEB
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" id="importarAcestreamGist" checked> Vía Acestream
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" id="importarFuentesGist" checked> FUENTES
+                        </label>
+                    </div>
+                </div>
+
+                <div class="seccion-opciones">
+                    <h4>Deportes a Importar:</h4>
+                    <div class="grupo-opciones">
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="deporte-checkbox-gist" value="f1" checked> Fórmula 1
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="deporte-checkbox-gist" value="futbol" checked> Fútbol
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="deporte-checkbox-gist" value="nba" checked> NBA
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="deporte-checkbox-gist" value="tenis" checked> Tenis
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="deporte-checkbox-gist" value="nascar" checked> NASCAR
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="deporte-checkbox-gist" value="indy" checked> Indy
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="deporte-checkbox-gist" value="motogp" checked> Moto GP
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="deporte-checkbox-gist" value="wec" checked> WEC
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="deporte-checkbox-gist" value="rugby" checked> Rugby
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="deporte-checkbox-gist" value="ciclismo" checked> Ciclismo
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="deporte-checkbox-gist" value="boxeo" checked> Boxeo
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="deporte-checkbox-gist" value="mma" checked> MMA
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="deporte-checkbox-gist" value="esports" checked> eSports
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="deporte-checkbox-gist" value="otros" checked> Otros
+                        </label>
+                    </div>
+                </div>
+
+                <div class="seccion-opciones">
+                    <h4>Idiomas a Importar:</h4>
+                    <div class="grupo-opciones">
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="idioma-checkbox-gist" value="ES" checked> Español
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="idioma-checkbox-gist" value="EN" checked> Inglés
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="idioma-checkbox-gist" value="FR" checked> Francés
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="idioma-checkbox-gist" value="DE" checked> Alemán
+                        </label>
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" class="idioma-checkbox-gist" value="OT" checked> Otros
+                        </label>
+                    </div>
+                </div>
+
+                <div class="seccion-opciones">
+                    <h4>Otras Opciones:</h4>
+                    <div class="grupo-opciones">
+                        <label class="opcion-checkbox">
+                            <input type="checkbox" id="conservarFavoritosGist" checked> Conservar favoritos
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="confirmarImportarGist()">Importar</button>
+            <button onclick="cerrarModalGist()">Cancelar</button>
+        </div>
+
+        <h1>🧔 Chefo TV 📺</h1>
+
+        <div class="barra-busqueda">
+            <input type="text" id="busqueda" placeholder="Buscar enlaces..." oninput="filtrarEnlaces()">
+        </div>
+        <div class="filtros">
+            <select id="filtroDeporte" onchange="filtrarEnlaces()">
+                <option value="">Todos los deportes</option>
+                <option value="f1">Fórmula 1 🏎️</option>
+                <option value="futbol">Fútbol ⚽</option>
+                <option value="nba">NBA 🏀</option>
+                <option value="tenis">Tenis 🎾</option>
+                <option value="nascar">NASCAR 🚗</option>
+                <option value="indy">Indy 🚙</option>
+                <option value="motogp">Moto GP 🏍️</option>
+                <option value="wec">WEC 🏁</option>
+                <option value="rugby">Rugby 🏉</option>
+                <option value="ciclismo">Ciclismo 🚴</option>
+                <option value="boxeo">Boxeo 🥊</option>
+                <option value="mma">MMA 🥋</option>
+                <option value="esports">eSports 🎮</option>
+                <option value="otros">Otros 🏅</option>
+            </select>
+            <select id="filtroIdioma" onchange="filtrarEnlaces()">
+                <option value="">Todos los idiomas</option>
+                <option value="ES">🇪🇦 ESPAÑOL</option>
+                <option value="EN">🇬🇧 ENGLISH</option>
+                <option value="FR">🇫🇷 FRENCH</option>
+                <option value="DE">🇩🇪 DUTCH</option>
+                <option value="OT">🏳️‍⚧️ OTROS</option>
+            </select>
+            <button class="boton-limpiar-filtros" onclick="limpiarFiltros()" title="Limpiar filtros">⥀</button>
+        </div>
+
+        <div class="categoria" id="categoriaWeb">
+            <h2>
+                Vía WEB
+                <button class="toggle-categoria" onclick="toggleCategoria(this)">▼</button>
+            </h2>
+            <div class="link-list" id="linkList"></div>
+        </div>
+
+        <hr class="separador">
+
+        <div class="categoria" id="categoriaAcestream">
+            <h2>
+                Vía Acestream
+                <button class="toggle-categoria" onclick="toggleCategoria(this)">▼</button>
+            </h2>
+            <div class="link-list" id="acestreamList"></div>
+        </div>
+
+        <hr class="separador">
+
+        <div class="categoria" id="categoriaFuentes">
+            <h2>
+                FUENTES
+                <button class="toggle-categoria" onclick="toggleCategoria(this)">▼</button>
+            </h2>
+            <div class="link-list" id="multiList"></div>
+        </div>
+
+        <div class="link-list">
+            <div class="boton-agregar" id="botonAgregar" onclick="manejarClicAgregar()">+</div>
+        </div>
+
+        <div class="form-container" id="formContainer">
+            <input type="text" id="link" placeholder="Pega tu enlace aquí">
+            <input type="text" id="title" placeholder="Añade un título">
+            <input type="text" id="webName" placeholder="Nombre de la web (opcional)">
+            <div class="puntuacion" id="puntuacion">
+                <button onclick="seleccionarPuntuacion(1)">☆</button>
+                <button onclick="seleccionarPuntuacion(2)">☆</button>
+                <button onclick="seleccionarPuntuacion(3)">☆</button>
+                <button onclick="seleccionarPuntuacion(4)">☆</button>
+                <button onclick="seleccionarPuntuacion(5)">☆</button>
+            </div>
+            <div class="selectores">
+                <div class="color-picker">
+                    <input type="color" id="color" value="#28a745" oninput="actualizarCodigoColor()">
+                    <input type="text" id="codigoColor" value="#28a745">
+                </div>
+
+                <div class="deporte-selector">
+                    <select id="deporte">
+                        <option value="f1"> 🏎️ </option>
+                        <option value="futbol"> ⚽ </option>
+                        <option value="nba"> 🏀 </option>
+                        <option value="tenis"> 🎾 </option>
+                        <option value="nascar"> 🚗 </option>
+                        <option value="indy"> 🚙 </option>
+                        <option value="motogp"> 🏍️ </option>
+                        <option value="wec"> 🏁 </option>
+                        <option value="rugby"> 🏉 </option>
+                        <option value="ciclismo"> 🚴 </option>
+                        <option value="boxeo"> 🥊 </option>
+                        <option value="mma"> 🥋 </option>
+                        <option value="esports">  🎮 </option>
+                        <option value="otros"> 🏅 </option>
+                    </select>
+                </div>
+
+                <div class="idioma-selector">
+                    <select id="idioma">
+                        <option value="ES">🇪🇦 </option>
+                        <option value="EN">🇬🇧 </option>
+                        <option value="FR">🇫🇷 </option>
+                        <option value="DE">🇩🇪 </option>
+                        <option value="OT">🏳️‍⚧️ </option>
+                    </select>
+                </div>
+
+                <div class="toggle-icono">
+                    <select id="tipoEnlace">
+                        <option value="web">Vía WEB</option>
+                        <option value="acestream">Vía Acestream</option>
+                        <option value="fuentes">FUENTES</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="selector-etiquetas">
+                <label>Etiquetas:</label>
+                <div class="etiquetas-opciones" id="etiquetasOpciones">
+                    <label class="etiqueta-opcion">
+                        <input type="checkbox" value="#Acestream"> #Acestream
+                    </label>
+                    <label class="etiqueta-opcion">
+                        <input type="checkbox" value="#Vpn"> #Vpn
+                    </label>
+                    <label class="etiqueta-opcion">
+                        <input type="checkbox" value="#Recopilador"> #Recopilador
+                    </label>
+                    <label class="etiqueta-opcion">
+                        <input type="checkbox" value="#Multideporte"> #Multideporte
+                    </label>
+                    <label class="etiqueta-opcion">
+                        <input type="checkbox" value="#Eventos"> #Eventos
+                    </label>
+                </div>
+            </div>
+
+            <button onclick="guardarEnlace()">Guardar Enlace</button>
+            <input type="file" id="fileInput" accept=".json" style="display: none;" onchange="importarEnlaces(event)">
         </div>
     </div>
 
-    <div class="channel-list-container" id="channelListContainer">
-        <div class="channel-list-title">Lista de Canales</div>
-        <div class="channel-list-search">
-            <input type="text" id="channelListSearch" placeholder="Buscar canales...">
-        </div>
-        <div id="channelListContent"></div>
-    </div>
+    <div class="notificacion" id="notificacion"></div>
 
-    <div class="modal-favorito" id="modalFavorito">
-        <div class="modal-contenido">
-            <h3>Guardar como favorito</h3>
-            <input type="text" id="nombreFavorito" placeholder="Nombre personalizado">
-            <div>
-                <button class="tv-button" onclick="guardarFavoritoConNombre()">Guardar</button>
-                <button class="tv-button tv-button-accent" onclick="cerrarModalFavorito()">Cancelar</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="tv-container">
-        <div class="container" id="mainContainer">
-            <div id="channelCounter" class="channel-counter">Canales detectados: 0</div>
-            
-            <div class="search-box">
-                <input type="text" id="searchInput" placeholder="Buscar canales o ingresar número (ej: #123)">
-            </div>
-            
-            <div class="filter-buttons">
-                <button class="filter-button active" id="filterAll">Todos</button>
-                <button class="filter-button" id="filterLive">En Vivo</button>
-                <button class="filter-button" id="filterFavorites">Favoritos</button>
-            </div>
-            
-            <div id="loading" class="loading">
-                Cargando canales desde DaddyLive, por favor espera...
-            </div>
-            
-            <div id="channelsContainer"></div>
-        </div>
-    </div>
-
-    <button class="dark-mode-toggle" id="darkModeToggle">🌙</button>
-    <button class="fullscreen-toggle" id="fullscreenToggle" title="Pantalla completa">⛶</button>
+    <button class="boton-subir" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑</button>
 
     <script>
-        function extractChannels(htmlContent) {
-            try {
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(htmlContent, 'text/html');
-                const channels = [];
-                const timeRegex = /(\d{2}:\d{2})/;
+        let enlacesGuardados = JSON.parse(localStorage.getItem('enlaces')) || [];
+        let indiceEdicion = null;
+        let indiceCambiar = null;
+        let puntuacionSeleccionada = 0;
+        let modoApertura = localStorage.getItem('modoApertura') || 'todo-reproductor'; // Cambiado a reproductor por defecto
+        let alturaReproductor = localStorage.getItem('alturaReproductor') || '250px';
+        let mostrarSoloFavoritos = localStorage.getItem('mostrarSoloFavoritos') === 'true';
+        let agrupacionActivada = localStorage.getItem('agrupacionActivada') !== 'false'; // Cambiado para que sea true por defecto
+        let currentVideoUrl = '';
+        
+        // Variables para el triple clic
+        let contadorClicksAgregar = 0;
+        let temporizadorAgregar = null;
+        let contadorClicksAjustes = 0;
+        let temporizadorAjustes = null;
+        let elementosOcultos = localStorage.getItem('elementosOcultos') === 'true';
+        
+        const iconosDeporte = {
+            f1: '🏎️', futbol: '⚽', nba: '🏀', tenis: '🎾', nascar: '🚗',
+            indy: '🚙', motogp: '🏍️', wec: '🏁', rugby: '🏉', ciclismo: '🚴',
+            boxeo: '🥊', mma: '🥋', esports: '🎮', otros: '🏅'
+        };
+        
+        const banderasIdioma = {
+            ES: '🇪🇦', EN: '🇬🇧', FR: '🇫🇷', DE: '🇩🇪', OT: '🏳️‍⚧️'
+        };
 
-                const blocks = doc.querySelectorAll('strong, p, h2');
-                
-                blocks.forEach(block => {
-                    const blockText = block.textContent.trim();
-                    if (!blockText.includes("(CH-") && !blockText.includes("CH-")) return;
-
-                    const timeMatch = blockText.match(timeRegex);
-                    let time = timeMatch ? timeMatch[1] : '';
-                    
-                    if (time) {
-                        const [hours, minutes] = time.split(':').map(Number);
-                        let newHours = hours + 1;
-                        if (newHours >= 24) newHours -= 24;
-                        time = `${String(newHours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
-                    }
-
-                    let eventText = '';
-                    const textParts = blockText.split('(CH-');
-                    if (textParts.length > 1) {
-                        eventText = textParts[0].trim();
-                        eventText = eventText.replace(/\d{1,2}:\d{2}(?::\d{2})?(?:\s?[APap][mM])?/g, '').trim();
-                        eventText = eventText.replace(/\s{2,}/g, ' ').trim();
-                    }
-
-                    const links = block.querySelectorAll('a');
-                    if (links.length > 0) {
-                        links.forEach(link => {
-                            const channelMatch = link.textContent.match(/(.+?) \(CH-(\d+)\)/i) || 
-                                               [null, link.textContent.trim(), link.href.match(/stream-(\d+)\.php/)?.[1]];
-                            if (channelMatch && channelMatch[2]) {
-                                channels.push({
-                                    name: channelMatch[1].trim(),
-                                    number: channelMatch[2],
-                                    time: time,
-                                    event: eventText,
-                                    url: link.href,
-                                    rawText: `${time} ${eventText} ${channelMatch[1]} (CH-${channelMatch[2]})`
-                                });
-                            }
-                        });
-                    } else {
-                        const channelMatches = blockText.matchAll(/(.+?)\(CH-(\d+)\)/g);
-                        for (const match of channelMatches) {
-                            const channelName = match[1].trim();
-                            const channelNumber = match[2];
-                            channels.push({
-                                name: channelName,
-                                number: channelNumber,
-                                time: time,
-                                event: eventText,
-                                url: `https://daddylivehd1.click/live/stream-${channelNumber}.php`,
-                                rawText: `${time} ${eventText} ${channelName} (CH-${channelNumber})`
-                            });
-                        }
-                    }
-                });
-
-                return channels;
-            } catch (error) {
-                console.error('Error al extraer canales:', error);
-                return [];
+        // Función modificada para manejar el clic en el botón +
+        function manejarClicAgregar() {
+            contadorClicksAgregar++;
+            
+            if (contadorClicksAgregar === 1) {
+                temporizadorAgregar = setTimeout(() => {
+                    // Comportamiento normal con un solo clic
+                    mostrarFormulario();
+                    contadorClicksAgregar = 0;
+                }, 600);
+            } else if (contadorClicksAgregar === 3) {
+                clearTimeout(temporizadorAgregar);
+                contadorClicksAgregar = 0;
+                importarDesdeGist(); // Triple clic ejecuta importar desde Gist
             }
         }
 
-        document.addEventListener('DOMContentLoaded', function() {
-            const channelsContainer = document.getElementById('channelsContainer');
-            const loading = document.getElementById('loading');
-            const searchInput = document.getElementById('searchInput');
-            const channelCounter = document.getElementById('channelCounter');
-            const videoFrame = document.getElementById('videoFrame');
-            const reproductorContainer = document.getElementById('reproductorContainer');
-            const botonCerrar = document.getElementById('botonCerrarReproductor');
-            const botonGuardar = document.getElementById('botonGuardarReproductor');
-            const favoritosContainer = document.getElementById('favoritosContainer');
-            const favoritosList = document.getElementById('favoritosList');
-            const modalFavorito = document.getElementById('modalFavorito');
-            const nombreFavoritoInput = document.getElementById('nombreFavorito');
-            const mainContainer = document.getElementById('mainContainer');
-            const botonListaCanales = document.getElementById('botonListaCanales');
-            const channelListContainer = document.getElementById('channelListContainer');
-            const channelListContent = document.getElementById('channelListContent');
-            const channelListSearch = document.getElementById('channelListSearch');
-            const filterAll = document.getElementById('filterAll');
-            const filterLive = document.getElementById('filterLive');
-            const filterFavorites = document.getElementById('filterFavorites');
-            const darkModeToggle = document.getElementById('darkModeToggle');
-            const fullscreenToggle = document.getElementById('fullscreenToggle');
+        function alternarVisibilidadElementos() {
+            elementosOcultos = !elementosOcultos;
+            localStorage.setItem('elementosOcultos', elementosOcultos);
             
-            let allChannels = [];
-            let currentChannel = null;
-            let alturaReproductor = localStorage.getItem('alturaReproductor') || '350px';
-            let favoritos = JSON.parse(localStorage.getItem('canalesFavoritos')) || [];
-            let currentFilter = 'all';
-            let s2Toggle = true;
+            const titulo = document.querySelector('h1');
+            const botonAgregar = document.getElementById('botonAgregar');
             
-            const darkMode = localStorage.getItem('darkMode') === 'true';
-            if (darkMode) {
-                document.body.classList.add('dark-mode');
-                darkModeToggle.textContent = '☀️';
+            if (elementosOcultos) {
+                titulo.style.opacity = '0';
+                botonAgregar.style.opacity = '0';
+            } else {
+                titulo.style.opacity = '1';
+                botonAgregar.style.opacity = '1';
             }
             
-            channelCounter.addEventListener('dblclick', function() {
-                cargarCanales();
-            });
-            
-            darkModeToggle.addEventListener('click', function() {
-                document.body.classList.toggle('dark-mode');
-                const isDarkMode = document.body.classList.contains('dark-mode');
-                localStorage.setItem('darkMode', isDarkMode);
-                darkModeToggle.textContent = isDarkMode ? '☀️' : '🌙';
-            });
+            mostrarNotificacion(elementosOcultos ? 'Elementos ocultos' : 'Elementos visibles');
+        }
 
-            fullscreenToggle.addEventListener('click', function() {
-                if (!document.fullscreenElement) {
-                    if (document.documentElement.requestFullscreen) {
-                        document.documentElement.requestFullscreen();
-                    } else if (document.documentElement.webkitRequestFullscreen) { /* Safari */
-                        document.documentElement.webkitRequestFullscreen();
-                    } else if (document.documentElement.msRequestFullscreen) { /* IE11 */
-                        document.documentElement.msRequestFullscreen();
-                    }
-                } else {
-                    if (document.exitFullscreen) {
-                        document.exitFullscreen();
-                    } else if (document.webkitExitFullscreen) { /* Safari */
-                        document.webkitExitFullscreen();
-                    } else if (document.msExitFullscreen) { /* IE11 */
-                        document.msExitFullscreen();
-                    }
-                }
-            });
+        function mostrarMenuAjustes() {
+            contadorClicksAjustes++;
             
-            if (favoritos.length > 0) {
-                mostrarFavoritos();
-            }
-            
-            filterAll.addEventListener('click', function() {
-                currentFilter = 'all';
-                filterAll.classList.add('active');
-                filterLive.classList.remove('active');
-                filterFavorites.classList.remove('active');
-                filterChannels();
-            });
-            
-            filterLive.addEventListener('click', function() {
-                currentFilter = 'live';
-                filterAll.classList.remove('active');
-                filterLive.classList.add('active');
-                filterFavorites.classList.remove('active');
-                filterChannels();
-            });
-            
-            filterFavorites.addEventListener('click', function() {
-                currentFilter = 'favorites';
-                filterAll.classList.remove('active');
-                filterLive.classList.remove('active');
-                filterFavorites.classList.add('active');
-                filterChannels();
-            });
-            
-            searchInput.addEventListener('input', function() {
-                const searchBox = this.closest('.search-box');
-                
-                if (/^#?\d*$/.test(this.value)) {
-                    searchBox.classList.add('number-mode');
-                } else {
-                    searchBox.classList.remove('number-mode');
-                    filterChannels();
-                }
-            });
-
-            searchInput.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    const value = this.value.trim();
+            if (contadorClicksAjustes === 1) {
+                temporizadorAjustes = setTimeout(() => {
+                    // Comportamiento normal con un solo clic
+                    const menuAjustes = document.getElementById('menuAjustes');
+                    menuAjustes.classList.toggle('mostrar');
                     
-                    if (/^#?\d+$/.test(value)) {
-                        const channelNumber = value.replace('#', '');
-                        let url, nombre;
-                        
-                        if (s2Toggle) {
-                            url = `https://stream2wetch.top/embed/stream-${channelNumber}.php`;
-                            nombre = `Canal ${channelNumber} (S2Wetch)`;
-                        } else {
-                            url = `https://daddylivehd1.click/channel-${channelNumber}`;
-                            nombre = `Canal ${channelNumber} (DaddyLive)`;
-                        }
-                        
-                        reproducirCanal(url, nombre, channelNumber);
-                        this.value = '';
-                        this.closest('.search-box').classList.remove('number-mode');
-                    }
-                }
-            });
-            
-            window.mostrarListaCanales = function() {
-                if (!allChannels.length && currentFilter !== 'favorites') return;
-                
-                channelListContent.innerHTML = '';
-                
-                function renderFilteredChannels(filterTerm = '') {
-                    channelListContent.innerHTML = '';
-                    
-                    let channelsToShow = [];
-                    const now = new Date();
-                    const searchTerm = searchInput.value.toLowerCase();
-                    
-                    // 1. Determinar qué canales mostrar según el filtro actual
-                    if (currentFilter === 'favorites') {
-                        channelsToShow = favoritos.map(fav => ({
-                            name: fav.name,
-                            number: fav.number,
-                            url: fav.url,
-                            event: '',
-                            time: '',
-                            rawText: fav.name
-                        }));
-                    } else if (currentFilter === 'live') {
-                        // Filtrar canales en vivo (con tiempo dentro de +/- 30 minutos)
-                        channelsToShow = allChannels.filter(channel => {
-                            if (!channel.time) return false;
-                            
-                            const [hours, minutes] = channel.time.split(':').map(Number);
-                            const eventTime = new Date();
-                            eventTime.setHours(hours, minutes, 0, 0);
-                            
-                            const diffMinutes = (now - eventTime) / (1000 * 60);
-                            return diffMinutes >= -30 && diffMinutes <= 120;
-                        });
-                    } else {
-                        // Mostrar todos los canales (sin filtro de tiempo)
-                        const uniqueChannels = {};
-                        allChannels.forEach(channel => {
-                            if (!uniqueChannels[channel.number] || 
-                                (channel.time && (!uniqueChannels[channel.number].time || channel.time > uniqueChannels[channel.number].time))) {
-                                uniqueChannels[channel.number] = channel;
-                            }
-                        });
-                        channelsToShow = Object.values(uniqueChannels);
-                    }
-                    
-                    // 2. Aplicar búsqueda principal (si existe)
-                    if (searchTerm && currentFilter !== 'favorites') {
-                        channelsToShow = channelsToShow.filter(channel => 
-                            channel.rawText.toLowerCase().includes(searchTerm) || 
-                            channel.number.includes(searchTerm.replace('#', '')));
-                    }
-                    
-                    // 3. Aplicar búsqueda dentro de la lista (si existe)
-                    if (filterTerm) {
-                        channelsToShow = channelsToShow.filter(channel => 
-                            channel.name.toLowerCase().includes(filterTerm) || 
-                            channel.number.includes(filterTerm) ||
-                            (channel.event && channel.event.toLowerCase().includes(filterTerm))
-                        );
-                    }
-                    
-                    // 4. Mostrar los canales filtrados
-                    let currentItem = null;
-                    
-                    channelsToShow.forEach(channel => {
-                        const item = document.createElement('div');
-                        item.className = 'channel-list-item';
-                        if (currentChannel && channel.number === currentChannel.number) {
-                            item.classList.add('current');
-                            currentItem = item;
-                        }
-                        item.innerHTML = `<span class="channel-list-number">CH-${channel.number}</span>${channel.name}${channel.event ? '<br><small>' + channel.event + '</small>' : ''}`;
-                        
-                        item.addEventListener('click', function() {
-                            let url = channel.url;
-                            if (s2Toggle) {
-                                url = `https://stream2wetch.top/embed/stream-${channel.number}.php`;
-                            }
-                            reproducirCanal(url, channel.name, channel.number);
-                            channelListContainer.classList.remove('show');
-                        });
-                        
-                        channelListContent.appendChild(item);
-                    });
-
-                    if (currentItem) {
+                    if (menuAjustes.classList.contains('mostrar')) {
                         setTimeout(() => {
-                            currentItem.scrollIntoView({ block: 'center' });
-                        }, 50);
-                    }
-                }
-                
-                renderFilteredChannels();
-                
-                channelListSearch.addEventListener('input', function() {
-                    renderFilteredChannels(this.value.toLowerCase());
-                });
-                
-                channelListContainer.classList.toggle('show');
-            }
-            
-            window.mostrarModalFavorito = function() {
-                if (!currentChannel) return;
-                nombreFavoritoInput.value = currentChannel.name;
-                modalFavorito.style.display = 'flex';
-            }
-            
-            window.cerrarModalFavorito = function() {
-                modalFavorito.style.display = 'none';
-            }
-            
-            window.guardarFavoritoConNombre = function() {
-                const nombrePersonalizado = nombreFavoritoInput.value.trim();
-                if (!nombrePersonalizado) {
-                    alert('Por favor ingresa un nombre para el favorito');
-                    return;
-                }
-                
-                if (!currentChannel) return;
-                
-                const yaExiste = favoritos.some(fav => fav.url === currentChannel.url);
-                
-                if (!yaExiste) {
-                    favoritos.push({
-                        url: currentChannel.url,
-                        name: nombrePersonalizado,
-                        number: currentChannel.number,
-                        originalName: currentChannel.name
-                    });
-                    localStorage.setItem('canalesFavoritos', JSON.stringify(favoritos));
-                    mostrarFavoritos();
-                    cerrarModalFavorito();
-                    alert('Canal guardado en favoritos');
-                } else {
-                    alert('Este canal ya está en tus favoritos');
-                    cerrarModalFavorito();
-                }
-            }
-            
-            function mostrarFavoritos() {
-                if (favoritos.length === 0) {
-                    return;
-                }
-            }
-            
-            function reproducirCanal(url, nombre, numero) {
-                currentChannel = {
-                    url: s2Toggle ? `https://stream2wetch.top/embed/stream-${numero}.php` : url,
-                    name: nombre,
-                    number: numero
-                };
-                
-                videoFrame.src = currentChannel.url;
-                reproductorContainer.classList.add('mostrar');
-                reproductor.style.height = alturaReproductor;
-                channelListContainer.style.height = alturaReproductor;
-                
-                mainContainer.classList.add('with-player');
-                
-                reproductor.addEventListener('pointerup', function() {
-                    alturaReproductor = reproductor.style.height;
-                    localStorage.setItem('alturaReproductor', alturaReproductor);
-                    channelListContainer.style.height = alturaReproductor;
-                });
-            }
-            
-            window.cerrarReproductor = function() {
-                reproductorContainer.classList.remove('mostrar');
-                videoFrame.src = '';
-                currentChannel = null;
-                mainContainer.classList.remove('with-player');
-                channelListContainer.classList.remove('show');
-            }
-            
-            function updateChannelCounter(count) {
-                channelCounter.textContent = `Canales detectados: ${count}`;
-            }
-            
-            function displayChannels(channels) {
-                channelsContainer.innerHTML = '';
-                
-                if (channels.length === 0) {
-                    updateChannelCounter(0);
-                    return;
-                }
-                
-                updateChannelCounter(channels.length);
-
-                channels.forEach(channel => {
-                    const channelItem = document.createElement('div');
-                    channelItem.className = 'channel-item';
-                    
-                    if (channel.time) {
-                        const timeEl = document.createElement('div');
-                        timeEl.className = 'channel-time';
-                        timeEl.textContent = channel.time;
-                        channelItem.appendChild(timeEl);
+                            document.addEventListener('click', cerrarMenuSiClickFuera);
+                        }, 0);
                     } else {
-                        const emptyTime = document.createElement('div');
-                        emptyTime.className = 'channel-time';
-                        emptyTime.textContent = '';
-                        channelItem.appendChild(emptyTime);
+                        document.removeEventListener('click', cerrarMenuSiClickFuera);
                     }
                     
-                    const btn = document.createElement('button');
-                    btn.className = 'channel-btn';
+                    contadorClicksAjustes = 0;
+                }, 600);
+            } else if (contadorClicksAjustes === 3) {
+                clearTimeout(temporizadorAjustes);
+                contadorClicksAjustes = 0;
+                alternarVisibilidadElementos();
+            }
+        }
+
+        function importarDesdeGist() {
+            mostrarNotificacion('Preparando importación desde Gist...');
+            document.getElementById('modalGist').style.display = 'block';
+        }
+
+        function confirmarImportarGist() {
+            mostrarNotificacion('Importando desde Gist...');
+            
+            const importarWeb = document.getElementById('importarWebGist').checked;
+            const importarAcestream = document.getElementById('importarAcestreamGist').checked;
+            const importarFuentes = document.getElementById('importarFuentesGist').checked;
+            const conservarFavoritos = document.getElementById('conservarFavoritosGist').checked;
+            
+            const deportesSeleccionados = [];
+            document.querySelectorAll('.deporte-checkbox-gist:checked').forEach(checkbox => {
+                deportesSeleccionados.push(checkbox.value);
+            });
+            
+            const idiomasSeleccionados = [];
+            document.querySelectorAll('.idioma-checkbox-gist:checked').forEach(checkbox => {
+                idiomasSeleccionados.push(checkbox.value);
+            });
+
+            fetch('https://gist.githubusercontent.com/Ciento20/be82cec2fed5b9886b07fc171f2d9744/raw')
+                .then(response => {
+                    if (!response.ok) throw new Error('No se pudo cargar el gist');
+                    return response.json();
+                })
+                .then(nuevosEnlaces => {
+                    if (!Array.isArray(nuevosEnlaces)) throw new Error('Formato de gist inválido');
+
+                    let contador = 0;
+                    nuevosEnlaces.forEach(nuevoEnlace => {
+                        const esWeb = !nuevoEnlace.mostrarIcono && !nuevoEnlace.mostrarMulti;
+                        const esAcestream = nuevoEnlace.mostrarIcono;
+                        const esFuentes = nuevoEnlace.mostrarMulti;
+                        
+                        if (!(
+                            (esWeb && importarWeb) || 
+                            (esAcestream && importarAcestream) || 
+                            (esFuentes && importarFuentes)
+                        )) return;
+                        
+                        if (!deportesSeleccionados.includes(nuevoEnlace.deporte)) return;
+                        if (!idiomasSeleccionados.includes(nuevoEnlace.idioma)) return;
+                        
+                        const existe = enlacesGuardados.some(enlace => enlace.link === nuevoEnlace.link);
+                        if (!existe) {
+                            enlacesGuardados.push({ 
+                                ...nuevoEnlace, 
+                                favorito: conservarFavoritos ? (nuevoEnlace.favorito || false) : false,
+                                etiquetas: nuevoEnlace.etiquetas || []
+                            });
+                            contador++;
+                        }
+                    });
+
+                    localStorage.setItem('enlaces', JSON.stringify(enlacesGuardados));
+                    filtrarEnlaces();
+                    mostrarNotificacion(`Importados ${contador} nuevos enlaces desde Gist.`);
+                    cerrarModalGist();
+                })
+                .catch(error => {
+                    console.error('Error al importar desde gist:', error);
+                    mostrarNotificacion('Error al importar desde Gist: ' + error.message);
+                });
+        }
+
+        function cerrarModalGist() {
+            document.getElementById('modalGist').style.display = 'none';
+        }
+
+        function importarConMensaje() {
+            mostrarNotificacion('Selecciona el archivo JSON para importar');
+            document.getElementById('fileInput').click();
+        }
+
+        function importarEnlaces(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            mostrarNotificacion('Preparando importación desde archivo...');
+            document.getElementById('modalImportar').style.display = 'block';
+            document.getElementById('textoImportar').value = '';
+            
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                document.getElementById('textoImportar').value = e.target.result;
+            };
+            reader.readAsText(file);
+        }
+
+        function alternarAgrupacion() {
+            agrupacionActivada = !agrupacionActivada;
+            localStorage.setItem('agrupacionActivada', agrupacionActivada);
+            document.getElementById('botonAgrupar').textContent = agrupacionActivada ? 'Desagrupar' : 'Agrupar por título';
+            filtrarEnlaces();
+        }
+
+        function toggleFavorito(index, event) {
+            event.stopPropagation();
+            
+            if (enlacesGuardados[index].favorito) {
+                if (!confirm('¿Estás seguro de que quieres quitar este enlace de favoritos?')) {
+                    return;
+                }
+            }
+            
+            enlacesGuardados[index].favorito = !enlacesGuardados[index].favorito;
+            localStorage.setItem('enlaces', JSON.stringify(enlacesGuardados));
+            filtrarEnlaces();
+            mostrarNotificacion(enlacesGuardados[index].favorito ? 'Añadido a favoritos' : 'Eliminado de favoritos');
+        }
+
+        function filtrarEnlaces() {
+            if (agrupacionActivada) {
+                filtrarEnlacesAgrupados();
+            } else {
+                filtrarEnlacesNormales();
+            }
+        }
+
+        function filtrarEnlacesNormales() {
+            const busqueda = document.getElementById('busqueda').value.toLowerCase();
+            const filtroDeporte = document.getElementById('filtroDeporte').value;
+            const filtroIdioma = document.getElementById('filtroIdioma').value;
+
+            const categorias = {
+                web: document.getElementById('categoriaWeb'),
+                acestream: document.getElementById('categoriaAcestream'),
+                fuentes: document.getElementById('categoriaFuentes')
+            };
+
+            const listas = {
+                web: document.getElementById('linkList'),
+                acestream: document.getElementById('acestreamList'),
+                fuentes: document.getElementById('multiList')
+            };
+
+            Object.values(categorias).forEach(categoria => {
+                categoria.style.display = 'none';
+            });
+
+            Object.values(listas).forEach(lista => {
+                lista.innerHTML = '';
+            });
+
+            let enlacesVisibles = {
+                web: 0,
+                acestream: 0,
+                fuentes: 0
+            };
+
+            enlacesGuardados.forEach((item, index) => {
+                if (mostrarSoloFavoritos && !item.favorito) return;
+                
+                const titulo = item.title.toLowerCase();
+                const webName = item.webName ? item.webName.toLowerCase() : '';
+                const cumpleBusqueda = titulo.includes(busqueda) || webName.includes(busqueda);
+                const cumpleDeporte = !filtroDeporte || item.deporte === filtroDeporte;
+                const cumpleIdioma = !filtroIdioma || item.idioma === filtroIdioma;
+                
+                if (!cumpleBusqueda || !cumpleDeporte || !cumpleIdioma) return;
+
+                const categoria = item.mostrarIcono ? 'acestream' : item.mostrarMulti ? 'fuentes' : 'web';
+                const lista = listas[categoria];
+                
+                const linkItem = document.createElement('div');
+                linkItem.className = 'link-item';
+                linkItem.style.borderColor = item.color;
+                linkItem.onclick = () => {
+                    if (indiceCambiar !== null) {
+                        cambiarPosicion(index);
+                    } else {
+                        manejarClicEnlace(item.link, categoria);
+                    }
+                };
+
+                linkItem.innerHTML = `
+                    <button class="boton-favorito" onclick="toggleFavorito(${index}, event)">${item.favorito ? '★' : '☆'}</button>
+                    <div style="font-size:24px">${iconosDeporte[item.deporte]}</div>
+                    <div>${item.title}</div>
+                    ${item.webName ? `<div>${item.webName}</div>` : ''}
+                    <div>${banderasIdioma[item.idioma]}</div>
+                    <div>${'✭'.repeat(item.puntuacion) + '☆'.repeat(5 - item.puntuacion)}</div>
+                    ${(item.etiquetas || []).map(etiqueta => `<span class="etiqueta">${etiqueta}</span>`).join('')}
+                    <div class="menu-contextual">
+                        <button onclick="event.stopPropagation(); editarEnlace(${index})">✏️ Editar</button>
+                        <button onclick="event.stopPropagation(); borrarEnlace(${index})">🗑️ Borrar</button>
+                        <button onclick="event.stopPropagation(); cambiarPosicion(${index})">🔄 Cambiar</button>
+                    </div>
+                `;
+
+                lista.appendChild(linkItem);
+                enlacesVisibles[categoria]++;
+
+                linkItem.addEventListener('contextmenu', (e) => {
+                    e.preventDefault();
+                    linkItem.classList.add('mostrar-menu');
+                });
+
+                document.addEventListener('click', (e) => {
+                    if (!linkItem.contains(e.target)) {
+                        linkItem.classList.remove('mostrar-menu');
+                    }
+                });
+            });
+
+            Object.keys(enlacesVisibles).forEach(categoria => {
+                if (enlacesVisibles[categoria] > 0) {
+                    categorias[categoria].style.display = 'block';
+                }
+            });
+        }
+
+        function filtrarEnlacesAgrupados() {
+            const busqueda = document.getElementById('busqueda').value.toLowerCase();
+            const filtroDeporte = document.getElementById('filtroDeporte').value;
+            const filtroIdioma = document.getElementById('filtroIdioma').value;
+
+            const categorias = {
+                web: document.getElementById('categoriaWeb'),
+                acestream: document.getElementById('categoriaAcestream'),
+                fuentes: document.getElementById('categoriaFuentes')
+            };
+
+            const listas = {
+                web: document.getElementById('linkList'),
+                acestream: document.getElementById('acestreamList'),
+                fuentes: document.getElementById('multiList')
+            };
+
+            Object.values(categorias).forEach(categoria => {
+                categoria.style.display = 'none';
+            });
+
+            Object.values(listas).forEach(lista => {
+                lista.innerHTML = '';
+            });
+
+            let enlacesVisibles = {
+                web: 0,
+                acestream: 0,
+                fuentes: 0
+            };
+
+            const estadosGrupos = JSON.parse(localStorage.getItem('estadosGrupos')) || {};
+
+            const enlacesPorSeccionYTitulo = {
+                web: {},
+                acestream: {},
+                fuentes: {}
+            };
+            
+            enlacesGuardados.forEach((item, index) => {
+                if (mostrarSoloFavoritos && !item.favorito) return;
+                
+                const titulo = item.title.toLowerCase();
+                const webName = item.webName ? item.webName.toLowerCase() : '';
+                const cumpleBusqueda = titulo.includes(busqueda) || webName.includes(busqueda);
+                const cumpleDeporte = !filtroDeporte || item.deporte === filtroDeporte;
+                const cumpleIdioma = !filtroIdioma || item.idioma === filtroIdioma;
+                
+                if (!cumpleBusqueda || !cumpleDeporte || !cumpleIdioma) return;
+
+                const tituloGrupo = item.title;
+                const seccion = item.mostrarIcono ? 'acestream' : item.mostrarMulti ? 'fuentes' : 'web';
+                
+                if (!enlacesPorSeccionYTitulo[seccion][tituloGrupo]) {
+                    enlacesPorSeccionYTitulo[seccion][tituloGrupo] = [];
+                }
+                
+                enlacesPorSeccionYTitulo[seccion][tituloGrupo].push({item, index});
+                enlacesVisibles[seccion]++;
+            });
+
+            procesarSeccion('web', listas.web, enlacesPorSeccionYTitulo.web, estadosGrupos);
+            procesarSeccion('acestream', listas.acestream, enlacesPorSeccionYTitulo.acestream, estadosGrupos);
+            procesarSeccion('fuentes', listas.fuentes, enlacesPorSeccionYTitulo.fuentes, estadosGrupos);
+
+            Object.keys(enlacesVisibles).forEach(categoria => {
+                if (enlacesVisibles[categoria] > 0) {
+                    categorias[categoria].style.display = 'block';
+                }
+            });
+        }
+
+        function procesarSeccion(seccion, contenedor, enlacesPorTitulo, estadosGrupos) {
+            Object.entries(enlacesPorTitulo).forEach(([tituloGrupo, enlaces]) => {
+                if (enlaces.length > 1) {
+                    const tituloContainer = document.createElement('div');
+                    tituloContainer.className = 'titulo-container';
                     
-                    let btnContent = `
-                        <div class="channel-name-container">
-                            <div class="channel-name">${channel.name}</div>
-                            <div class="channel-number">CH-${channel.number}</div>
-                        </div>
+                    const tituloElement = document.createElement('h3');
+                    const grupoKey = `${seccion}-${tituloGrupo}`;
+                    tituloElement.dataset.grupo = grupoKey;
+                    
+                    tituloElement.innerHTML = `
+                        <span class="titulo-info">${tituloGrupo}</span>
+                        <span class="titulo-controles">
+                            <button onclick="event.stopPropagation(); agregarEnlaceAGrupo('${seccion}', '${tituloGrupo}')" title="Añadir enlace">+</button>
+                            <button onclick="event.stopPropagation(); expandirColapsarGrupo(this)" title="Expandir/Colapsar">▼</button>
+                        </span>
                     `;
                     
-                    if (channel.event) {
-                        btnContent += `<div class="channel-event">${channel.event}</div>`;
+                    // Por defecto los grupos estarán plegados
+                    const estadoGuardado = estadosGrupos[grupoKey];
+                    const inicialmenteCerrado = estadoGuardado !== undefined ? estadoGuardado : true;
+                    
+                    const tituloLinks = document.createElement('div');
+                    tituloLinks.className = 'titulo-links';
+                    if (inicialmenteCerrado) {
+                        tituloLinks.classList.add('cerrado');
+                        tituloElement.querySelector('.titulo-controles button:nth-child(2)').textContent = '▶';
                     }
                     
-                    btn.innerHTML = btnContent;
-                    
-                    btn.addEventListener('click', function() {
-                        let url = channel.url;
-                        if (s2Toggle) {
-                            url = `https://stream2wetch.top/embed/stream-${channel.number}.php`;
-                        }
-                        reproducirCanal(url, channel.name, channel.number);
-                    });
-                    
-                    channelItem.appendChild(btn);
-                    channelsContainer.appendChild(channelItem);
-                });
-            }
-            
-            function filterChannels() {
-                const searchTerm = searchInput.value.toLowerCase();
-                let filtered = allChannels;
-                
-                if (searchTerm) {
-                    filtered = filtered.filter(channel => {
-                        const cleanName = channel.rawText.toLowerCase();
-                        return cleanName.includes(searchTerm) || 
-                               channel.number.includes(searchTerm) ||
-                               (channel.time && channel.time.includes(searchTerm));
-                    });
-                }
-                
-                if (currentFilter === 'live') {
-                    const now = new Date();
-                    filtered = filtered.filter(channel => {
-                        if (!channel.time) return false;
-                        
-                        const [hours, minutes] = channel.time.split(':').map(Number);
-                        const eventTime = new Date();
-                        eventTime.setHours(hours, minutes, 0, 0);
-                        
-                        const diffMinutes = (now - eventTime) / (1000 * 60);
-                        
-                        return diffMinutes >= -30 && diffMinutes <= 120;
-                    });
-                } else if (currentFilter === 'favorites') {
-                    filtered = favoritos.map(fav => {
-                        return {
-                            name: fav.name,
-                            number: fav.number,
-                            url: fav.url,
-                            rawText: fav.name
+                    enlaces.forEach(({item, index}) => {
+                        const linkItem = document.createElement('div');
+                        linkItem.className = 'link-item';
+                        linkItem.style.borderColor = item.color;
+                        linkItem.onclick = () => {
+                            if (indiceCambiar !== null) {
+                                cambiarPosicion(index);
+                            } else {
+                                const categoria = item.mostrarIcono ? 'acestream' : item.mostrarMulti ? 'fuentes' : 'web';
+                                manejarClicEnlace(item.link, categoria);
+                            }
                         };
+
+                        linkItem.innerHTML = `
+                            <button class="boton-favorito" onclick="toggleFavorito(${index}, event)">${item.favorito ? '★' : '☆'}</button>
+                            <div style="font-size:24px">${iconosDeporte[item.deporte]}</div>
+                            <div>${item.webName || 'Sin web especificada'}</div>
+                            <div>${banderasIdioma[item.idioma]}</div>
+                            <div>${'✭'.repeat(item.puntuacion) + '☆'.repeat(5 - item.puntuacion)}</div>
+                            ${(item.etiquetas || []).map(etiqueta => `<span class="etiqueta">${etiqueta}</span>`).join('')}
+                            <div class="menu-contextual">
+                                <button onclick="event.stopPropagation(); editarEnlace(${index})">✏️ Editar</button>
+                                <button onclick="event.stopPropagation(); borrarEnlace(${index})">🗑️ Borrar</button>
+                                <button onclick="event.stopPropagation(); cambiarPosicion(${index})">🔄 Cambiar</button>
+                            </div>
+                        `;
+
+                        linkItem.addEventListener('contextmenu', (e) => {
+                            e.preventDefault();
+                            linkItem.classList.add('mostrar-menu');
+                        });
+
+                        document.addEventListener('click', (e) => {
+                            if (!linkItem.contains(e.target)) {
+                                linkItem.classList.remove('mostrar-menu');
+                            }
+                        });
+
+                        tituloLinks.appendChild(linkItem);
+                    });
+                    
+                    tituloContainer.appendChild(tituloElement);
+                    tituloContainer.appendChild(tituloLinks);
+                    
+                    tituloElement.onclick = () => {
+                        const lista = tituloContainer.querySelector('.titulo-links');
+                        const boton = tituloElement.querySelector('.titulo-controles button:nth-child(2)');
+                        lista.classList.toggle('cerrado');
+                        
+                        if (lista.classList.contains('cerrado')) {
+                            boton.textContent = '▶';
+                        } else {
+                            boton.textContent = '▼';
+                        }
+                        
+                        estadosGrupos[grupoKey] = lista.classList.contains('cerrado');
+                        localStorage.setItem('estadosGrupos', JSON.stringify(estadosGrupos));
+                    };
+                    
+                    contenedor.appendChild(tituloContainer);
+                } else {
+                    const {item, index} = enlaces[0];
+                    const linkItem = document.createElement('div');
+                    linkItem.className = 'link-item';
+                    linkItem.style.borderColor = item.color;
+                    linkItem.onclick = () => {
+                        if (indiceCambiar !== null) {
+                            cambiarPosicion(index);
+                        } else {
+                            const categoria = item.mostrarIcono ? 'acestream' : item.mostrarMulti ? 'fuentes' : 'web';
+                            manejarClicEnlace(item.link, categoria);
+                        }
+                    };
+
+                    linkItem.innerHTML = `
+                        <button class="boton-favorito" onclick="toggleFavorito(${index}, event)">${item.favorito ? '★' : '☆'}</button>
+                        <div style="font-size:24px">${iconosDeporte[item.deporte]}</div>
+                        <div>${item.title}</div>
+                        ${item.webName ? `<div>${item.webName}</div>` : ''}
+                        <div>${banderasIdioma[item.idioma]}</div>
+                        <div>${'✭'.repeat(item.puntuacion) + '☆'.repeat(5 - item.puntuacion)}</div>
+                        ${(item.etiquetas || []).map(etiqueta => `<span class="etiqueta">${etiqueta}</span>`).join('')}
+                        <div class="menu-contextual">
+                            <button onclick="event.stopPropagation(); editarEnlace(${index})">✏️ Editar</button>
+                            <button onclick="event.stopPropagation(); borrarEnlace(${index})">🗑️ Borrar</button>
+                            <button onclick="event.stopPropagation(); cambiarPosicion(${index})">🔄 Cambiar</button>
+                        </div>
+                    `;
+
+                    contenedor.appendChild(linkItem);
+
+                    linkItem.addEventListener('contextmenu', (e) => {
+                        e.preventDefault();
+                        linkItem.classList.add('mostrar-menu');
+                    });
+
+                    document.addEventListener('click', (e) => {
+                        if (!linkItem.contains(e.target)) {
+                            linkItem.classList.remove('mostrar-menu');
+                        }
                     });
                 }
-                
-                displayChannels(filtered);
+            });
+        }
+
+        function agregarEnlaceAGrupo(seccion, tituloGrupo) {
+            mostrarFormulario();
+            document.getElementById('tipoEnlace').value = seccion === 'acestream' ? 'acestream' : seccion === 'fuentes' ? 'fuentes' : 'web';
+            document.getElementById('title').value = tituloGrupo;
+            mostrarNotificacion(`Añadiendo enlace al grupo: ${tituloGrupo}`);
+        }
+
+        function expandirColapsarGrupo(boton) {
+            const tituloElement = boton.closest('h3');
+            const tituloContainer = boton.closest('.titulo-container');
+            const lista = tituloContainer.querySelector('.titulo-links');
+            const grupoKey = tituloElement.dataset.grupo;
+            
+            lista.classList.toggle('cerrado');
+            
+            if (lista.classList.contains('cerrado')) {
+                boton.textContent = '▶';
+            } else {
+                boton.textContent = '▼';
             }
             
-            function cargarCanales() {
-                loading.style.display = 'block';
-                channelsContainer.innerHTML = '';
-                updateChannelCounter(0);
+            const estadosGrupos = JSON.parse(localStorage.getItem('estadosGrupos')) || {};
+            estadosGrupos[grupoKey] = lista.classList.contains('cerrado');
+            localStorage.setItem('estadosGrupos', JSON.stringify(estadosGrupos));
+        }
+
+        function cambiarModoApertura() {
+            const modos = [
+                { valor: 'todo-reproductor', texto: 'Modo: Reproductor' },
+                { valor: 'nueva-pestaña', texto: 'Modo: Nueva pestaña' },
+                { valor: 'solo-web-reproductor', texto: 'Modo: WEB en reproductor' }
+            ];
+            
+            // Encuentra el índice del modo actual
+            const indiceActual = modos.findIndex(modo => modo.valor === modoApertura);
+            const siguienteIndice = (indiceActual + 1) % modos.length;
+            
+            modoApertura = modos[siguienteIndice].valor;
+            localStorage.setItem('modoApertura', modoApertura);
+            
+            const boton = document.getElementById('botonModoApertura');
+            boton.textContent = modos[siguienteIndice].texto;
+            
+            mostrarNotificacion(modos[siguienteIndice].texto);
+        }
+
+        function reproducirEnlace(url) {
+            currentVideoUrl = url;
+            const videoFrame = document.getElementById('videoFrame');
+            const reproductor = document.getElementById('reproductor');
+            const botonCerrar = document.getElementById('botonCerrarReproductor');
+            const botonRefrescar = document.getElementById('botonRefrescarReproductor');
+            const botonAgrandar = document.getElementById('botonAgrandarReproductor');
+            const botonReducir = document.getElementById('botonReducirReproductor');
+
+            reproductor.classList.add('mostrar');
+            videoFrame.src = url;
+            reproductor.style.height = alturaReproductor;
+            botonCerrar.style.display = 'flex';
+            botonRefrescar.style.display = 'flex';
+            botonAgrandar.style.display = 'flex';
+            botonReducir.style.display = 'flex';
+            
+            reproductor.addEventListener('pointerup', function() {
+                alturaReproductor = reproductor.style.height;
+                localStorage.setItem('alturaReproductor', alturaReproductor);
+            });
+        }
+
+        function cerrarReproductor() {
+            const videoFrame = document.getElementById('videoFrame');
+            const reproductor = document.getElementById('reproductor');
+            const botonCerrar = document.getElementById('botonCerrarReproductor');
+            const botonRefrescar = document.getElementById('botonRefrescarReproductor');
+            const botonAgrandar = document.getElementById('botonAgrandarReproductor');
+            const botonReducir = document.getElementById('botonReducirReproductor');
+
+            reproductor.classList.add('ocultar');
+            
+            setTimeout(() => {
+                reproductor.classList.remove('mostrar', 'ocultar');
+                videoFrame.src = '';
+                botonCerrar.style.display = 'none';
+                botonRefrescar.style.display = 'none';
+                botonAgrandar.style.display = 'none';
+                botonReducir.style.display = 'none';
+                currentVideoUrl = '';
+            }, 500);
+        }
+
+        function refrescarReproductor() {
+            if (currentVideoUrl) {
+                const videoFrame = document.getElementById('videoFrame');
+                const reproductor = document.getElementById('reproductor');
                 
-                const targetUrl = 'https://daddylivehd1.click/';
-                const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(targetUrl)}`;
-                
-                fetch(proxyUrl)
-                    .then(response => {
-                        if (!response.ok) throw new Error('Error en la conexión');
-                        return response.json();
-                    })
-                    .then(data => {
-                        if (data.contents) {
-                            allChannels = extractChannels(data.contents);
-                            filterChannels();
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    })
-                    .finally(() => {
-                        loading.style.display = 'none';
+                reproductor.classList.remove('mostrar');
+                setTimeout(() => {
+                    videoFrame.src = currentVideoUrl;
+                    reproductor.classList.add('mostrar');
+                    mostrarNotificacion('Reproductor refrescado');
+                }, 300);
+            }
+        }
+
+        function agrandarReproductor() {
+            const reproductor = document.getElementById('reproductor');
+            const currentHeight = parseInt(reproductor.style.height || '250');
+            const newHeight = Math.min(currentHeight + 50, 800); // Máximo 800px
+            reproductor.style.height = `${newHeight}px`;
+            alturaReproductor = `${newHeight}px`;
+            localStorage.setItem('alturaReproductor', alturaReproductor);
+        }
+
+        function reducirReproductor() {
+            const reproductor = document.getElementById('reproductor');
+            const currentHeight = parseInt(reproductor.style.height || '250');
+            const newHeight = Math.max(currentHeight - 50, 150); // Mínimo 150px
+            reproductor.style.height = `${newHeight}px`;
+            alturaReproductor = `${newHeight}px`;
+            localStorage.setItem('alturaReproductor', alturaReproductor);
+        }
+
+        function filtrarFavoritos() {
+            mostrarSoloFavoritos = !mostrarSoloFavoritos;
+            localStorage.setItem('mostrarSoloFavoritos', mostrarSoloFavoritos);
+            document.querySelector('.boton-favoritos').textContent = mostrarSoloFavoritos ? 'Mostrar todos' : 'Mostrar solo favoritos';
+            filtrarEnlaces();
+        }
+
+        function limpiarFiltros() {
+            document.getElementById('busqueda').value = '';
+            document.getElementById('filtroDeporte').value = '';
+            document.getElementById('filtroIdioma').value = '';
+            filtrarEnlaces();
+        }
+
+        function togglePantallaCompleta() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    mostrarNotificacion(`Error al activar pantalla completa: ${err.message}`);
+                });
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+
+        function manejarClicEnlace(url, categoria) {
+            if (modoApertura === 'nueva-pestaña') {
+                window.open(url, '_blank');
+            } else if (modoApertura === 'solo-web-reproductor' && categoria === 'web') {
+                reproducirEnlace(url);
+            } else if (modoApertura === 'todo-reproductor') {
+                reproducirEnlace(url);
+            } else {
+                window.open(url, '_blank');
+            }
+        }
+
+        function guardarEstadoCategorias() {
+            const categorias = document.querySelectorAll('.categoria');
+            const estadoCategorias = {};
+
+            categorias.forEach((categoria, index) => {
+                estadoCategorias[`categoria-${index}`] = categoria.classList.contains('oculta');
+            });
+
+            localStorage.setItem('estadoCategorias', JSON.stringify(estadoCategorias));
+        }
+
+        function cargarEstadoCategorias() {
+            const estadoCategorias = JSON.parse(localStorage.getItem('estadoCategorias')) || {};
+            const categorias = document.querySelectorAll('.categoria');
+
+            categorias.forEach((categoria, index) => {
+                const estado = estadoCategorias[`categoria-${index}`];
+                if (estado !== undefined) {
+                    if (estado) {
+                        categoria.classList.add('oculta');
+                        categoria.querySelector('.toggle-categoria').textContent = '▲';
+                    } else {
+                        categoria.classList.remove('oculta');
+                        categoria.querySelector('.toggle-categoria').textContent = '▼';
+                    }
+                }
+            });
+        }
+
+        function toggleCategoria(boton) {
+            const categoria = boton.closest('.categoria');
+            categoria.classList.toggle('oculta');
+
+            if (categoria.classList.contains('oculta')) {
+                boton.textContent = '▲';
+            } else {
+                boton.textContent = '▼';
+            }
+
+            guardarEstadoCategorias();
+        }
+
+        function mostrarFormulario() {
+            const formContainer = document.getElementById('formContainer');
+            const botonAgregar = document.getElementById('botonAgregar');
+            formContainer.classList.toggle('mostrar');
+            botonAgregar.textContent = formContainer.classList.contains('mostrar') ? '×' : '+';
+        }
+
+        function mostrarNotificacion(mensaje) {
+            const notificacion = document.getElementById('notificacion');
+            notificacion.textContent = mensaje;
+            notificacion.style.display = 'block';
+            setTimeout(() => notificacion.style.display = 'none', 3000);
+        }
+
+        function actualizarCodigoColor() {
+            const colorPicker = document.getElementById('color');
+            const codigoColor = document.getElementById('codigoColor');
+            codigoColor.value = colorPicker.value;
+        }
+
+        function seleccionarPuntuacion(puntos) {
+            puntuacionSeleccionada = puntos;
+            const botones = document.querySelectorAll('#puntuacion button');
+            botones.forEach((boton, index) => {
+                if (index < puntos) {
+                    boton.textContent = '✭';
+                    boton.classList.add('seleccionado');
+                } else {
+                    boton.textContent = '☆';
+                    boton.classList.remove('seleccionado');
+                }
+            });
+        }
+
+        function obtenerEtiquetasSeleccionadas() {
+            const checkboxes = document.querySelectorAll('.etiquetas-opciones input[type="checkbox"]:checked');
+            return Array.from(checkboxes).map(checkbox => checkbox.value);
+        }
+
+        function establecerEtiquetasSeleccionadas(etiquetas) {
+            const checkboxes = document.querySelectorAll('.etiquetas-opciones input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = etiquetas.includes(checkbox.value);
+                const label = checkbox.parentElement;
+                if (checkbox.checked) {
+                    label.classList.add('seleccionada');
+                } else {
+                    label.classList.remove('seleccionada');
+                }
+            });
+        }
+
+        function guardarEnlace() {
+            const link = document.getElementById('link').value;
+            const title = document.getElementById('title').value;
+            const webName = document.getElementById('webName').value;
+            const deporte = document.getElementById('deporte').value;
+            const color = document.getElementById('codigoColor').value;
+            const idioma = document.getElementById('idioma').value;
+            const tipoEnlace = document.getElementById('tipoEnlace').value;
+            const puntuacion = puntuacionSeleccionada;
+            const etiquetas = obtenerEtiquetasSeleccionadas();
+
+            const mostrarIcono = tipoEnlace === 'acestream';
+            const mostrarMulti = tipoEnlace === 'fuentes';
+
+            if (link && title) {
+                if (indiceEdicion !== null) {
+                    enlacesGuardados[indiceEdicion] = { 
+                        link, 
+                        title, 
+                        webName, 
+                        deporte, 
+                        color, 
+                        idioma, 
+                        mostrarIcono, 
+                        mostrarMulti, 
+                        puntuacion, 
+                        etiquetas,
+                        favorito: enlacesGuardados[indiceEdicion].favorito || false 
+                    };
+                    indiceEdicion = null;
+                    mostrarNotificacion('Enlace actualizado correctamente.');
+                } else {
+                    const enlaceExistente = enlacesGuardados.some((enlace) => enlace.link === link);
+                    if (enlaceExistente) {
+                        mostrarNotificacion('Este enlace ya existe. No se puede duplicar.');
+                        return;
+                    }
+
+                    enlacesGuardados.push({ 
+                        link, 
+                        title, 
+                        webName, 
+                        deporte, 
+                        color, 
+                        idioma, 
+                        mostrarIcono, 
+                        mostrarMulti, 
+                        puntuacion, 
+                        etiquetas,
+                        favorito: false 
                     });
+                    mostrarNotificacion('Enlace guardado correctamente.');
+                }
+
+                document.getElementById('link').value = '';
+                document.getElementById('title').value = '';
+                document.getElementById('webName').value = '';
+                seleccionarPuntuacion(0);
+                establecerEtiquetasSeleccionadas([]);
+                mostrarFormulario();
+                localStorage.setItem('enlaces', JSON.stringify(enlacesGuardados));
+                filtrarEnlaces();
+            } else {
+                mostrarNotificacion('Por favor, ingresa un enlace y un título.');
             }
+        }
+
+        function editarEnlace(index) {
+            const enlace = enlacesGuardados[index];
+            indiceEdicion = index;
+
+            document.getElementById('link').value = enlace.link;
+            document.getElementById('title').value = enlace.title;
+            document.getElementById('webName').value = enlace.webName || '';
+            document.getElementById('deporte').value = enlace.deporte;
+            document.getElementById('color').value = enlace.color;
+            document.getElementById('codigoColor').value = enlace.color;
+            document.getElementById('idioma').value = enlace.idioma;
             
-            cargarCanales();
+            const tipoEnlace = enlace.mostrarMulti ? 'fuentes' : enlace.mostrarIcono ? 'acestream' : 'web';
+            document.getElementById('tipoEnlace').value = tipoEnlace;
+            
+            seleccionarPuntuacion(enlace.puntuacion);
+            establecerEtiquetasSeleccionadas(enlace.etiquetas || []);
+
+            mostrarFormulario();
+        }
+
+        function cambiarPosicion(index) {
+            if (indiceCambiar === null) {
+                indiceCambiar = index;
+                mostrarNotificacion('Selecciona otro enlace para mover el primero detrás del segundo.');
+            } else {
+                if (indiceCambiar === index) {
+                    mostrarNotificacion('No puedes mover un enlace detrás de sí mismo.');
+                    indiceCambiar = null;
+                    return;
+                }
+
+                const enlaceMovido = enlacesGuardados[indiceCambiar];
+                enlacesGuardados.splice(indiceCambiar, 1);
+                const nuevaPosicion = index > indiceCambiar ? index : index + 1;
+                enlacesGuardados.splice(nuevaPosicion, 0, enlaceMovido);
+
+                localStorage.setItem('enlaces', JSON.stringify(enlacesGuardados));
+                filtrarEnlaces();
+                mostrarNotificacion('Enlace movido correctamente.');
+                indiceCambiar = null;
+            }
+        }
+
+        function borrarEnlace(index) {
+            if (confirm('¿Estás seguro de que quieres eliminar este enlace?')) {
+                enlacesGuardados.splice(index, 1);
+                localStorage.setItem('enlaces', JSON.stringify(enlacesGuardados));
+                filtrarEnlaces();
+                mostrarNotificacion('Enlace eliminado correctamente.');
+            }
+        }
+
+        function borrarTodosLosEnlaces() {
+            if (confirm('¿Estás seguro de que quieres borrar todos los enlaces? Esta acción no se puede deshacer.')) {
+                enlacesGuardados = [];
+                localStorage.setItem('enlaces', JSON.stringify(enlacesGuardados));
+                localStorage.setItem('mostrarSoloFavoritos', false);
+                mostrarSoloFavoritos = false;
+                document.querySelector('.boton-favoritos').textContent = 'Mostrar solo favoritos';
+                filtrarEnlaces();
+                mostrarNotificacion('Todos los enlaces han sido borrados.');
+            }
+        }
+
+        function exportarEnlaces() {
+            const contenido = JSON.stringify(enlacesGuardados, null, 2);
+            const blob = new Blob([contenido], { type: 'application/json' });
+            const enlaceDescarga = document.createElement('a');
+            enlaceDescarga.href = URL.createObjectURL(blob);
+            enlaceDescarga.download = 'enlaces_chefo_tv.json';
+            enlaceDescarga.click();
+            mostrarNotificacion('Enlaces exportados correctamente.');
+        }
+
+        function importarDesdeTexto() {
+            mostrarNotificacion('Preparando para importar desde texto...');
+            const modal = document.getElementById('modalImportar');
+            modal.style.display = 'block';
+        }
+
+        function cerrarModalImportar() {
+            const modal = document.getElementById('modalImportar');
+            modal.style.display = 'none';
+        }
+
+        function procesarTextoImportado() {
+            const texto = document.getElementById('textoImportar').value;
+            if (texto) {
+                try {
+                    const nuevosEnlaces = JSON.parse(texto);
+                    if (!Array.isArray(nuevosEnlaces)) throw new Error('Formato inválido');
+
+                    const importarWeb = document.getElementById('importarWeb').checked;
+                    const importarAcestream = document.getElementById('importarAcestream').checked;
+                    const importarFuentes = document.getElementById('importarFuentes').checked;
+                    const conservarFavoritos = document.getElementById('conservarFavoritos').checked;
+                    
+                    const deportesSeleccionados = [];
+                    document.querySelectorAll('.deporte-checkbox:checked').forEach(checkbox => {
+                        deportesSeleccionados.push(checkbox.value);
+                    });
+                    
+                    const idiomasSeleccionados = [];
+                    document.querySelectorAll('.idioma-checkbox:checked').forEach(checkbox => {
+                        idiomasSeleccionados.push(checkbox.value);
+                    });
+
+                    let contador = 0;
+                    nuevosEnlaces.forEach(nuevoEnlace => {
+                        const esWeb = !nuevoEnlace.mostrarIcono && !nuevoEnlace.mostrarMulti;
+                        const esAcestream = nuevoEnlace.mostrarIcono;
+                        const esFuentes = nuevoEnlace.mostrarMulti;
+                        
+                        if (!(
+                            (esWeb && importarWeb) || 
+                            (esAcestream && importarAcestream) || 
+                            (esFuentes && importarFuentes)
+                        )) return;
+                        
+                        if (!deportesSeleccionados.includes(nuevoEnlace.deporte)) return;
+                        if (!idiomasSeleccionados.includes(nuevoEnlace.idioma)) return;
+                        
+                        const existe = enlacesGuardados.some(enlace => enlace.link === nuevoEnlace.link);
+                        if (!existe) {
+                            enlacesGuardados.push({ 
+                                ...nuevoEnlace, 
+                                favorito: conservarFavoritos ? (nuevoEnlace.favorito || false) : false,
+                                etiquetas: nuevoEnlace.etiquetas || []
+                            });
+                            contador++;
+                        }
+                    });
+
+                    localStorage.setItem('enlaces', JSON.stringify(enlacesGuardados));
+                    filtrarEnlaces();
+                    mostrarNotificacion(`Importados ${contador} nuevos enlaces. Se han descartado duplicados y filtrados según tus opciones.`);
+                    cerrarModalImportar();
+                } catch (error) {
+                    mostrarNotificacion('El texto no es válido. Asegúrate de pegar un JSON correcto.');
+                }
+            } else {
+                mostrarNotificacion('No se ha pegado ningún texto.');
+            }
+        }
+
+        function cerrarMenuSiClickFuera(event) {
+            const menuAjustes = document.getElementById('menuAjustes');
+            const botonAjustes = document.querySelector('.boton-ajustes');
+            
+            if (!menuAjustes.contains(event.target) && !botonAjustes.contains(event.target)) {
+                menuAjustes.classList.remove('mostrar');
+                document.removeEventListener('click', cerrarMenuSiClickFuera);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Configuración de modos de apertura
+            const modos = [
+                { valor: 'todo-reproductor', texto: 'Modo: Reproductor' },
+                { valor: 'nueva-pestaña', texto: 'Modo: Nueva pestaña' },
+                { valor: 'solo-web-reproductor', texto: 'Modo: WEB en reproductor' }
+            ];
+            
+            const modoAperturaGuardado = localStorage.getItem('modoApertura') || 'todo-reproductor';
+            modoApertura = modoAperturaGuardado;
+            
+            const modoActual = modos.find(modo => modo.valor === modoApertura) || modos[0];
+            document.getElementById('botonModoApertura').textContent = modoActual.texto;
+
+            // Grupos plegados por defecto
+            if (!localStorage.getItem('estadosGrupos')) {
+                localStorage.setItem('estadosGrupos', JSON.stringify({}));
+            }
+
+            // Agrupación activada por defecto
+            if (localStorage.getItem('agrupacionActivada') === null) {
+                localStorage.setItem('agrupacionActivada', 'true');
+                agrupacionActivada = true;
+            }
+
+            cargarEstadoCategorias();
+            filtrarEnlaces();
+
+            if (mostrarSoloFavoritos) {
+                document.querySelector('.boton-favoritos').textContent = 'Mostrar todos';
+            }
+
+            // Aplicar estado de visibilidad al cargar
+            if (elementosOcultos) {
+                document.querySelector('h1').style.opacity = '0';
+                document.getElementById('botonAgregar').style.opacity = '0';
+            }
         });
     </script>
 </body>
